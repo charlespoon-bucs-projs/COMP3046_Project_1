@@ -1,4 +1,4 @@
-package Database;
+﻿package Database;
 
 import org.sqlite.SQLiteConfig;
 import org.sqlite.SQLiteDataSource;
@@ -14,9 +14,9 @@ public class Sqlite {
 
 
         SQLiteDataSource ds = new SQLiteDataSource(config);
-        ds.setUrl("jdbc:sqlite:sample.db");
+        ds.setUrl("jdbc:sqlite:cinema.db");
         return ds.getConnection();
-        //ds.setServerName("sample.db");
+        //ds.setServerName("cinema.db");
     }
 
     //create Table
