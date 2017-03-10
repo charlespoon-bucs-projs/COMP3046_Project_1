@@ -8,3 +8,15 @@ CREATE TABLE `Customer` (
 	`Email`	TEXT NOT NULL UNIQUE,
 	`Password`	TEXT NOT NULL
 );
+CREATE TABLE `Movie` (
+	`MID`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+	`Movie_name`	TEXT NOT NULL,
+	`Movie_type`	TEXT NOT NULL,
+	`Movie_date`	INTEGER NOT NULL,
+	`Movie_class`	TEXT NOT NULL,
+	`Movie_lang`	TEXT NOT NULL,
+	`Movie_length`	INTEGER NOT NULL,
+	`Movie_director`	TEXT NOT NULL,
+	`Movie_cast`	TEXT NOT NULL,
+	`Movie_location`	TEXT NOT NULL
+);
