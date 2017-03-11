@@ -1,12 +1,14 @@
 ﻿package Database;
 
+import org.jooq.DSLContext;
+import org.jooq.SQLDialect;
+import org.jooq.impl.DSL;
 import org.sqlite.SQLiteConfig;
 import org.sqlite.SQLiteDataSource;
 
 import java.io.Closeable;
 import java.io.IOException;
 import java.sql.*;
-import java.util.Arrays;
 
 public class Sqlite implements Closeable, AutoCloseable {
     private Connection connection;
@@ -36,11 +38,14 @@ public class Sqlite implements Closeable, AutoCloseable {
         this.connection.close();
     }
 
-    @Override
     public void close() throws IOException {
         try {
             this.closeConnection();
         } catch (SQLException ignored) {
         }
+    }
+
+    public DSLContext getDsl() {
+        return DSL.using(this.getConnection(), SQLDialect.SQLITE);
     }
 }

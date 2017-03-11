@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-3.5.0.xsd">
+<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-3.9.0.xsd">
     <!-- Configure the database connection here -->
     <jdbc>
         <driver>org.sqlite.JDBC</driver>
-        <url>jdbc:sqlite:../rsc/cinema.db</url>
+        <url>jdbc:sqlite:../src/main/resources/cinema.db</url>
         <!--<user></user>-->
         <!--<password></password>-->
     </jdbc>
@@ -41,7 +41,7 @@
             <packageName>Database.JooqGenerated</packageName>
 
             <!-- The destination directory of your generated classes. Using Maven directory layout here -->
-            <directory>./../src/</directory>
+            <directory>./../src/main/java</directory>
         </target>
     </generator>
 </configuration>
