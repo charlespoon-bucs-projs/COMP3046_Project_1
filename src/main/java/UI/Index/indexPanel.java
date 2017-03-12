@@ -1,4 +1,4 @@
-package Index;
+package UI.Index;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -8,7 +8,7 @@ import javax.swing.JButton;
 
 import javax.swing.JPanel;
 
-import Login.loginFrame;
+import UI.Login.loginFrame;
 
 public class indexPanel extends JPanel{
 	private JPanel loginPanel,controlPanel;
@@ -18,7 +18,7 @@ public class indexPanel extends JPanel{
 		 setLayout(new BorderLayout());
 		 //set for login (top bar)
 		 loginPanel= new JPanel();
-		 addButton("Login", new ChangeFrameAction(),loginPanel);
+		 addButton("UI/Login", new ChangeFrameAction(),loginPanel);
 		 add(loginPanel, BorderLayout.LINE_END);
 		 
 	   

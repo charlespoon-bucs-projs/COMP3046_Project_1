@@ -1,4 +1,4 @@
-package Index;
+package UI.Index;
 
 import javax.swing.JFrame;
 

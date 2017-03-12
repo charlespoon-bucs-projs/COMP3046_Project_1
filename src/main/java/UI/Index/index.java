@@ -1,8 +1,6 @@
-package Index;
+package UI.Index;
 
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
 
 public class index {
 	public static void main(String[] args){

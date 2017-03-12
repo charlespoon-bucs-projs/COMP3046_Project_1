@@ -1,4 +1,4 @@
-package Login;
+package UI.Login;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -7,14 +7,11 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
 
 public class loginPanel extends JPanel {
 
@@ -62,9 +59,9 @@ public class loginPanel extends JPanel {
 		buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,20,30));
 	
 		btn_cancel = new JButton("Cancel");
-		btn_login = new JButton("Login");
+		btn_login = new JButton("UI/Login");
 		addButton("Cancel",new CancelAction(),buttonPanel);
-		addButton("Login",new LoginAction(),buttonPanel);
+		addButton("UI/Login",new LoginAction(),buttonPanel);
 		
 	
 		add(inputPanel,BorderLayout.NORTH);
