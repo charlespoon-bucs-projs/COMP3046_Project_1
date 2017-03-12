@@ -2,13 +2,15 @@ package Database;
 
 import org.jooq.DSLContext;
 import org.jooq.Record1;
+import org.jooq.Record7;
 import org.jooq.Result;
 import org.jooq.exception.DataAccessException;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static Database.JooqGenerated.tables.Customer.CUSTOMER;
 
@@ -31,16 +33,24 @@ public class User {
 
     public boolean createCustomer(String username, String password,
                                   String salutation, String name, Date birthday, int mobile, String email) {
-        String strBirthday = (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'")).format(birthday);
-
         DSLContext dsl = this.sqlite.getDsl();
 
         try {
             return dsl.insertInto(CUSTOMER,
-                    CUSTOMER.USERNAME, CUSTOMER.PASSWORD,
-                    CUSTOMER.SALUTATION, CUSTOMER.NAME, CUSTOMER.BIRTHDAY, CUSTOMER.MOBILE, CUSTOMER.EMAIL)
-                    .values(username, password,
-                            salutation, name, strBirthday, mobile, email)
+                    CUSTOMER.USERNAME,
+                    CUSTOMER.PASSWORD,
+                    CUSTOMER.SALUTATION,
+                    CUSTOMER.NAME,
+                    CUSTOMER.BIRTHDAY,
+                    CUSTOMER.MOBILE,
+                    CUSTOMER.EMAIL)
+                    .values(username,
+                            password,
+                            salutation,
+                            name,
+                            Utils.Convert.dateToString(birthday),
+                            mobile,
+                            email)
                     .execute() == 1;
         } catch (DataAccessException e) {
             System.out.println(e.getMessage());
@@ -51,8 +61,6 @@ public class User {
 
     public boolean updateCustomer(int uid, String username, String password,
                                   String salutation, String name, Date birthday, int mobile, String email) {
-        String strBirthday = (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'")).format(birthday);
-
         DSLContext dsl = this.sqlite.getDsl();
 
         try {
@@ -61,7 +69,7 @@ public class User {
                     .set(CUSTOMER.PASSWORD, password)
                     .set(CUSTOMER.SALUTATION, salutation)
                     .set(CUSTOMER.NAME, name)
-                    .set(CUSTOMER.BIRTHDAY, strBirthday)
+                    .set(CUSTOMER.BIRTHDAY, Utils.Convert.dateToString(birthday))
                     .set(CUSTOMER.MOBILE, mobile)
                     .set(CUSTOMER.EMAIL, email)
                     .where(CUSTOMER.UID.equal(uid))
@@ -74,15 +82,13 @@ public class User {
     }
 
     public String forgetPasswordCheckMobileBirthday(String username, int mobile, Date birthday) throws UnsupportedOperationException {
-        String strBirthday = (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'")).format(birthday);
-
         DSLContext dsl = this.sqlite.getDsl();
 
         Result<Record1<Integer>> fetchUid = dsl.select(CUSTOMER.UID)
                 .from(CUSTOMER)
                 .where(CUSTOMER.USERNAME.equal(username))
                 .and(CUSTOMER.MOBILE.equal(mobile))
-                .and(CUSTOMER.BIRTHDAY.equal(strBirthday))
+                .and(CUSTOMER.BIRTHDAY.equal(Utils.Convert.dateToString(birthday)))
                 .fetch();
 
         boolean canChangePassword = fetchUid.size() == 1;
@@ -105,5 +111,65 @@ public class User {
         if (affect != 1)
             return null;
         return newPassword;
+    }
+
+    // == iteration ==
+
+    public Map<Integer, Entity.Customer> getCustomersList() {
+        DSLContext dsl = this.sqlite.getDsl();
+
+        Result<Record7<Integer, String, String, String, Integer, String, String>> fetch = dsl
+                .select(CUSTOMER.UID,
+                        CUSTOMER.NAME,
+                        CUSTOMER.SALUTATION,
+                        CUSTOMER.USERNAME,
+                        CUSTOMER.MOBILE,
+                        CUSTOMER.EMAIL,
+                        CUSTOMER.BIRTHDAY)
+                .from(CUSTOMER)
+                .fetch();
+
+        return fetch.stream().map(r -> new Entity.Customer(
+                r.get(CUSTOMER.UID),
+                r.get(CUSTOMER.NAME),
+                r.get(CUSTOMER.SALUTATION),
+                r.get(CUSTOMER.USERNAME),
+                r.get(CUSTOMER.MOBILE),
+                r.get(CUSTOMER.EMAIL),
+                Utils.Convert.stringToDate(r.get(CUSTOMER.BIRTHDAY), null)
+        )).collect(Collectors.toMap(Entity.Customer::getUid, c -> c));
+    }
+
+    public Entity.Customer getCustomerByUid(int uid) throws DataAccessException {
+        DSLContext dsl = this.sqlite.getDsl();
+
+        Result<Record7<Integer, String, String, String, Integer, String, String>> fetch = dsl
+                .select(CUSTOMER.UID,
+                        CUSTOMER.NAME,
+                        CUSTOMER.SALUTATION,
+                        CUSTOMER.USERNAME,
+                        CUSTOMER.MOBILE,
+                        CUSTOMER.EMAIL,
+                        CUSTOMER.BIRTHDAY)
+                .from(CUSTOMER)
+                .where(CUSTOMER.UID.equal(uid))
+                .limit(2)
+                .fetch();
+
+        if (fetch.size() < 1)
+            return null;
+        else if (fetch.size() > 1)
+            throw new DataAccessException("size > 1");
+
+        Record7<Integer, String, String, String, Integer, String, String> fetchSingle = fetch.get(0);
+        return new Entity.Customer(
+                fetchSingle.get(CUSTOMER.UID),
+                fetchSingle.get(CUSTOMER.NAME),
+                fetchSingle.get(CUSTOMER.SALUTATION),
+                fetchSingle.get(CUSTOMER.USERNAME),
+                fetchSingle.get(CUSTOMER.MOBILE),
+                fetchSingle.get(CUSTOMER.EMAIL),
+                Utils.Convert.stringToDate(fetchSingle.get(CUSTOMER.BIRTHDAY), null)
+        );
     }
 }
