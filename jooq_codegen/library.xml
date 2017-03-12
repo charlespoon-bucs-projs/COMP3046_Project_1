@@ -33,8 +33,15 @@
             <!-- All elements that are excluded from your schema
                  (A Java regular expression. Use the pipe to separate several expressions).
                  Excludes match before includes, i.e. excludes have a higher priority -->
-            <!--<excludes></excludes>-->
+            <excludes>sqlite_sequence</excludes>
         </database>
+
+        <generate>
+            <!-- Generate jOOQ Record classes for type-safe querying. You can
+                 turn this off, if you don't need "active records" for CRUD
+                 Defaults to true -->
+            <records>false</records>
+        </generate>
 
         <target>
             <!-- The destination package of your generated classes (within the destination directory) -->

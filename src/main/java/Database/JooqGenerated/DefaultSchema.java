@@ -6,7 +6,8 @@ package Database.JooqGenerated;
 
 import Database.JooqGenerated.tables.Customer;
 import Database.JooqGenerated.tables.Movie;
-import Database.JooqGenerated.tables.SqliteSequence;
+import Database.JooqGenerated.tables.Staff;
+import Database.JooqGenerated.tables.Transactions;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,7 +33,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DefaultSchema extends SchemaImpl {
 
-    private static final long serialVersionUID = -1392357467;
+    private static final long serialVersionUID = -1422816076;
 
     /**
      * The reference instance of <code></code>
@@ -50,9 +51,14 @@ public class DefaultSchema extends SchemaImpl {
     public final Movie MOVIE = Database.JooqGenerated.tables.Movie.MOVIE;
 
     /**
-     * The table <code>sqlite_sequence</code>.
+     * The table <code>Staff</code>.
      */
-    public final SqliteSequence SQLITE_SEQUENCE = Database.JooqGenerated.tables.SqliteSequence.SQLITE_SEQUENCE;
+    public final Staff STAFF = Database.JooqGenerated.tables.Staff.STAFF;
+
+    /**
+     * The table <code>Transactions</code>.
+     */
+    public final Transactions TRANSACTIONS = Database.JooqGenerated.tables.Transactions.TRANSACTIONS;
 
     /**
      * No further instances allowed
@@ -81,6 +87,7 @@ public class DefaultSchema extends SchemaImpl {
         return Arrays.<Table<?>>asList(
             Customer.CUSTOMER,
             Movie.MOVIE,
-            SqliteSequence.SQLITE_SEQUENCE);
+            Staff.STAFF,
+            Transactions.TRANSACTIONS);
     }
 }

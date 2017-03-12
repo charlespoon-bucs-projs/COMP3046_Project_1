@@ -6,7 +6,8 @@ package Database.JooqGenerated;
 
 import Database.JooqGenerated.tables.Customer;
 import Database.JooqGenerated.tables.Movie;
-import Database.JooqGenerated.tables.SqliteSequence;
+import Database.JooqGenerated.tables.Staff;
+import Database.JooqGenerated.tables.Transactions;
 
 import javax.annotation.Generated;
 
@@ -35,7 +36,12 @@ public class Tables {
     public static final Movie MOVIE = Database.JooqGenerated.tables.Movie.MOVIE;
 
     /**
-     * The table <code>sqlite_sequence</code>.
+     * The table <code>Staff</code>.
      */
-    public static final SqliteSequence SQLITE_SEQUENCE = Database.JooqGenerated.tables.SqliteSequence.SQLITE_SEQUENCE;
+    public static final Staff STAFF = Database.JooqGenerated.tables.Staff.STAFF;
+
+    /**
+     * The table <code>Transactions</code>.
+     */
+    public static final Transactions TRANSACTIONS = Database.JooqGenerated.tables.Transactions.TRANSACTIONS;
 }
