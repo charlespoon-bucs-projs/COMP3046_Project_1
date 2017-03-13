@@ -1,4 +1,4 @@
-package TransactionRecord;
+package UI.TransactionRecord;
 
 import java.awt.EventQueue;
 import java.awt.Font;

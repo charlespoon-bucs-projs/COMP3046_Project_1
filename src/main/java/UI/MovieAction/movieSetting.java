@@ -1,4 +1,4 @@
-package MovieAction;
+package UI.MovieAction;
 
 import java.awt.EventQueue;
 import java.awt.Font;

@@ -1,4 +1,4 @@
-package Menu;
+package UI.Menu;
 
 import java.awt.Font;
 import java.util.Calendar;

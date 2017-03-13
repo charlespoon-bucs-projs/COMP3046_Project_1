@@ -1,4 +1,4 @@
-package Register;
+package UI.Register;
 
 import java.awt.EventQueue;
 import java.awt.Font;

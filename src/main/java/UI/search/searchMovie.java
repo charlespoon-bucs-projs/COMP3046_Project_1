@@ -1,4 +1,4 @@
-package search;
+package UI.search;
 
 import java.awt.EventQueue;
 import java.awt.Font;
