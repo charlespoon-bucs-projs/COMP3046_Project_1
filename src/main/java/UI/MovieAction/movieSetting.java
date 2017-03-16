@@ -34,12 +34,12 @@ public class movieSetting {
 	private JFrame frame;
 	private JPanel topbar;
 	private JLabel lblLoginer, lblMovieImage, lblMovieName, lblDate, lblType, lblClass, lblLang, lblLeng, lblDirector,
-			lblCost, lblHouse, lblTime;
+			lblCast, lblHouse, lblTime, lblPrice;
 	topbar tb;
 	private JButton btnBack, btnSubmit, btnReset, btnDelete;
 	private JSeparator separator;
 
-	private JTextField textField_MovieName, textField_Director, textField_Cost, textField_Leng;
+	private JTextField textField_MovieName, textField_Director, textField_Price, textField_Leng, textField_Cast;
 	boolean isAdd;
 	private JComboBox comboBox_Type, comboBox_Class, comboBox_Lang, comboBox_House, comboBox_hours, comboBox_apm,
 			comboBox_minutes;
@@ -67,7 +67,7 @@ public class movieSetting {
 		frame = new JFrame();
 
 		tb = new topbar();
-		frame.setBounds(100, 100, 524, 399);
+		frame.setBounds(100, 100, 524, 430);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		frame.setVisible(true);
@@ -202,15 +202,15 @@ public class movieSetting {
 
 		frame.getContentPane().add(textField_Leng);
 
-		lblCost = new JLabel("Cost");
-		lblCost.setBounds(168, 218, 87, 35);
-		lblCost.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
-		frame.getContentPane().add(lblCost);
+		lblPrice = new JLabel("Price");
+		lblPrice.setBounds(168, 218, 87, 35);
+		lblPrice.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
+		frame.getContentPane().add(lblPrice);
 
-		textField_Cost = new JTextField();
-		textField_Cost.setBounds(228, 218, 122, 28);
-		textField_Cost.setDocument(new JTextFieldLimit(10));
-		frame.getContentPane().add(textField_Cost);
+		textField_Price = new JTextField();
+		textField_Price.setBounds(228, 218, 122, 28);
+		textField_Price.setDocument(new JTextFieldLimit(10));
+		frame.getContentPane().add(textField_Price);
 
 		lblHouse = new JLabel("House");
 		lblHouse.setBounds(360, 218, 56, 35);
@@ -246,34 +246,44 @@ public class movieSetting {
 		frame.getContentPane().add(comboBox_hours);
 
 		comboBox_apm = new JComboBox();
-		comboBox_apm.setBounds(340, 254, 46, 28);
+		comboBox_apm.setBounds(452, 254, 46, 28);
 		comboBox_apm.addItem("am");
 		comboBox_apm.addItem("pm");
 		frame.getContentPane().add(comboBox_apm);
 
 		comboBox_minutes = new JComboBox();
-		comboBox_minutes.setBounds(411, 254, 87, 28);
+		comboBox_minutes.setBounds(334, 254, 87, 28);
 		comboBox_minutes.addItem("00 min");
 		comboBox_minutes.addItem("15 min");
 		comboBox_minutes.addItem("30 min");
 		comboBox_minutes.addItem("45 min");
 		frame.getContentPane().add(comboBox_minutes);
 
+		lblCast = new JLabel("Cast");
+		lblCast.setBounds(168, 288, 87, 35);
+		lblCast.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
+		frame.getContentPane().add(lblCast);
+
+		textField_Cast = new JTextField();
+		textField_Cast.setBounds(228, 288, 270, 28);
+		textField_Cast.setDocument(new JTextFieldLimit(10));
+		frame.getContentPane().add(textField_Cast);
+
 		btnDelete = new JButton("Delete Movie");
 		btnDelete.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
-		btnDelete.setBounds(10, 306, 122, 23);
+		btnDelete.setBounds(10, 358, 122, 23);
 		btnDelete.addActionListener(new DeleteAction());
 		frame.getContentPane().add(btnDelete);
 
 		btnSubmit = new JButton("Submit");
 		btnSubmit.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
-		btnSubmit.setBounds(299, 306, 87, 23);
+		btnSubmit.setBounds(299, 358, 87, 23);
 		btnDelete.addActionListener(new SubmitAction());
 		frame.getContentPane().add(btnSubmit);
 
 		btnReset = new JButton("Reset");
 		btnReset.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
-		btnReset.setBounds(411, 306, 87, 23);
+		btnReset.setBounds(411, 358, 87, 23);
 		btnDelete.addActionListener(new ResetAction());
 		frame.getContentPane().add(btnReset);
 

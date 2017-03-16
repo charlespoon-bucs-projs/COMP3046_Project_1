@@ -51,7 +51,7 @@ public class forgot_password {
 
 		textField_email = new JTextField();
 		textField_email.setBounds(124, 27, 200, 18);
-		textField_email.setFont(new Font("ï¿½sï¿½Ó©ï¿½ï¿½ï¿½", Font.PLAIN, 18));
+		textField_email.setFont(new Font("·s²Ó©úÅé", Font.PLAIN, 18));
 		frame.getContentPane().add(textField_email);
 		textField_email.setColumns(30);
 

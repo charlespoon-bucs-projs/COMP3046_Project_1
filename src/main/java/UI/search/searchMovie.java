@@ -131,7 +131,10 @@ public class searchMovie {
 
 	private class SubmitAction implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
-
+			String movie_id = " ";
+			String movie_name = "Name";
+			new searchResult(movie_id, movie_name);
+			frame.dispose();
 		}
 	}
 

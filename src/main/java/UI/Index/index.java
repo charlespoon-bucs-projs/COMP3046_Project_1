@@ -75,7 +75,7 @@ public class index {
 		frame.getContentPane().add(lblId);
 
 		textField_username = new JTextField();
-		textField_username.setFont(new Font("ï¿½sï¿½Ó©ï¿½ï¿½ï¿½", Font.PLAIN, 18));
+		textField_username.setFont(new Font("·s²Ó©úÅé", Font.PLAIN, 18));
 		textField_username.setBounds(165, 78, 135, 21);
 		frame.getContentPane().add(textField_username);
 		textField_username.setColumns(15);
