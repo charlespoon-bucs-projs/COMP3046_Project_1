@@ -2,7 +2,7 @@
 
 Deadline : 19/3/2017 - 11 pm
 
-Present time: Who cares?
+Present time: Group 8 but Who cares?
 
 Topic: Movie Ticketing System
 
