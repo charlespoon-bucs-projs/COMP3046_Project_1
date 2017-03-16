@@ -152,6 +152,8 @@ public class movieSetting {
 		comboBox_Class.setBounds(411, 95, 87, 28);
 		comboBox_Class.addItem("I");
 		comboBox_Class.addItem("II");
+		comboBox_Class.addItem("IIA");
+		comboBox_Class.addItem("IIB");
 		comboBox_Class.addItem("III");
 		frame.getContentPane().add(comboBox_Class);
 

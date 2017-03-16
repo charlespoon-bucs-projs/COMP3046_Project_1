@@ -106,7 +106,7 @@ public class searchMovie {
 		comboBox_Time.addItem("time 3");
 		frame.getContentPane().add(comboBox_Time);
 
-		btnSubmit = new JButton("Submit");
+		btnSubmit = new JButton("Buy Ticket");
 		btnSubmit.setBounds(276, 366, 87, 23);
 		btnSubmit.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
 		frame.getContentPane().add(btnSubmit); //

@@ -68,7 +68,7 @@ public class buyTicket {
 
 		frame.getContentPane().add(tb.topbarLayout(topbar, tb.id, tb.FullName));
 
-		lblNewLabel = new JLabel("Thank you for putchase");
+		lblNewLabel = new JLabel("Thank you for purchase");
 		lblNewLabel.setBounds(122, 50, 280, 40);
 		lblNewLabel.setHorizontalAlignment(JLabel.CENTER);
 		lblNewLabel.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 26));
