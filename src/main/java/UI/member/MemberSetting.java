@@ -222,7 +222,11 @@ public class MemberSetting {
 		btnReset.setBounds(397, 366, 87, 23);
 		btnReset.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
 		frame.getContentPane().add(btnReset); //
-		btnReset.addActionListener(new ResetAction());
+
+		JButton button = new JButton("Delete Member");
+		button.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
+		button.setBounds(27, 367, 122, 23);
+		frame.getContentPane().add(button);
 
 		if (isAdd == false && isStaff == true) { // staff modify mem
 
