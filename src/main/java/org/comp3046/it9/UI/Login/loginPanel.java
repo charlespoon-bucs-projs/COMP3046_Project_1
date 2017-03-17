@@ -1,13 +1,14 @@
 package org.comp3046.it9.UI.Login;
 
+import org.comp3046.it9.Database.CustomerDb;
 import org.comp3046.it9.Database.Sqlite;
 import org.comp3046.it9.Database.StaffDb;
-import org.comp3046.it9.Database.CustomerDb;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.sql.SQLException;
 
