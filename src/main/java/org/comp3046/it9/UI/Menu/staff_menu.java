@@ -12,10 +12,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 
-import UI.MovieAction.movieSetting;
-import UI.TransactionRecord.transactionRecord;
-import UI.Index.index;
-import UI.member.MemberSetting;
+import org.comp3046.it9.UI.MovieAction.movieSetting;
+import org.comp3046.it9.UI.TransactionRecord.transactionRecord;
+import org.comp3046.it9.UI.Index.index;
+import org.comp3046.it9.UI.member.MemberSetting;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -143,7 +143,7 @@ public class staff_menu {
 
 			// check the movie id is true
 
-			new movieSetting(false, movie_id);
+			new movieSetting(false);
 
 			frame.dispose();
 		}

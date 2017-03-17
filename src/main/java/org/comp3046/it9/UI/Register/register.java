@@ -2,7 +2,7 @@ package org.comp3046.it9.UI.Register;
 
 import java.awt.EventQueue;
 import java.awt.Font;
-import UI.Register.*;
+import org.comp3046.it9.UI.Register.*;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;

@@ -49,11 +49,16 @@ public class MovieDb {
                             location
                     )
                     .execute() == 1;
+            // IF need to know new ID, call SQL "SELECT last_insert_rowid()"
         } catch (DataAccessException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
             return false;
         }
+    }
+
+    public boolean createMovie(Movie m) {
+        return this.createMovie(m.getName(), m.getType(), m.getDate(), m.getTypeClass(), m.getLanguage(), m.getLength(), m.getDirector(), m.getCast(), m.getLocation());
     }
 
     public boolean updateMovie(int movieId, String name, String type, Date date,

@@ -46,11 +46,16 @@ public class TransactionsDb {
                             cancelled ? 1 : 0
                     )
                     .execute() == 1;
+            // IF need to know new ID, call SQL "SELECT last_insert_rowid()"
         } catch (DataAccessException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
             return false;
         }
+    }
+
+    public boolean createTransaction(Transaction t) {
+        return this.createTransaction(t.getStaffId(), t.getCustomerId(), t.getMovieId(), t.getSeat(), t.getTotal(), t.getNumberOfTickets(), t.isCancelled());
     }
 
     public boolean updateTransaction(int tid,

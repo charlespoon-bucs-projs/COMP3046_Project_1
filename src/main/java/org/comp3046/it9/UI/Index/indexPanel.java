@@ -8,7 +8,7 @@ import javax.swing.JButton;
 
 import javax.swing.JPanel;
 
-import UI.Login.loginFrame;
+import org.comp3046.it9.UI.Login.loginFrame;
 
 public class indexPanel extends JPanel{
 	private JPanel loginPanel,controlPanel;

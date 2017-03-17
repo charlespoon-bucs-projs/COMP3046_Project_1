@@ -12,9 +12,9 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.UIManager;
 
-import UI.Menu.member_menu;
-import UI.Menu.topbar;
-import UI.buyTicket.buyTicket;
+import org.comp3046.it9.UI.Menu.member_menu;
+import org.comp3046.it9.UI.Menu.topbar;
+import org.comp3046.it9.UI.buyTicket.buyTicket;
 
 import java.awt.Color;
 import java.awt.Component;

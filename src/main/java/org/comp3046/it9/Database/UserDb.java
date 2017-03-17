@@ -53,12 +53,18 @@ public class UserDb {
                             Utils.Convert.dateToString(birthday),
                             mobile,
                             email)
+                    .returning(CUSTOMER.UID)
                     .execute() == 1;
+            // IF need to know new ID, call SQL "SELECT last_insert_rowid()"
         } catch (DataAccessException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
             return false;
         }
+    }
+
+    public boolean createCustomer(Customer c) {
+        return this.createCustomer(c.getUsername(), c.getEmail(), c.getSalutation(), c.getName(), c.getBirthday(), c.getMobile(), c.getEmail());
     }
 
     public boolean updateCustomer(int uid, String username, String password,

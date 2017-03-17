@@ -1,4 +1,4 @@
-﻿package org.comp3046.it9.Database;
+package org.comp3046.it9.Database;
 
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;

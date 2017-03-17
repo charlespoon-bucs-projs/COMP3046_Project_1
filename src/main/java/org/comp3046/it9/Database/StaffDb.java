@@ -32,11 +32,16 @@ public class StaffDb {
                             password
                     )
                     .execute() == 1;
+            // IF need to know new ID, call SQL "SELECT last_insert_rowid()"
         } catch (DataAccessException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
             return false;
         }
+    }
+
+    public boolean createStaff(Staff staff) {
+        return this.createStaff(staff.getName(), staff.getUsername(), staff.getPassword());
     }
 
     public boolean updateStaff(int staffId, String name, String username, String password) {

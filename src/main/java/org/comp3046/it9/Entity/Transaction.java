@@ -38,7 +38,7 @@ public class Transaction {
         return movieId;
     }
 
-    public String getStringeat() {
+    public String getSeat() {
         return stringeat;
     }
 

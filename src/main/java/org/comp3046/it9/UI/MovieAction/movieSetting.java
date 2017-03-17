@@ -7,8 +7,8 @@ import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.Properties;
 
-import UI.Menu.*;
-import UI.Register.JTextFieldLimit;
+import org.comp3046.it9.UI.Menu.*;
+import org.comp3046.it9.UI.Register.JTextFieldLimit;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
