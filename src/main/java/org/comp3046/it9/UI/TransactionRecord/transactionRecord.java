@@ -1,5 +1,7 @@
 package org.comp3046.it9.UI.TransactionRecord;
 
+import org.comp3046.it9.Database.Sqlite;
+import org.comp3046.it9.Database.TransactionsDb;
 import org.comp3046.it9.Entity.Customer;
 import org.comp3046.it9.Entity.Staff;
 import org.comp3046.it9.UI.Menu.member_menu;
@@ -12,6 +14,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.sql.SQLException;
 
 public class transactionRecord {
     private Customer customer = null;
@@ -99,17 +103,12 @@ public class transactionRecord {
         btnSearch.addActionListener(new SearchAction());
         frame.getContentPane().add(btnSearch);
 
-        DefaultTableModel model = new DefaultTableModel();
-
         MovieTable = new JTable();
         MovieTable.setBounds(0, 0, 478, 233);
 
-        model.addColumn("Movie Name");
-        model.addColumn("Start Time");
-        model.addColumn("Language");
-        model.addColumn("Length");
-        MovieTable.setModel(model);
+        DefaultTableModel model = defaultTableModel();
         model.addRow(new Object[]{"123", "11:15 pm", "Chinese", "183 mins"});
+        MovieTable.setModel(model);
 
         JScrollPane scrollPane = new JScrollPane(MovieTable);
         scrollPane.setBounds(10, 102, 488, 233);
@@ -131,7 +130,18 @@ public class transactionRecord {
 
     private class SearchAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-
+            // TODO: search TRANSACTIONS
         }
+    }
+
+    private DefaultTableModel defaultTableModel() {
+        DefaultTableModel model = new DefaultTableModel();
+
+        model.addColumn("Movie Name");
+        model.addColumn("Start Time");
+        model.addColumn("Language");
+        model.addColumn("Length");
+
+        return model;
     }
 }

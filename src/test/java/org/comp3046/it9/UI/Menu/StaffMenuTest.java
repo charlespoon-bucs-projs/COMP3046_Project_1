@@ -17,7 +17,7 @@ public class StaffMenuTest {
         EventQueue.invokeLater(() -> {
             try {
                 staff_menu staff_menu = new staff_menu(STAFF);
-                staff_menu.frame.setVisible(true);
+//                staff_menu.frame.setVisible(true);
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -3,6 +3,7 @@ package org.comp3046.it9.UI.Menu;
 import org.comp3046.it9.Database.CustomerDb;
 import org.comp3046.it9.Database.Sqlite;
 import org.comp3046.it9.Entity.Customer;
+import org.comp3046.it9.Entity.Movie;
 import org.comp3046.it9.Entity.Staff;
 import org.comp3046.it9.UI.Index.index;
 import org.comp3046.it9.UI.MovieAction.movieSetting;
@@ -21,7 +22,7 @@ public class staff_menu {
 
     JLabel lblLoginer;
     topbar tb;
-    JFrame frame;
+    private JFrame frame;
     private JSeparator separator;
     private JButton btnAddMember, btnAddMovie, btnModifyMember, btnModifyMovie, btnTransactionRecord;
     private JButton btnLogout;
@@ -107,14 +108,14 @@ public class staff_menu {
 
     private class AddMemberAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            new MemberSetting(true, staff);
+            new MemberSetting(staff);
             frame.setVisible(false);
         }
     }
 
     private class AddMovieAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            new movieSetting(true, staff);
+            new movieSetting(staff);
             frame.dispose();
         }
     }
@@ -126,7 +127,7 @@ public class staff_menu {
 
             Customer fetchCustomer;
             try (Sqlite sqlite = new Sqlite()) {
-                int mid = Integer.parseInt(member_id);
+                int mid = Integer.parseInt(member_id, 10);
 
                 CustomerDb customerDb = new CustomerDb(sqlite);
 
@@ -145,7 +146,7 @@ public class staff_menu {
 
             // check the member id is true
 
-            new MemberSetting(false, staff, fetchCustomer);
+            new MemberSetting(staff, fetchCustomer);
 
             frame.setVisible(false);
 
@@ -157,9 +158,15 @@ public class staff_menu {
 
             // check the movie id is true
 
-            new movieSetting(false, staff);
+            throw new UnsupportedOperationException("not implemented");
 
-            frame.dispose();
+            // TODO: how to get movie object?
+
+//            Movie movieToEdit = null;
+//
+//            new movieSetting(staff, movieToEdit);
+//
+//            frame.dispose();
         }
     }
 

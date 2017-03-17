@@ -1,6 +1,9 @@
 package org.comp3046.it9.UI.MovieAction;
 
+import org.comp3046.it9.Database.MovieDb;
+import org.comp3046.it9.Database.Sqlite;
 import org.comp3046.it9.Entity.Customer;
+import org.comp3046.it9.Entity.Movie;
 import org.comp3046.it9.Entity.Staff;
 import org.comp3046.it9.UI.Menu.staff_menu;
 import org.comp3046.it9.UI.Menu.topbar;
@@ -15,15 +18,19 @@ import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Properties;
 
 public class movieSetting {
-    private Staff staff = null;
-    private Customer customer = null;
+    private Staff staff;
+    private Movie movie = null;
+//    private Customer customer = null;
 
     topbar tb;
-    boolean isAdd;
+//    boolean isAdd;
     MaskFormatter mf1;
     UtilDateModel model;
     private JFrame frame;
@@ -37,18 +44,28 @@ public class movieSetting {
             comboBox_minutes, comboBox_ID;
     private JLabel lblId;
 
-    public movieSetting(boolean isAdd, Staff staff) {
+    private JDatePickerImpl datePicker;
+
+    public movieSetting(Staff staff) {
         this.staff = staff;
-        _ctor(isAdd);
+        _ctor();
     }
 
+    public movieSetting(Staff staff, Movie movie) {
+        this.staff = staff;
+        this.movie = movie;
+        _ctor();
+    }
+
+    /*
     public movieSetting(boolean isAdd, Customer customer) {
         this.customer = customer;
         _ctor(isAdd);
     }
+    */
 
-    private void _ctor(boolean isAdd) {
-        this.isAdd = isAdd;
+    private void _ctor() {
+//        this.isAdd = isAdd;
         initialize();
         tb.clock();
     }
@@ -130,7 +147,7 @@ public class movieSetting {
         p.put("text.year", "Year");
         JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
         // Don't know about the formatter, but there it is...
-        JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateComponentFormatter());
+        datePicker = new JDatePickerImpl(datePanel, new DateComponentFormatter());
 
         datePicker.setBounds(212, 149, 138, 28);
         datePicker.addActionListener(new CheckDateAction());
@@ -305,7 +322,7 @@ public class movieSetting {
         lblId.setBounds(168, 85, 62, 35);
         frame.getContentPane().add(lblId);
 
-        if (isAdd) // check the staff want to add or modify
+        if (movie == null) // check the staff want to add or modify
             frame.setTitle("XXX Cinema - Add New Movie");
         else {
             frame.setTitle("XXX Cinema - Modify Movie");
@@ -326,19 +343,66 @@ public class movieSetting {
 
     private class DeleteAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-
+            // TODO: assume you have Movie entity
         }
     }
 
     private class SubmitAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
+            String name = textField_MovieName.getText();
+            Date date = (Date) datePicker.getModel().getValue();
+            String typeClass = (String) comboBox_Class.getSelectedItem();
+            String language = (String) comboBox_Lang.getSelectedItem();
+            String type = (String) comboBox_Type.getSelectedItem();
+            String director = textField_Director.getText();
+            String location = (String) comboBox_House.getSelectedItem();
+            // TODO: time field on database?
+            String cast = textField_Cast.getText();
+            int movieId;
+            int length;
+            int price;
+            try {
+                movieId = Integer.parseInt((String) comboBox_ID.getSelectedItem());
+                length = Integer.parseInt(textField_Leng.getText());
+                price = Integer.parseInt(textField_Price.getText());
+            } catch (NumberFormatException ignored) {
+                JOptionPane.showMessageDialog(null, "Not a number.", "Movie setting", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
 
+            boolean isAdd = movie == null;
+
+            try (Sqlite sqlite = new Sqlite()) {
+                MovieDb movieDb = new MovieDb(sqlite);
+
+                boolean dbOk = false;
+
+                if (isAdd) {
+                    dbOk = movieDb.createMovie(name, type, date, typeClass, language, length, director, cast, location);
+                } else {
+                    dbOk = movieDb.updateMovie(movie.getId(), name, type, date, typeClass, language, length, director, cast, location);
+                }
+
+                if (!dbOk) {
+                    JOptionPane.showMessageDialog(null, "Failed to modify data on database, unknown reason.", "Movie Settings", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                JOptionPane.showMessageDialog(null, "Successful to " + (isAdd ? "add" : ("modify movie " + movie.getId())) + " data.", "Movie Settings", JOptionPane.INFORMATION_MESSAGE);
+
+                // back
+                btnBack.doClick();
+            } catch (SQLException | IOException e) {
+                JOptionPane.showMessageDialog(null, "Error: \r\n\r\n" + e.getMessage() , "Modify member", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+                return;
+            }
         }
     }
 
     private class ResetAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-
+            // TODO: reset movie setting
         }
     }
 

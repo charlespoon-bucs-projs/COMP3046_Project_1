@@ -246,7 +246,7 @@ public class register {
             String salutn = (String) comboBox_Salutation.getSelectedItem();
             String name = textField_FullName.getText();
             Date bday = (Date) datePicker.getModel().getValue();
-            int mob = Integer.parseInt(textField_Mobile_Number.getText());
+            int mob = Integer.parseInt(textField_Mobile_Number.getText(), 10);
             String email = textField_Email.getText();
 
             // check

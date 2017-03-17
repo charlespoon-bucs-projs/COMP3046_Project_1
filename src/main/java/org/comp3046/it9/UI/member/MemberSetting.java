@@ -1,5 +1,7 @@
 package org.comp3046.it9.UI.member;
 
+import org.comp3046.it9.Database.CustomerDb;
+import org.comp3046.it9.Database.Sqlite;
 import org.comp3046.it9.Entity.Customer;
 import org.comp3046.it9.Entity.Staff;
 import org.comp3046.it9.UI.Menu.member_menu;
@@ -16,7 +18,11 @@ import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Properties;
 
 public class MemberSetting {
@@ -52,21 +58,19 @@ public class MemberSetting {
         tp.clock();
     }
 
-    public MemberSetting(boolean isAdd, Staff staff) { // for add new member
-        this.isAdd = isAdd;
+    public MemberSetting(Staff staff) { // for add new member
         this.staff = staff;
 
         initialize();
         tp.clock();
     }
 
-    public MemberSetting(boolean isAdd, Staff staff, Customer customer) { // for
+    public MemberSetting(Staff staff, Customer customer) { // for
         // add
         // new
         // member
         // this.isModifiedMember_id = isModifiedMember_id;
         this.customer = customer;
-        this.isAdd = isAdd;
         this.staff = staff;
 
         initialize();
@@ -284,13 +288,75 @@ public class MemberSetting {
 
     private class ResetAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-
+            // reset all fields
+            textField_FullName.setText("");
+            comboBox_Salutation.setSelectedIndex(0);
+            textField_Username.setText("");
+            textField_Password.setText("");
+            textField_Mobile_Number.setText("");
+            textField_Email.setText("");
+            // TODO: how to reset date of birth?
         }
     }
 
     private class SubmitAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
+            String fullName = textField_FullName.getText();
+            String salutation = (String) comboBox_Salutation.getSelectedItem();
+            String username = textField_Username.getText();
+            String password = textField_Password.getText();
+            int mobile = Integer.parseInt(textField_Mobile_Number.getText(), 10);
+            Date dateOfBorn = (Date) datePicker.getModel().getValue();
+            String email = textField_Email.getText();
 
+            boolean isAdd = customer == null;
+
+            try (Sqlite sqlite = new Sqlite()) {
+                CustomerDb customerDb = new CustomerDb(sqlite);
+
+                boolean dbOk = false;
+
+                if (isAdd) {
+                    dbOk = customerDb.createCustomer(
+                            username,
+                            password,
+                            salutation,
+                            fullName,
+                            dateOfBorn,
+                            mobile,
+                            email
+                    );
+                } else {
+                    dbOk = customerDb.updateCustomer(
+                            customer.getUid(),
+                            username,
+                            password,
+                            salutation,
+                            fullName,
+                            dateOfBorn,
+                            mobile,
+                            email
+                    );
+                }
+
+                if (!dbOk) {
+                    JOptionPane.showMessageDialog(null, "Failed to modify data on database, unknown reason.", "Member Settings", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                JOptionPane.showMessageDialog(null, "Successful to " + (isAdd ? "add" : ("modify user " + customer.getUid())) + " data.", "Member Settings", JOptionPane.INFORMATION_MESSAGE);
+
+                // back
+                btnBack.doClick();
+
+            } catch (SQLException | IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Error: \r\n\r\n" + e.getMessage(),
+                        "Error setting member details",
+                        JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
