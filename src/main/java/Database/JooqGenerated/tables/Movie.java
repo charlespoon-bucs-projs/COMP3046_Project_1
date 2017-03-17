@@ -29,7 +29,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Movie extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1149926513;
+    private static final long serialVersionUID = -969219232;
 
     /**
      * The reference instance of <code>Movie</code>
@@ -93,6 +93,11 @@ public class Movie extends TableImpl<Record> {
      * The column <code>Movie.Movie_location</code>.
      */
     public final TableField<Record, String> MOVIE_LOCATION = createField("Movie_location", org.jooq.impl.SQLDataType.CLOB.nullable(false), this, "");
+
+    /**
+     * The column <code>Movie.Movie_price</code>.
+     */
+    public final TableField<Record, Integer> MOVIE_PRICE = createField("Movie_price", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * Create a <code>Movie</code> table reference

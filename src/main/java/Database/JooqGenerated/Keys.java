@@ -72,6 +72,6 @@ public class Keys {
 
     private static class ForeignKeys0 extends AbstractKeys {
         public static final ForeignKey<Record, Record> FK_TRANSACTIONS_STAFF_1 = createForeignKey(Database.JooqGenerated.Keys.PK_STAFF, Transactions.TRANSACTIONS, "fk_Transactions_Staff_1", Transactions.TRANSACTIONS.STAFFID);
-        public static final ForeignKey<Record, Record> FK_TRANSACTIONS_CUSTOMER_1 = createForeignKey(Database.JooqGenerated.Keys.PK_CUSTOMER, Transactions.TRANSACTIONS, "fk_Transactions_Customer_1", Transactions.TRANSACTIONS.MEMBERID);
+        public static final ForeignKey<Record, Record> FK_TRANSACTIONS_CUSTOMER_1 = createForeignKey(Database.JooqGenerated.Keys.PK_CUSTOMER, Transactions.TRANSACTIONS, "fk_Transactions_Customer_1", Transactions.TRANSACTIONS.CUSTOMERID);
     }
 }

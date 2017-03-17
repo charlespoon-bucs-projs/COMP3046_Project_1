@@ -14,10 +14,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 
-import TransactionRecord.transactionRecord;
-import index.index;
-import member.MemberSetting;
-import search.searchMovie;
+import UI.TransactionRecord.transactionRecord;
+import UI.Index.index;
+import UI.member.MemberSetting;
+import UI.search.searchMovie;
 
 public class member_menu {
 

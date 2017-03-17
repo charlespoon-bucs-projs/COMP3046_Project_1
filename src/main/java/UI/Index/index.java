@@ -14,10 +14,10 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JTextField;
 
-import ForgotPassword.forgot_password;
-import Menu.member_menu;
-import Menu.staff_menu;
-import Register.register;
+import UI.ForgotPassword.forgot_password;
+import UI.Menu.member_menu;
+import UI.Menu.staff_menu;
+import UI.Register.register;
 
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
@@ -75,7 +75,7 @@ public class index {
 		frame.getContentPane().add(lblId);
 
 		textField_username = new JTextField();
-		textField_username.setFont(new Font("·s²Ó©úÅé", Font.PLAIN, 18));
+		textField_username.setFont(new Font("ï¿½sï¿½Ó©ï¿½ï¿½ï¿½", Font.PLAIN, 18));
 		textField_username.setBounds(165, 78, 135, 21);
 		frame.getContentPane().add(textField_username);
 		textField_username.setColumns(15);

@@ -11,9 +11,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 
-import Menu.member_menu;
-import Menu.topbar;
-import search.searchMovie;
+import UI.Menu.member_menu;
+import UI.Menu.topbar;
+import UI.search.searchMovie;
 
 public class buyTicket {
 

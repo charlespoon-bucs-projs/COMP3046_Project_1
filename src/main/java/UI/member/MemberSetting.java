@@ -21,10 +21,10 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
-import Menu.member_menu;
-import Menu.staff_menu;
-import Menu.topbar;
-import Register.JTextFieldLimit;
+import UI.Menu.member_menu;
+import UI.Menu.staff_menu;
+import UI.Menu.topbar;
+import UI.Register.JTextFieldLimit;
 import javax.swing.JRadioButton;
 
 public class MemberSetting {

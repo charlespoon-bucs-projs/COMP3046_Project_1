@@ -2,7 +2,7 @@ package UI.Register;
 
 import java.awt.EventQueue;
 import java.awt.Font;
-import Register.*;
+import UI.Register.*;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;

@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Transactions extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -655909740;
+    private static final long serialVersionUID = 2069220631;
 
     /**
      * The reference instance of <code>Transactions</code>
@@ -62,14 +62,29 @@ public class Transactions extends TableImpl<Record> {
     public final TableField<Record, Integer> STAFFID = createField("StaffId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>Transactions.MemberId</code>.
+     * The column <code>Transactions.CustomerId</code>.
      */
-    public final TableField<Record, Integer> MEMBERID = createField("MemberId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<Record, Integer> CUSTOMERID = createField("CustomerId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>Transactions.MovieId</code>.
      */
     public final TableField<Record, Integer> MOVIEID = createField("MovieId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+    /**
+     * The column <code>Transactions.Seat</code>.
+     */
+    public final TableField<Record, String> SEAT = createField("Seat", org.jooq.impl.SQLDataType.CLOB.nullable(false), this, "");
+
+    /**
+     * The column <code>Transactions.Total</code>.
+     */
+    public final TableField<Record, Integer> TOTAL = createField("Total", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+    /**
+     * The column <code>Transactions.NumberOfTickets</code>.
+     */
+    public final TableField<Record, Integer> NUMBEROFTICKETS = createField("NumberOfTickets", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * Create a <code>Transactions</code> table reference

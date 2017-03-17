@@ -13,9 +13,9 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 
-import Menu.member_menu;
-import Menu.topbar;
-import Register.JTextFieldLimit;
+import UI.Menu.member_menu;
+import UI.Menu.topbar;
+import UI.Register.JTextFieldLimit;
 
 public class searchMovie {
 

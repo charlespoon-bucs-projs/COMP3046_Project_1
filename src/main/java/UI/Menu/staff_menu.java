@@ -12,10 +12,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 
-import MovieAction.movieSetting;
-import TransactionRecord.transactionRecord;
-import index.index;
-import member.MemberSetting;
+import UI.MovieAction.movieSetting;
+import UI.TransactionRecord.transactionRecord;
+import UI.Index.index;
+import UI.member.MemberSetting;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;

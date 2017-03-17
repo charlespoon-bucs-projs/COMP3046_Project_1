@@ -172,4 +172,18 @@ public class User {
                 Utils.Convert.stringToDate(fetchSingle.get(CUSTOMER.BIRTHDAY), null)
         );
     }
+
+    public boolean removeCustomer(int uid) {
+        DSLContext dsl = this.sqlite.getDsl();
+
+        try {
+            return dsl.delete(CUSTOMER)
+                    .where(CUSTOMER.UID.equal(uid))
+                    .execute() == 1;
+        } catch (DataAccessException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

@@ -14,10 +14,10 @@ import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import Menu.member_menu;
-import Menu.staff_menu;
-import Menu.topbar;
-import Register.JTextFieldLimit;
+import UI.Menu.member_menu;
+import UI.Menu.staff_menu;
+import UI.Menu.topbar;
+import UI.Register.JTextFieldLimit;
 import javax.swing.JTable;
 import javax.swing.JMenu;
 
