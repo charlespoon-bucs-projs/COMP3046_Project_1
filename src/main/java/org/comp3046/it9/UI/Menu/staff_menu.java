@@ -1,4 +1,4 @@
-package org.comp3046.it9.UI.Menu;
+package UI.Menu;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -12,10 +12,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 
-import UI.MovieAction.movieSetting;
-import UI.TransactionRecord.transactionRecord;
-import UI.Index.index;
-import UI.member.MemberSetting;
+import MovieAction.movieSetting;
+import TransactionRecord.transactionRecord;
+import index.index;
+import member.MemberSetting;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -139,11 +139,10 @@ public class staff_menu {
 
 	private class ModifyMovieAction implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
-			String movie_id = JOptionPane.showInputDialog(frame, "Enter the Movie ID");
 
 			// check the movie id is true
 
-			new movieSetting(false, movie_id);
+			new movieSetting(false);
 
 			frame.dispose();
 		}
