@@ -139,7 +139,6 @@ public class staff_menu {
 
 	private class ModifyMovieAction implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
-			String movie_id = JOptionPane.showInputDialog(frame, "Enter the Movie ID");
 
 			// check the movie id is true
 
