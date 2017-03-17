@@ -1,5 +1,6 @@
 package org.comp3046.it9.Database;
 
+import org.comp3046.it9.Entity.Customer;
 import org.jooq.DSLContext;
 import org.jooq.Record1;
 import org.jooq.Record7;
@@ -12,14 +13,12 @@ import java.util.Date;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.comp3046.it9.Entity.Customer;
-
 import static org.comp3046.it9.Database.JooqGenerated.tables.Customer.CUSTOMER;
 
-public class UserDb {
+public class CustomerDb {
     private Sqlite sqlite;
 
-    public UserDb(Sqlite sqlite) {
+    public CustomerDb(Sqlite sqlite) {
         this.sqlite = sqlite;
     }
 
@@ -33,8 +32,13 @@ public class UserDb {
         return fetch.size() == 1;
     }
 
-    public boolean createCustomer(String username, String password,
-                                  String salutation, String name, Date birthday, int mobile, String email) {
+    public boolean createCustomer(String username,
+                                  String password,
+                                  String salutation,
+                                  String name,
+                                  Date birthday,
+                                  int mobile,
+                                  String email) {
         DSLContext dsl = this.sqlite.getDsl();
 
         try {
@@ -89,6 +93,37 @@ public class UserDb {
         }
     }
 
+    @Deprecated
+    public String forgetPasswordCheckEmail(String email) throws UnsupportedOperationException {
+        // DON'T DO THIS ON PRODUCTION!!!
+
+        DSLContext dsl = this.sqlite.getDsl();
+
+        Result<Record1<Integer>> fetchUid = dsl.select(CUSTOMER.UID)
+                .from(CUSTOMER)
+                .where(CUSTOMER.EMAIL.equal(email))
+                .fetch();
+
+        boolean canChangePassword = fetchUid.size() == 1;
+
+        if (!canChangePassword)
+            throw new UnsupportedOperationException();
+
+        int changingUid = fetchUid.get(0).value1();
+
+        String newPassword = new BigInteger(130, new SecureRandom()).toString(32);
+
+        int affect = dsl.update(CUSTOMER)
+                .set(CUSTOMER.PASSWORD, newPassword)
+                .where(CUSTOMER.UID.equal(changingUid))
+//                .and(CUSTOMER.EMAIL.equal(email))
+                .execute();
+
+        if (affect != 1)
+            return null;
+        return newPassword;
+    }
+
     public String forgetPasswordCheckMobileBirthday(String username, int mobile, Date birthday) throws UnsupportedOperationException {
         DSLContext dsl = this.sqlite.getDsl();
 
@@ -104,13 +139,13 @@ public class UserDb {
         if (!canChangePassword)
             throw new UnsupportedOperationException();
 
-        int chaingingUid = fetchUid.get(0).value1();
+        int changingUid = fetchUid.get(0).value1();
 
         String newPassword = new BigInteger(130, new SecureRandom()).toString(32);
 
         int affect = dsl.update(CUSTOMER)
                 .set(CUSTOMER.PASSWORD, newPassword)
-                .where(CUSTOMER.UID.equal(chaingingUid))
+                .where(CUSTOMER.UID.equal(changingUid))
 //                .and(CUSTOMER.USERNAME.equal(username))
 //                .and(CUSTOMER.MOBILE.equal(mobile))
 //                .and(CUSTOMER.BIRTHDAY.equal(strBirthday))

@@ -8,21 +8,20 @@ import org.junit.Test;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
-public class UserDbTest {
+public class CustomerDbTest {
     private Sqlite sqlite;
-    private UserDb userDb;
+    private CustomerDb customerDb;
 
     @Before
     public void setup() throws SQLException {
         this.sqlite = new Sqlite();
-        this.userDb = new UserDb(this.sqlite);
+        this.customerDb = new CustomerDb(this.sqlite);
     }
 
     @Test
     public void testCreateCustomer() throws ParseException {
-        boolean ret = this.userDb.createCustomer(
+        boolean ret = this.customerDb.createCustomer(
                 "testUsername",
                 "testPassword",
                 "Mr",

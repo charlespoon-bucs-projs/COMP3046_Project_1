@@ -11,10 +11,12 @@ public class Utils {
         public static String dateToString(Date value) {
             return dateFormat.format(value);
         }
+
         public static Date stringToDate(String value) throws ParseException {
             return dateFormat.parse(value);
         }
-        public static Date stringToDate(String value, Object ignoreException){
+
+        public static Date stringToDate(String value, Object ignoreException) {
             try {
                 return dateFormat.parse(value);
             } catch (ParseException ignored) {

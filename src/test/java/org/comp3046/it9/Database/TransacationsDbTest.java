@@ -1,8 +1,8 @@
 package org.comp3046.it9.Database;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.After;
 
 public class TransacationsDbTest {
     Sqlite sqlite;

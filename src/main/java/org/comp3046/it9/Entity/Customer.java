@@ -11,6 +11,22 @@ public class Customer {
     private final String email;
     private final Date birthday;
 
+    public Customer(final int uid,
+                    final String name,
+                    final String salutation,
+                    final String username,
+                    final int mobile,
+                    final String email,
+                    final Date birthday) {
+        this.uid = uid;
+        this.name = name;
+        this.salutation = salutation;
+        this.username = username;
+        this.mobile = mobile;
+        this.email = email;
+        this.birthday = birthday;
+    }
+
     public int getUid() {
         return uid;
     }
@@ -37,21 +53,5 @@ public class Customer {
 
     public Date getBirthday() {
         return birthday;
-    }
-
-    public Customer(final int uid,
-                    final String name,
-                    final String salutation,
-                    final String username,
-                    final int mobile,
-                    final String email,
-                    final Date birthday) {
-        this.uid = uid;
-        this.name = name;
-        this.salutation = salutation;
-        this.username = username;
-        this.mobile = mobile;
-        this.email = email;
-        this.birthday = birthday;
     }
 }

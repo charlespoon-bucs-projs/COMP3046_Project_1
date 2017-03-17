@@ -1,17 +1,16 @@
 package org.comp3046.it9.Database;
 
+import org.comp3046.it9.Entity.Movie;
 import org.jooq.DSLContext;
 import org.jooq.Record11;
 import org.jooq.Result;
 import org.jooq.exception.DataAccessException;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.comp3046.it9.Database.JooqGenerated.tables.Movie.MOVIE;
-import org.comp3046.it9.Entity.Movie;
 
 public class MovieDb {
     private Sqlite sqlite;

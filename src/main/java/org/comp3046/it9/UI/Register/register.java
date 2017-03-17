@@ -1,275 +1,311 @@
 package org.comp3046.it9.UI.Register;
 
-import java.awt.EventQueue;
-import java.awt.Font;
-import org.comp3046.it9.UI.Register.*;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import java.awt.BorderLayout;
-import javax.swing.JTextField;
-import javax.swing.text.MaskFormatter;
-
+import org.comp3046.it9.Database.Sqlite;
+import org.comp3046.it9.Database.CustomerDb;
 import org.jdatepicker.impl.DateComponentFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.text.NumberFormat;
+import javax.swing.*;
+import javax.swing.text.MaskFormatter;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.text.ParseException;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
 
-import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
-import javax.swing.JButton;
-
 public class register {
 
-	private JFrame frame;
-	private JLabel lblFullName, lblSalutation, lblUsername, lblBirthday, lblMobileNumber, lblEmail, lblConfirm_Email,
-			lblPassword, lblConfirm_Password;
-	private JTextField textField_FullName, textField_Username, textField_Mobile_Number, textField_Email,
-			textField_Confirm_Email, textField_Password, textField_Confirm_Password;
-	private JComboBox comboBox_Salutation;
-	private JButton btnSubmit, btnReset;
-	MaskFormatter mf1;
-	UtilDateModel model;
+    MaskFormatter mf1;
+    UtilDateModel model;
+    private JFrame frame;
+    private JLabel lblFullName, lblSalutation, lblUsername, lblBirthday, lblMobileNumber, lblEmail, lblConfirm_Email,
+            lblPassword, lblConfirm_Password;
+    private JTextField textField_FullName, textField_Username, textField_Mobile_Number, textField_Email,
+            textField_Confirm_Email, textField_Password, textField_Confirm_Password;
+    private JComboBox comboBox_Salutation;
+    private JButton btnSubmit, btnReset;
+    private JDatePickerImpl datePicker;
 
-	/**
-	 * Create the application.
-	 */
-	public register() {
+    /**
+     * Create the application.
+     */
+    public register() {
 
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 447);
-		frame.setTitle("XXX Cinema - Register");
-		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
-		try {
-			mf1 = new MaskFormatter("00000000");
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		initialize();
-	}
+        frame = new JFrame();
+        frame.setBounds(100, 100, 450, 447);
+        frame.setTitle("XXX Cinema - Register");
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        frame.getContentPane().setLayout(null);
+        try {
+            mf1 = new MaskFormatter("00000000");
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        initialize();
+    }
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
+    private static void addPopup(Component component, final JPopupMenu popup) {
+        component.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                if (e.isPopupTrigger()) {
+                    showMenu(e);
+                }
+            }
 
-		lblFullName = new JLabel("*Full Name");
-		lblFullName.setBounds(46, 10, 138, 35);
-		lblFullName.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
-		frame.getContentPane().add(lblFullName);
+            public void mouseReleased(MouseEvent e) {
+                if (e.isPopupTrigger()) {
+                    showMenu(e);
+                }
+            }
 
-		textField_FullName = new JTextField();
-		textField_FullName.setBounds(182, 19, 138, 21);
-		textField_FullName.setDocument(new JTextFieldLimit(15));
-		frame.getContentPane().add(textField_FullName);
-		textField_FullName.setColumns(10);
+            private void showMenu(MouseEvent e) {
+                popup.show(e.getComponent(), e.getX(), e.getY());
+            }
+        });
+    }
 
-		lblSalutation = new JLabel("*Salutation");
-		lblSalutation.setBounds(46, 45, 114, 35);
-		lblSalutation.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
-		frame.getContentPane().add(lblSalutation);
+    /**
+     * Initialize the contents of the frame.
+     */
+    private void initialize() {
 
-		comboBox_Salutation = new JComboBox();
-		comboBox_Salutation.setBounds(250, 54, 70, 21);
-		comboBox_Salutation.addItem("Mr.");
-		comboBox_Salutation.addItem("Ms.");
-		comboBox_Salutation.addItem("Mrs.");
-		frame.getContentPane().add(comboBox_Salutation);
+        lblFullName = new JLabel("*Full Name");
+        lblFullName.setBounds(46, 10, 138, 35);
+        lblFullName.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
+        frame.getContentPane().add(lblFullName);
 
-		lblUsername = new JLabel("*Username");
-		lblUsername.setBounds(46, 80, 114, 35);
-		lblUsername.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
-		frame.getContentPane().add(lblUsername);
+        textField_FullName = new JTextField();
+        textField_FullName.setBounds(182, 19, 138, 21);
+        textField_FullName.setDocument(new JTextFieldLimit(15));
+        frame.getContentPane().add(textField_FullName);
+        textField_FullName.setColumns(10);
 
-		textField_Username = new JTextField();
-		textField_Username.setBounds(182, 89, 138, 21);
-		textField_Username.setDocument(new JTextFieldLimit(15));
-		frame.getContentPane().add(textField_Username);
-		textField_Username.setColumns(15);
+        lblSalutation = new JLabel("*Salutation");
+        lblSalutation.setBounds(46, 45, 114, 35);
+        lblSalutation.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
+        frame.getContentPane().add(lblSalutation);
 
-		lblBirthday = new JLabel("*Birthday");
-		lblBirthday.setBounds(46, 115, 114, 35);
-		lblBirthday.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
-		frame.getContentPane().add(lblBirthday);
+        comboBox_Salutation = new JComboBox();
+        comboBox_Salutation.setBounds(250, 54, 70, 21);
+        comboBox_Salutation.addItem("Mr.");
+        comboBox_Salutation.addItem("Ms.");
+        comboBox_Salutation.addItem("Mrs.");
+        frame.getContentPane().add(comboBox_Salutation);
 
-		model = new UtilDateModel();
+        lblUsername = new JLabel("*Username");
+        lblUsername.setBounds(46, 80, 114, 35);
+        lblUsername.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
+        frame.getContentPane().add(lblUsername);
 
-		// model.setDate(20,04,2014);
-		// Need this...
-		model.setSelected(true);
-		model.setDate(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH),
-				Calendar.getInstance().get(Calendar.DAY_OF_MONTH) - 1);
+        textField_Username = new JTextField();
+        textField_Username.setBounds(182, 89, 138, 21);
+        textField_Username.setDocument(new JTextFieldLimit(15));
+        frame.getContentPane().add(textField_Username);
+        textField_Username.setColumns(15);
 
-		Properties p = new Properties();
-		p.put("text.today", "Today");
-		p.put("text.month", "Month");
-		p.put("text.year", "Year");
-		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
-		// Don't know about the formatter, but there it is...
-		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateComponentFormatter());
-		datePicker.setBounds(182, 119, 138, 28);
-		datePicker.addActionListener(new CheckDateAction());
-		frame.getContentPane().add(datePicker);
+        lblBirthday = new JLabel("*Birthday");
+        lblBirthday.setBounds(46, 115, 114, 35);
+        lblBirthday.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
+        frame.getContentPane().add(lblBirthday);
 
-		lblMobileNumber = new JLabel("*Mobile Number");
-		lblMobileNumber.setBounds(46, 150, 114, 35);
-		lblMobileNumber.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
-		frame.getContentPane().add(lblMobileNumber);
+        model = new UtilDateModel();
 
-		textField_Mobile_Number = new JTextField();
-		textField_Mobile_Number.setBounds(182, 159, 138, 21);
-		frame.getContentPane().add(textField_Mobile_Number);
-		textField_Mobile_Number.setDocument(new JTextFieldLimit(8));
-		textField_Mobile_Number.setColumns(8);
+        // model.setDate(20,04,2014);
+        // Need this...
+        model.setSelected(true);
+        model.setDate(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH),
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH) - 1);
 
-		lblEmail = new JLabel("*Email");
-		lblEmail.setBounds(46, 185, 114, 35);
-		lblEmail.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
-		frame.getContentPane().add(lblEmail);
+        Properties p = new Properties();
+        p.put("text.today", "Today");
+        p.put("text.month", "Month");
+        p.put("text.year", "Year");
+        JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
+        // Don't know about the formatter, but there it is...
+        datePicker = new JDatePickerImpl(datePanel, new DateComponentFormatter());
+        datePicker.setBounds(182, 119, 138, 28);
+        datePicker.addActionListener(new CheckDateAction());
+        frame.getContentPane().add(datePicker);
 
-		textField_Email = new JTextField();
-		textField_Email.setBounds(182, 194, 138, 21);
-		frame.getContentPane().add(textField_Email);
-		textField_Email.setDocument(new JTextFieldLimit(20));
-		textField_Email.setColumns(20);
+        lblMobileNumber = new JLabel("*Mobile Number");
+        lblMobileNumber.setBounds(46, 150, 114, 35);
+        lblMobileNumber.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
+        frame.getContentPane().add(lblMobileNumber);
 
-		lblConfirm_Email = new JLabel("*Confirm");
-		lblConfirm_Email.setBounds(46, 220, 114, 35);
-		lblConfirm_Email.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
-		frame.getContentPane().add(lblConfirm_Email);
+        textField_Mobile_Number = new JTextField();
+        textField_Mobile_Number.setBounds(182, 159, 138, 21);
+        frame.getContentPane().add(textField_Mobile_Number);
+        textField_Mobile_Number.setDocument(new JTextFieldLimit(8));
+        textField_Mobile_Number.setColumns(8);
 
-		textField_Confirm_Email = new JTextField();
-		textField_Confirm_Email.setBounds(182, 229, 138, 21);
-		frame.getContentPane().add(textField_Confirm_Email);
-		textField_Confirm_Email.setDocument(new JTextFieldLimit(20));
-		textField_Confirm_Email.setColumns(20);
+        lblEmail = new JLabel("*Email");
+        lblEmail.setBounds(46, 185, 114, 35);
+        lblEmail.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
+        frame.getContentPane().add(lblEmail);
 
-		lblPassword = new JLabel("*Password");
-		lblPassword.setBounds(46, 255, 114, 35);
-		lblPassword.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
-		frame.getContentPane().add(lblPassword);
+        textField_Email = new JTextField();
+        textField_Email.setBounds(182, 194, 138, 21);
+        frame.getContentPane().add(textField_Email);
+        textField_Email.setDocument(new JTextFieldLimit(20));
+        textField_Email.setColumns(20);
 
-		textField_Password = new JTextField();
-		textField_Password.setBounds(182, 264, 138, 21);
-		frame.getContentPane().add(textField_Password);
-		textField_Password.setDocument(new JTextFieldLimit(20));
-		textField_Password.setColumns(20);
+        lblConfirm_Email = new JLabel("*Confirm");
+        lblConfirm_Email.setBounds(46, 220, 114, 35);
+        lblConfirm_Email.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
+        frame.getContentPane().add(lblConfirm_Email);
 
-		lblConfirm_Password = new JLabel("*Confirm");
-		lblConfirm_Password.setBounds(46, 290, 114, 35);
-		lblConfirm_Password.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
-		frame.getContentPane().add(lblConfirm_Password);
+        textField_Confirm_Email = new JTextField();
+        textField_Confirm_Email.setBounds(182, 229, 138, 21);
+        frame.getContentPane().add(textField_Confirm_Email);
+        textField_Confirm_Email.setDocument(new JTextFieldLimit(20));
+        textField_Confirm_Email.setColumns(20);
 
-		textField_Confirm_Password = new JTextField();
-		textField_Confirm_Password.setBounds(182, 299, 138, 21);
-		frame.getContentPane().add(textField_Confirm_Password);
-		textField_Confirm_Password.setDocument(new JTextFieldLimit(20));
-		textField_Confirm_Password.setColumns(20);
+        lblPassword = new JLabel("*Password");
+        lblPassword.setBounds(46, 255, 114, 35);
+        lblPassword.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
+        frame.getContentPane().add(lblPassword);
 
-		JLabel lblrequiredField = new JLabel("*Required Field");
-		lblrequiredField.setBounds(46, 365, 138, 21);
-		lblrequiredField.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
-		frame.getContentPane().add(lblrequiredField);
+        textField_Password = new JTextField();
+        textField_Password.setBounds(182, 264, 138, 21);
+        frame.getContentPane().add(textField_Password);
+        textField_Password.setDocument(new JTextFieldLimit(20));
+        textField_Password.setColumns(20);
 
-		btnSubmit = new JButton("Submit");
-		btnSubmit.setBounds(186, 366, 87, 23);
-		btnSubmit.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
-		frame.getContentPane().add(btnSubmit);
-		btnSubmit.addActionListener(new SubmitAction());
+        lblConfirm_Password = new JLabel("*Confirm");
+        lblConfirm_Password.setBounds(46, 290, 114, 35);
+        lblConfirm_Password.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
+        frame.getContentPane().add(lblConfirm_Password);
 
-		btnReset = new JButton("Reset");
-		btnReset.setBounds(283, 366, 87, 23);
-		btnReset.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
-		frame.getContentPane().add(btnReset);
-		btnReset.addActionListener(new ResetAction());
+        textField_Confirm_Password = new JTextField();
+        textField_Confirm_Password.setBounds(182, 299, 138, 21);
+        frame.getContentPane().add(textField_Confirm_Password);
+        textField_Confirm_Password.setDocument(new JTextFieldLimit(20));
+        textField_Confirm_Password.setColumns(20);
 
-	}
+        JLabel lblrequiredField = new JLabel("*Required Field");
+        lblrequiredField.setBounds(46, 365, 138, 21);
+        lblrequiredField.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
+        frame.getContentPane().add(lblrequiredField);
 
-	private class CheckDateAction implements ActionListener {
-		public void actionPerformed(ActionEvent event) {
-			if (model.getYear() == Calendar.getInstance().get(Calendar.YEAR)) {
-				if (model.getMonth() == Calendar.getInstance().get(Calendar.MONTH)) {
-					if (model.getDay() >= Calendar.getInstance().get(Calendar.DAY_OF_MONTH) - 1) {
-						model.setDate(Calendar.getInstance().get(Calendar.YEAR),
-								Calendar.getInstance().get(Calendar.MONTH),
-								Calendar.getInstance().get(Calendar.DAY_OF_MONTH) - 1);
+        btnSubmit = new JButton("Submit");
+        btnSubmit.setBounds(186, 366, 87, 23);
+        btnSubmit.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
+        frame.getContentPane().add(btnSubmit);
+        btnSubmit.addActionListener(new SubmitAction());
 
-					}
-				} else {
-					if (model.getMonth() > Calendar.getInstance().get(Calendar.MONTH)) {
-						model.setDate(Calendar.getInstance().get(Calendar.YEAR),
-								Calendar.getInstance().get(Calendar.MONTH),
-								Calendar.getInstance().get(Calendar.DAY_OF_MONTH) - 1);
-					}
+        btnReset = new JButton("Reset");
+        btnReset.setBounds(283, 366, 87, 23);
+        btnReset.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
+        frame.getContentPane().add(btnReset);
+        btnReset.addActionListener(new ResetAction());
 
-				}
+    }
 
-			} else {
-				if (model.getYear() >= Calendar.getInstance().get(Calendar.YEAR)) {
-					model.setDate(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH),
-							Calendar.getInstance().get(Calendar.DAY_OF_MONTH) - 1);
-				}
+    private class CheckDateAction implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            if (model.getYear() == Calendar.getInstance().get(Calendar.YEAR)) {
+                if (model.getMonth() == Calendar.getInstance().get(Calendar.MONTH)) {
+                    if (model.getDay() >= Calendar.getInstance().get(Calendar.DAY_OF_MONTH) - 1) {
+                        model.setDate(Calendar.getInstance().get(Calendar.YEAR),
+                                Calendar.getInstance().get(Calendar.MONTH),
+                                Calendar.getInstance().get(Calendar.DAY_OF_MONTH) - 1);
 
-			}
-		}
-	}
+                    }
+                } else {
+                    if (model.getMonth() > Calendar.getInstance().get(Calendar.MONTH)) {
+                        model.setDate(Calendar.getInstance().get(Calendar.YEAR),
+                                Calendar.getInstance().get(Calendar.MONTH),
+                                Calendar.getInstance().get(Calendar.DAY_OF_MONTH) - 1);
+                    }
 
-	private class SubmitAction implements ActionListener {
-		public void actionPerformed(ActionEvent event) {
-			// todo
-		}
-	}
+                }
 
-	private class ResetAction implements ActionListener {
-		public void actionPerformed(ActionEvent event) {
-			textField_FullName.setText("");
-			comboBox_Salutation.setSelectedIndex(0);
+            } else {
+                if (model.getYear() >= Calendar.getInstance().get(Calendar.YEAR)) {
+                    model.setDate(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH),
+                            Calendar.getInstance().get(Calendar.DAY_OF_MONTH) - 1);
+                }
 
-			textField_Username.setText("");
-			model.setDate(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH),
-					Calendar.getInstance().get(Calendar.DAY_OF_MONTH) - 1);
-			textField_Mobile_Number.setText("");
-			textField_Email.setText("");
-			textField_Confirm_Email.setText("");
-			textField_Password.setText("");
-			textField_Confirm_Password.setText("");
-		}
-	}
+            }
+        }
+    }
 
-	private static void addPopup(Component component, final JPopupMenu popup) {
-		component.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
+    private class SubmitAction implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            // register submit button
 
-			public void mouseReleased(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
+            String uname = textField_Username.getText();
+            String pwd = textField_Password.getText();
+            String salutn = (String) comboBox_Salutation.getSelectedItem();
+            String name = textField_FullName.getText();
+            Date bday = (Date) datePicker.getModel().getValue();
+            int mob = Integer.parseInt(textField_Mobile_Number.getText());
+            String email = textField_Email.getText();
 
-			private void showMenu(MouseEvent e) {
-				popup.show(e.getComponent(), e.getX(), e.getY());
-			}
-		});
-	}
+            // check
+            if (!pwd.equals(textField_Confirm_Password.getText())) {
+                JOptionPane.showMessageDialog(null, "The passwords do not match.", "Passwords not match", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            if (!email.equals(textField_Confirm_Email.getText())) {
+                JOptionPane.showMessageDialog(null, "The e-mails do not match.", "E-mails not match", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // work
+            try (Sqlite sqlite = new Sqlite()) {
+                CustomerDb customerDb = new CustomerDb(sqlite);
+
+                boolean created = customerDb.createCustomer(
+                        uname,
+                        pwd,
+                        salutn,
+                        name,
+                        bday,
+                        mob,
+                        email);
+
+                if (created) {
+                    JOptionPane.showMessageDialog(null, "New account successfully created.", "Create account", JOptionPane.INFORMATION_MESSAGE);
+
+                    // close window
+                    frame.dispatchEvent(
+                            new WindowEvent(frame, WindowEvent.WINDOW_CLOSING)
+                    );
+                } else {
+                    throw new SQLException("returns false, see log");
+                }
+            } catch (SQLException | IOException e) {
+                e.printStackTrace();
+
+                String message = "Error creating account: \r\n";
+                message += e.getMessage();
+                JOptionPane.showMessageDialog(null, message, "Error creating account", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private class ResetAction implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            textField_FullName.setText("");
+            comboBox_Salutation.setSelectedIndex(0);
+
+            textField_Username.setText("");
+            model.setDate(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH),
+                    Calendar.getInstance().get(Calendar.DAY_OF_MONTH) - 1);
+            textField_Mobile_Number.setText("");
+            textField_Email.setText("");
+            textField_Confirm_Email.setText("");
+            textField_Password.setText("");
+            textField_Confirm_Password.setText("");
+        }
+    }
 }

@@ -2,6 +2,7 @@ package org.comp3046.it9.Database;
 
 import org.comp3046.it9.Entity.Staff;
 import org.jooq.DSLContext;
+import org.jooq.Record1;
 import org.jooq.Record4;
 import org.jooq.Result;
 import org.jooq.exception.DataAccessException;
@@ -10,6 +11,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.comp3046.it9.Database.JooqGenerated.Tables.STAFF;
+import static org.comp3046.it9.Database.JooqGenerated.tables.Customer.CUSTOMER;
 
 public class StaffDb {
     private Sqlite sqlite;
@@ -120,5 +122,15 @@ public class StaffDb {
                 fetch1.get(STAFF.USERNAME),
                 fetch1.get(STAFF.PASSWORD)
         );
+    }
+
+    public boolean isUserCredentialsValid(String username, String password) {
+        DSLContext dsl = this.sqlite.getDsl();
+        Result<Record1<Integer>> fetch = dsl.selectOne()
+                .from(STAFF)
+                .where(STAFF.USERNAME.equal(username))
+                .and(STAFF.PASSWORD.equal(password))
+                .fetch();
+        return fetch.size() == 1;
     }
 }
