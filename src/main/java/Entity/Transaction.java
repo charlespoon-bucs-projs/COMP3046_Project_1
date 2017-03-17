@@ -1,6 +1,6 @@
 package Entity;
 
-public class Transactions {
+public class Transaction {
     private final int id;
     private final int staffId;
     private final int customerId;
@@ -8,9 +8,10 @@ public class Transactions {
     private final String stringeat;
     private final int total;
     private final int numberOfTickets;
+    private final boolean cancelled;
 
 
-    public Transactions(int id, int staffId, int memberId, int movieId, String stringeat, int total, int numberOfTickets) {
+    public Transaction(int id, int staffId, int memberId, int movieId, String stringeat, int total, int numberOfTickets, boolean cancelled) {
         this.id = id;
         this.staffId = staffId;
         this.customerId = memberId;
@@ -18,6 +19,7 @@ public class Transactions {
         this.stringeat = stringeat;
         this.total = total;
         this.numberOfTickets = numberOfTickets;
+        this.cancelled = cancelled;
     }
 
     public int getId() {
@@ -46,6 +48,10 @@ public class Transactions {
 
     public int getNumberOfTickets() {
         return numberOfTickets;
+    }
+
+    public boolean isCancelled() {
+        return cancelled;
     }
 
     public Staff getStaff() {

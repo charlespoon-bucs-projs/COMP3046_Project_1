@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Transactions extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 2069220631;
+    private static final long serialVersionUID = 347672074;
 
     /**
      * The reference instance of <code>Transactions</code>
@@ -85,6 +85,11 @@ public class Transactions extends TableImpl<Record> {
      * The column <code>Transactions.NumberOfTickets</code>.
      */
     public final TableField<Record, Integer> NUMBEROFTICKETS = createField("NumberOfTickets", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+    /**
+     * The column <code>Transactions.IsCancelled</code>.
+     */
+    public final TableField<Record, Integer> ISCANCELLED = createField("IsCancelled", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * Create a <code>Transactions</code> table reference
