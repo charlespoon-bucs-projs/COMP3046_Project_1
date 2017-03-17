@@ -38,6 +38,11 @@ public class member_menu {
         tp.clock();
     }
 
+    public member_menu(String id, String fullName) {
+        //TO-DO payMethod, buyTicket
+    }
+
+
     /**
      * Initialize the contents of the frame.
      */

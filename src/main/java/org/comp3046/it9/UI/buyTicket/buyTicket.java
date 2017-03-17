@@ -1,19 +1,12 @@
-package buyTicket;
+package org.comp3046.it9.UI.buyTicket;
 
-import java.awt.EventQueue;
-import java.awt.Font;
+import org.comp3046.it9.UI.Menu.member_menu;
+import org.comp3046.it9.UI.Menu.topbar;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
-
-import Menu.member_menu;
-import Menu.topbar;
-import search.searchMovie;
 
 public class buyTicket {
 

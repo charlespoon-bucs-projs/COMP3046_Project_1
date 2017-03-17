@@ -2,7 +2,7 @@ package org.comp3046.it9.UI.search;
 
 import org.comp3046.it9.Entity.Customer;
 import org.comp3046.it9.UI.Menu.topbar;
-import org.comp3046.it9.UI.buyTicket.buyTicket;
+import org.comp3046.it9.UI.buyTicket.payMethod;
 
 import javax.swing.*;
 import java.awt.*;
@@ -183,7 +183,7 @@ public class searchResult {
 
     private class NextAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            new buyTicket(customer, selectedSeat);
+            new payMethod(selectedSeat, movie_name, movie_id);
             frame.dispose();
         }
     }
