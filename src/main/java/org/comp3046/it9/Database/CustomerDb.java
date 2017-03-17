@@ -22,14 +22,36 @@ public class CustomerDb {
         this.sqlite = sqlite;
     }
 
-    public boolean isUserCredentialsValid(String username, String password) {
+    public Customer getIdFromUserCredentials(String username, String password) throws DataAccessException {
         DSLContext dsl = this.sqlite.getDsl();
-        Result<Record1<Integer>> fetch = dsl.selectOne()
+        Result<Record7<Integer, String, String, String, Integer, String, String>> fetch = dsl
+                .select(CUSTOMER.UID,
+                        CUSTOMER.NAME,
+                        CUSTOMER.SALUTATION,
+                        CUSTOMER.USERNAME,
+                        CUSTOMER.MOBILE,
+                        CUSTOMER.EMAIL,
+                        CUSTOMER.BIRTHDAY)
                 .from(CUSTOMER)
                 .where(CUSTOMER.USERNAME.equal(username))
                 .and(CUSTOMER.PASSWORD.equal(password))
+                .limit(2)
                 .fetch();
-        return fetch.size() == 1;
+
+        if (fetch.size() < 1)
+            return null;
+        else if (fetch.size() > 1)
+            throw new DataAccessException("size > 1");
+
+        Record7<Integer, String, String, String, Integer, String, String> fetch1 = fetch.get(0);
+        return new Customer(
+                fetch1.get(CUSTOMER.UID),
+                fetch1.get(CUSTOMER.NAME),
+                fetch1.get(CUSTOMER.SALUTATION),
+                fetch1.get(CUSTOMER.USERNAME),
+                fetch1.get(CUSTOMER.MOBILE),
+                fetch1.get(CUSTOMER.EMAIL),
+                Utils.Convert.stringToDate(fetch1.get(CUSTOMER.BIRTHDAY), null));
     }
 
     public boolean createCustomer(String username,

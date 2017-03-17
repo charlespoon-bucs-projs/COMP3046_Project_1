@@ -1,5 +1,6 @@
 package org.comp3046.it9.UI.member;
 
+import org.comp3046.it9.Entity.Staff;
 import org.comp3046.it9.UI.Menu.member_menu;
 import org.comp3046.it9.UI.Menu.staff_menu;
 import org.comp3046.it9.UI.Menu.topbar;
@@ -18,8 +19,9 @@ import java.util.Calendar;
 import java.util.Properties;
 
 public class MemberSetting {
+    Staff staff;
 
-    boolean isAdd, isStaff;
+    boolean isAdd;
     String isModifiedMember_id;
     JRadioButton rdbtnStaff;
     topbar tp;
@@ -40,21 +42,21 @@ public class MemberSetting {
      * Launch the application.
      */
 
-    public MemberSetting(boolean isAdd, boolean isStaff) { // for add new member
+    public MemberSetting(boolean isAdd, Staff staff) { // for add new member
         this.isAdd = isAdd;
-        this.isStaff = isStaff;
+        this.staff = staff;
 
         initialize();
         tp.clock();
     }
 
-    public MemberSetting(boolean isAdd, boolean isStaff, String isModifiedMember_id) { // for
+    public MemberSetting(boolean isAdd, Staff staff, String isModifiedMember_id) { // for
         // add
         // new
         // member
         this.isModifiedMember_id = isModifiedMember_id;
         this.isAdd = isAdd;
-        this.isStaff = isStaff;
+        this.staff = staff;
 
         initialize();
         tp.clock();
@@ -82,7 +84,7 @@ public class MemberSetting {
         topbar.setBounds(0, 0, 504, 40);
 
         lblLoginer = new JLabel("Login as ");
-        if (isStaff)
+        if (staff != null)
             lblLoginer.setText(lblLoginer.getText() + tp.FullName + "-Staff");
         else
             lblLoginer.setText(lblLoginer.getText() + tp.FullName + "-Member");

@@ -1,5 +1,6 @@
 package org.comp3046.it9.UI.Menu;
 
+import org.comp3046.it9.Entity.Staff;
 import org.comp3046.it9.UI.Index.index;
 import org.comp3046.it9.UI.MovieAction.movieSetting;
 import org.comp3046.it9.UI.TransactionRecord.transactionRecord;
@@ -14,19 +15,19 @@ public class staff_menu {
 
     JLabel lblLoginer;
     topbar tb;
-    private JFrame frame;
+    JFrame frame;
     private JSeparator separator;
     private JButton btnAddMember, btnAddMovie, btnModifyMember, btnModifyMovie, btnTransactionRecord;
     private JButton btnLogout;
-    private String id, FullName;
     private JPanel topbar;
+
+    private Staff staff;
 
     /**
      * Create the application.
      */
-    public staff_menu(String id, String FullName) {
-        this.id = id;
-        this.FullName = FullName;
+    public staff_menu(Staff staff) {
+        this.staff = staff;
         frame = new JFrame();
         frame.setBounds(100, 100, 524, 457);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,7 +49,7 @@ public class staff_menu {
         topbar.setBounds(0, 0, 504, 40);
 
         lblLoginer = new JLabel("Login as ");
-        lblLoginer.setText(lblLoginer.getText() + FullName + "-Staff");
+        lblLoginer.setText(lblLoginer.getText() + this.staff.getName() + "-Staff");
         lblLoginer.setBounds(308, 10, 200, 15);
 
         lblLoginer.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
@@ -58,7 +59,7 @@ public class staff_menu {
         separator.setBounds(10, 35, 534, 2);
         topbar.add(separator);
 
-        frame.getContentPane().add(tb.topbarLayout(topbar, id, FullName));
+        frame.getContentPane().add(tb.topbarLayout(topbar, this.staff.getId() + "", this.staff.getName()));
 
         btnAddMember = new JButton("Add Member");
         btnAddMember.setBounds(20, 47, 215, 93);
@@ -100,7 +101,7 @@ public class staff_menu {
 
     private class AddMemberAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            new MemberSetting(true, true);
+            new MemberSetting(true, staff);
             frame.setVisible(false);
         }
     }
@@ -119,7 +120,7 @@ public class staff_menu {
 
             // check the member id is true
 
-            new MemberSetting(false, true, member_id);
+            new MemberSetting(false, staff, member_id);
 
             frame.setVisible(false);
 

@@ -2,8 +2,7 @@ package org.comp3046.it9.Database;
 
 import org.comp3046.it9.Entity.Staff;
 import org.jooq.DSLContext;
-import org.jooq.Record1;
-import org.jooq.Record4;
+import org.jooq.Record3;
 import org.jooq.Result;
 import org.jooq.exception.DataAccessException;
 
@@ -11,7 +10,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.comp3046.it9.Database.JooqGenerated.Tables.STAFF;
-import static org.comp3046.it9.Database.JooqGenerated.tables.Customer.CUSTOMER;
 
 public class StaffDb {
     private Sqlite sqlite;
@@ -42,8 +40,8 @@ public class StaffDb {
         }
     }
 
-    public boolean createStaff(Staff staff) {
-        return this.createStaff(staff.getName(), staff.getUsername(), staff.getPassword());
+    public boolean createStaff(Staff staff, String password) {
+        return this.createStaff(staff.getName(), staff.getUsername(), password);
     }
 
     public boolean updateStaff(int staffId, String name, String username, String password) {
@@ -80,30 +78,27 @@ public class StaffDb {
     public Map<Integer, Staff> getStaffList() {
         DSLContext dsl = this.sqlite.getDsl();
 
-        Result<Record4<Integer, String, String, String>> fetch = dsl
+        Result<Record3<Integer, String, String>> fetch = dsl
                 .select(STAFF.SID,
                         STAFF.NAME,
-                        STAFF.USERNAME,
-                        STAFF.PASSWORD)
+                        STAFF.USERNAME)
                 .from(STAFF)
                 .fetch();
 
         return fetch.stream().map(r -> new Staff(
                 r.get(STAFF.SID),
                 r.get(STAFF.NAME),
-                r.get(STAFF.USERNAME),
-                r.get(STAFF.PASSWORD)
+                r.get(STAFF.USERNAME)
         )).collect(Collectors.toMap(Staff::getId, c -> c));
     }
 
     public Staff getStaffById(int sid) {
         DSLContext dsl = this.sqlite.getDsl();
 
-        Result<Record4<Integer, String, String, String>> fetch = dsl
+        Result<Record3<Integer, String, String>> fetch = dsl
                 .select(STAFF.SID,
                         STAFF.NAME,
-                        STAFF.USERNAME,
-                        STAFF.PASSWORD)
+                        STAFF.USERNAME)
                 .from(STAFF)
                 .where(STAFF.SID.equal(sid))
                 .limit(2)
@@ -114,23 +109,37 @@ public class StaffDb {
         else if (fetch.size() > 1)
             throw new DataAccessException("size > 1");
 
-        Record4<Integer, String, String, String> fetch1 = fetch.get(0);
+        Record3<Integer, String, String> fetch1 = fetch.get(0);
 
         return new Staff(
                 fetch1.get(STAFF.SID),
                 fetch1.get(STAFF.NAME),
-                fetch1.get(STAFF.USERNAME),
-                fetch1.get(STAFF.PASSWORD)
+                fetch1.get(STAFF.USERNAME)
         );
     }
 
-    public boolean isUserCredentialsValid(String username, String password) {
+    public Staff getIdFromUserCredentials(String username, String password) throws DataAccessException {
         DSLContext dsl = this.sqlite.getDsl();
-        Result<Record1<Integer>> fetch = dsl.selectOne()
+        Result<Record3<Integer, String, String>> fetch = dsl
+                .select(STAFF.SID,
+                        STAFF.NAME,
+                        STAFF.USERNAME)
                 .from(STAFF)
                 .where(STAFF.USERNAME.equal(username))
                 .and(STAFF.PASSWORD.equal(password))
+                .limit(2)
                 .fetch();
-        return fetch.size() == 1;
+
+        if (fetch.size() < 1)
+            return null;
+        else if (fetch.size() > 1)
+            throw new DataAccessException("size > 1");
+
+        Record3<Integer, String, String> fetch1 = fetch.get(0);
+
+        return new Staff(
+                fetch1.get(STAFF.SID),
+                fetch1.get(STAFF.NAME),
+                fetch1.get(STAFF.USERNAME));
     }
 }

@@ -3,12 +3,14 @@ package org.comp3046.it9.UI.Login;
 import org.comp3046.it9.Database.CustomerDb;
 import org.comp3046.it9.Database.Sqlite;
 import org.comp3046.it9.Database.StaffDb;
+import org.comp3046.it9.Entity.Customer;
+import org.comp3046.it9.Entity.Staff;
+import org.jooq.exception.DataAccessException;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -85,19 +87,21 @@ public class loginPanel extends JPanel {
             try (Sqlite sqlite = new Sqlite()) {
                 // check if staff
                 StaffDb staffDb = new StaffDb(sqlite);
-                if (staffDb.isUserCredentialsValid(strUsername, strPassword)) {
+                Staff staffId = staffDb.getIdFromUserCredentials(strUsername, strPassword);
+                if (staffId != null) {
                     // TODO: what to do if it's staff? This window should also be closed
+
                 }
 
                 // check if customer
                 CustomerDb customerDb = new CustomerDb(sqlite);
-                if (customerDb.isUserCredentialsValid(strUsername, strPassword)) {
+                Customer customerId = customerDb.getIdFromUserCredentials(strUsername, strPassword);
+                if (customerId != null) {
                     // TODO: what to do if it's customer? This window should also be closed
                 }
 
                 JOptionPane.showMessageDialog(null, "The username and password is incorrect.", "Cannot login", JOptionPane.ERROR_MESSAGE);
-
-            } catch (SQLException | IOException e) {
+            } catch (DataAccessException | SQLException | IOException e) {
                 e.printStackTrace();
             }
         }
