@@ -45,7 +45,7 @@
 
         <target>
             <!-- The destination package of your generated classes (within the destination directory) -->
-            <packageName>Database.JooqGenerated</packageName>
+            <packageName>org.comp3046.it9.Database.JooqGenerated</packageName>
 
             <!-- The destination directory of your generated classes. Using Maven directory layout here -->
             <directory>./../src/main/java</directory>
