@@ -7,14 +7,13 @@ CREATE TABLE "Transactions" (
 	`Seat`	TEXT NOT NULL,
 	`Total`	INTEGER NOT NULL,
 	`NumberOfTickets`	INTEGER NOT NULL,
-	`IsCancelled`	INTEGER NOT NULL,
 	FOREIGN KEY(`StaffId`) REFERENCES `Staff`(`SID`),
 	FOREIGN KEY(`CustomerId`) REFERENCES `Customer`(`UID`),
 	FOREIGN KEY(`MovieId`) REFERENCES `Movie`(`MID`)
 );
-INSERT INTO `Transactions` VALUES (1,1,1,1,'A1,A2,A3',240,3,0);
+INSERT INTO `Transactions` VALUES (1,1,1,1,'A1,A2,A3',240,3);
 INSERT INTO `Transactions` VALUES (2,1,1,2,'B2,C3
-',200,2,1);
+',200,2);
 CREATE TABLE "Staff" (
 	`SID`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 	`Name`	TEXT NOT NULL,
