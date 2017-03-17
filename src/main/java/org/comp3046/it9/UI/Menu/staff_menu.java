@@ -1,15 +1,21 @@
 package org.comp3046.it9.UI.Menu;
 
+import org.comp3046.it9.Database.CustomerDb;
+import org.comp3046.it9.Database.Sqlite;
+import org.comp3046.it9.Entity.Customer;
 import org.comp3046.it9.Entity.Staff;
 import org.comp3046.it9.UI.Index.index;
 import org.comp3046.it9.UI.MovieAction.movieSetting;
 import org.comp3046.it9.UI.TransactionRecord.transactionRecord;
 import org.comp3046.it9.UI.member.MemberSetting;
+import org.jooq.exception.DataAccessException;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.sql.SQLException;
 
 public class staff_menu {
 
@@ -21,7 +27,7 @@ public class staff_menu {
     private JButton btnLogout;
     private JPanel topbar;
 
-    private Staff staff;
+    private Staff staff = null;
 
     /**
      * Create the application.
@@ -108,7 +114,7 @@ public class staff_menu {
 
     private class AddMovieAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            new movieSetting(true);
+            new movieSetting(true, staff);
             frame.dispose();
         }
     }
@@ -118,9 +124,28 @@ public class staff_menu {
 
             String member_id = JOptionPane.showInputDialog(frame, "Enter the Member ID");
 
+            Customer fetchCustomer;
+            try (Sqlite sqlite = new Sqlite()) {
+                int mid = Integer.parseInt(member_id);
+
+                CustomerDb customerDb = new CustomerDb(sqlite);
+
+                fetchCustomer = customerDb.getCustomerByUid(mid);
+            } catch (NumberFormatException ignored) {
+                JOptionPane.showMessageDialog(null, "Input member ID is not an integer.", "Modify member", JOptionPane.WARNING_MESSAGE);
+                return;
+            } catch (DataAccessException ignored) {
+                JOptionPane.showMessageDialog(null, "Member not found.", "Modify member", JOptionPane.WARNING_MESSAGE);
+                return;
+            } catch (SQLException | IOException e) {
+                JOptionPane.showMessageDialog(null, "Error: \r\n\r\n" + e.getMessage() , "Modify member", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+                return;
+            }
+
             // check the member id is true
 
-            new MemberSetting(false, staff, member_id);
+            new MemberSetting(false, staff, fetchCustomer);
 
             frame.setVisible(false);
 
@@ -132,7 +157,7 @@ public class staff_menu {
 
             // check the movie id is true
 
-            new movieSetting(false);
+            new movieSetting(false, staff);
 
             frame.dispose();
         }
@@ -140,7 +165,7 @@ public class staff_menu {
 
     private class TransactionRecordAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            new transactionRecord(true);
+            new transactionRecord(staff);
             frame.dispose();
         }
     }

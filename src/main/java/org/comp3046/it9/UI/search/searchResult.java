@@ -1,5 +1,6 @@
 package org.comp3046.it9.UI.search;
 
+import org.comp3046.it9.Entity.Customer;
 import org.comp3046.it9.UI.Menu.topbar;
 import org.comp3046.it9.UI.buyTicket.buyTicket;
 
@@ -9,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class searchResult {
+    private Customer customer;
 
     String movie_id, movie_name;
     topbar tb;
@@ -22,7 +24,7 @@ public class searchResult {
     private JButton btnA1, A2, A3, A4, B1, B2, B3, B4;
     private JLabel lblNewLabel;
 
-    public searchResult(String movie_id, String movie_name) {
+    public searchResult(Customer customer, String movie_id, String movie_name) {
         this.movie_name = movie_name;
         this.movie_id = movie_id;
         tb = new topbar();
@@ -181,7 +183,7 @@ public class searchResult {
 
     private class NextAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            new buyTicket(selectedSeat);
+            new buyTicket(customer, selectedSeat);
             frame.dispose();
         }
     }
@@ -189,7 +191,7 @@ public class searchResult {
     private class BackAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
 
-            new searchMovie();
+            new searchMovie(customer);
             frame.dispose();
 
         }

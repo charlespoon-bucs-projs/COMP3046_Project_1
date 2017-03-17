@@ -1,5 +1,6 @@
 package org.comp3046.it9.UI.Menu;
 
+import org.comp3046.it9.Entity.Customer;
 import org.comp3046.it9.UI.Index.index;
 import org.comp3046.it9.UI.TransactionRecord.transactionRecord;
 import org.comp3046.it9.UI.member.MemberSetting;
@@ -12,20 +13,21 @@ import java.awt.event.ActionListener;
 
 public class member_menu {
 
+    private Customer customer;
+
     topbar tp;
     private JFrame frame;
     private JLabel lblLoginer;
     private JSeparator separator;
     private JButton btnAccountSetting, btnSearchMovie, btnTransactionRecord, btnLogout;
-    private String id, FullName;
     private JPanel topbar;
 
     /**
      * Create the application.
      */
-    public member_menu(String id, String FullName) {
-        this.id = id;
-        this.FullName = FullName;
+    public member_menu(Customer customer) {
+        this.customer = customer;
+
         tp = new topbar();
         frame = new JFrame();
         frame.setBounds(100, 100, 524, 340);
@@ -46,7 +48,7 @@ public class member_menu {
         topbar.setBounds(0, 0, 504, 40);
 
         lblLoginer = new JLabel("Login as ");
-        lblLoginer.setText(lblLoginer.getText() + FullName + "-Member");
+        lblLoginer.setText(lblLoginer.getText() + this.customer.getName() + "-Member");
         lblLoginer.setBounds(304, 10, 200, 15);
 
         lblLoginer.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
@@ -56,7 +58,7 @@ public class member_menu {
         separator.setBounds(10, 35, 534, 2);
         topbar.add(separator);
 
-        frame.getContentPane().add(tp.topbarLayout(topbar, id, FullName));
+        frame.getContentPane().add(tp.topbarLayout(topbar, this.customer.getUid() + "", this.customer.getName()));
 
         btnAccountSetting = new JButton("Account Setting");
         btnAccountSetting.setBounds(20, 47, 215, 93);
@@ -86,21 +88,21 @@ public class member_menu {
 
     private class AccountSettingAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            new MemberSetting(false, false);
+            new MemberSetting(customer);
             frame.dispose();
         }
     }
 
     private class SearchMovieAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            new searchMovie();
+            new searchMovie(customer);
             frame.dispose();
         }
     }
 
     private class TransactionRecordAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            new transactionRecord(false);
+            new transactionRecord(customer);
             frame.dispose();
         }
     }

@@ -1,5 +1,7 @@
 package org.comp3046.it9.UI.MovieAction;
 
+import org.comp3046.it9.Entity.Customer;
+import org.comp3046.it9.Entity.Staff;
 import org.comp3046.it9.UI.Menu.staff_menu;
 import org.comp3046.it9.UI.Menu.topbar;
 import org.comp3046.it9.UI.Register.JTextFieldLimit;
@@ -17,6 +19,8 @@ import java.util.Calendar;
 import java.util.Properties;
 
 public class movieSetting {
+    private Staff staff = null;
+    private Customer customer = null;
 
     topbar tb;
     boolean isAdd;
@@ -33,7 +37,17 @@ public class movieSetting {
             comboBox_minutes, comboBox_ID;
     private JLabel lblId;
 
-    public movieSetting(boolean isAdd) {
+    public movieSetting(boolean isAdd, Staff staff) {
+        this.staff = staff;
+        _ctor(isAdd);
+    }
+
+    public movieSetting(boolean isAdd, Customer customer) {
+        this.customer = customer;
+        _ctor(isAdd);
+    }
+
+    private void _ctor(boolean isAdd) {
         this.isAdd = isAdd;
         initialize();
         tb.clock();
@@ -304,7 +318,7 @@ public class movieSetting {
     private class BackAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
 
-            new staff_menu(tb.id, tb.FullName);
+            new staff_menu(staff);
             frame.dispose();
 
         }

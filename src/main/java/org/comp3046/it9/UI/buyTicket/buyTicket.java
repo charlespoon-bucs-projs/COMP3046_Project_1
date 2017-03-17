@@ -1,5 +1,6 @@
 package org.comp3046.it9.UI.buyTicket;
 
+import org.comp3046.it9.Entity.Customer;
 import org.comp3046.it9.UI.Menu.member_menu;
 import org.comp3046.it9.UI.Menu.topbar;
 
@@ -9,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class buyTicket {
+    private Customer customer;
 
     String[] selectedSeat;
     topbar tb;
@@ -22,7 +24,9 @@ public class buyTicket {
     /**
      * Create the application.
      */
-    public buyTicket(String[] selectedSeat) {
+    public buyTicket(Customer customer, String[] selectedSeat) {
+        this.customer = customer;
+
         this.selectedSeat = selectedSeat;
         tb = new topbar();
         frame = new JFrame();
@@ -112,7 +116,7 @@ public class buyTicket {
     private class PrintAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
 
-            new member_menu(tb.id, tb.FullName);
+            new member_menu(customer);
             frame.dispose();
 
         }
@@ -121,7 +125,7 @@ public class buyTicket {
     private class BackAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
 
-            new member_menu(tb.id, tb.FullName);
+            new member_menu(customer);
             frame.dispose();
 
         }

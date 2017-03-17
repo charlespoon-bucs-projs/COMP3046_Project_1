@@ -1,5 +1,7 @@
 package org.comp3046.it9.UI.TransactionRecord;
 
+import org.comp3046.it9.Entity.Customer;
+import org.comp3046.it9.Entity.Staff;
 import org.comp3046.it9.UI.Menu.member_menu;
 import org.comp3046.it9.UI.Menu.staff_menu;
 import org.comp3046.it9.UI.Menu.topbar;
@@ -12,9 +14,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class transactionRecord {
+    private Customer customer = null;
+    private Staff staff = null;
 
     topbar tb;
-    boolean isStaff;
     private JFrame frame;
     private JPanel topbar;
     private JLabel lblLoginer, lblMobile;
@@ -24,10 +27,18 @@ public class transactionRecord {
     private JTable MovieTable;
     private JTable table;
 
-    public transactionRecord(boolean isStaff) {
-        tb = new topbar();
+    public transactionRecord(Staff staff) {
+        this.staff = staff;
+        _ctor();
+    }
 
-        this.isStaff = isStaff;
+    public transactionRecord(Customer customer) {
+        this.customer = customer;
+        _ctor();
+    }
+
+    private void _ctor() {
+        tb = new topbar();
         initialize();
         tb.clock();
     }
@@ -50,7 +61,7 @@ public class transactionRecord {
         topbar.setBounds(0, 0, 504, 40);
 
         lblLoginer = new JLabel("Login as ");
-        if (isStaff)
+        if (staff != null)
             lblLoginer.setText(lblLoginer.getText() + tb.FullName + "-Staff");
         else
             lblLoginer.setText(lblLoginer.getText() + tb.FullName + "-Member");
@@ -109,10 +120,10 @@ public class transactionRecord {
     private class BackAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
 
-            if (isStaff)
-                new staff_menu(tb.id, tb.FullName);
+            if (staff != null)
+                new staff_menu(staff);
             else
-                new member_menu(tb.id, tb.FullName);
+                new member_menu(customer);
             frame.dispose();
 
         }

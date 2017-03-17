@@ -1,5 +1,6 @@
 package org.comp3046.it9.UI.member;
 
+import org.comp3046.it9.Entity.Customer;
 import org.comp3046.it9.Entity.Staff;
 import org.comp3046.it9.UI.Menu.member_menu;
 import org.comp3046.it9.UI.Menu.staff_menu;
@@ -19,7 +20,8 @@ import java.util.Calendar;
 import java.util.Properties;
 
 public class MemberSetting {
-    Staff staff;
+    Staff staff = null;
+    Customer customer = null;
 
     boolean isAdd;
     String isModifiedMember_id;
@@ -42,6 +44,14 @@ public class MemberSetting {
      * Launch the application.
      */
 
+    // must not be adding customer by customer itself
+    public MemberSetting(Customer customer) {
+        this.isAdd = false;
+
+        initialize();
+        tp.clock();
+    }
+
     public MemberSetting(boolean isAdd, Staff staff) { // for add new member
         this.isAdd = isAdd;
         this.staff = staff;
@@ -50,11 +60,12 @@ public class MemberSetting {
         tp.clock();
     }
 
-    public MemberSetting(boolean isAdd, Staff staff, String isModifiedMember_id) { // for
+    public MemberSetting(boolean isAdd, Staff staff, Customer customer) { // for
         // add
         // new
         // member
-        this.isModifiedMember_id = isModifiedMember_id;
+        // this.isModifiedMember_id = isModifiedMember_id;
+        this.customer = customer;
         this.isAdd = isAdd;
         this.staff = staff;
 
@@ -219,7 +230,7 @@ public class MemberSetting {
         button.setBounds(27, 367, 122, 23);
         frame.getContentPane().add(button);
 
-        if (isAdd == false && isStaff == true) { // staff modify mem
+        if (isAdd == false && staff != null) { // staff modify mem
 
             textField_FullName.setText("BenLi");
             textField_FullName.setEditable(true);
@@ -246,7 +257,7 @@ public class MemberSetting {
 
             datePicker.getComponent(1).setEnabled(false);
 
-        } else if (isStaff) {
+        } else if (staff != null) {
             rdbtnStaff.setVisible(true);
             rdbtnStaff.setSelected(true);
             rdbtnStaff.setEnabled(false);
@@ -260,11 +271,11 @@ public class MemberSetting {
 
     private class BackAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            if (isStaff) {
-                new staff_menu(tp.id, tp.FullName);
+            if (staff != null) {
+                new staff_menu(staff);
                 frame.dispose();
             } else {
-                new member_menu(tp.id, tp.FullName);
+                new member_menu(customer);
                 frame.dispose();
             }
 

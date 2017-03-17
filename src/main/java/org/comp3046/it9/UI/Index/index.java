@@ -106,18 +106,20 @@ public class index {
         }
     }
 
+    @Deprecated
     private class ToMenuAction implements ActionListener {
+        @Deprecated
         public void actionPerformed(ActionEvent event) {
 
             if (!(textField_username.getText().equals("")) && !(passwordField.getText().equals(""))) {
 
                 if ((textField_username.getText().equals("mem")) && (passwordField.getText().equals("123"))) {
                     frame.setVisible(false);
-                    new member_menu("id", "BenLi");
+//                    new member_menu("id", "BenLi");
                 }
                 if ((textField_username.getText().equals("staff")) && (passwordField.getText().equals("123"))) {
                     frame.setVisible(false);
-                    new staff_menu("id", "BenLi");
+//                    new staff_menu("id", "BenLi");
                 }
 
             } else {

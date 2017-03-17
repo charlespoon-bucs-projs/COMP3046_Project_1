@@ -1,5 +1,6 @@
 package org.comp3046.it9.UI.search;
 
+import org.comp3046.it9.Entity.Customer;
 import org.comp3046.it9.UI.Menu.member_menu;
 import org.comp3046.it9.UI.Menu.topbar;
 
@@ -10,6 +11,7 @@ import java.awt.event.ActionListener;
 
 public class searchMovie {
 
+    private Customer customer;
     topbar tb;
     private JFrame frame;
     private JPanel topbar;
@@ -21,7 +23,9 @@ public class searchMovie {
     /**
      * Create the application.
      */
-    public searchMovie() {
+    public searchMovie(Customer customer) {
+        this.customer = customer;
+
         tb = new topbar();
         frame = new JFrame();
         frame.setBounds(100, 100, 524, 457);
@@ -114,7 +118,7 @@ public class searchMovie {
     private class BackAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
 
-            new member_menu(tb.id, tb.FullName);
+            new member_menu(customer);
             frame.dispose();
 
         }
@@ -124,7 +128,7 @@ public class searchMovie {
         public void actionPerformed(ActionEvent event) {
             String movie_id = " ";
             String movie_name = "Name";
-            new searchResult(movie_id, movie_name);
+            new searchResult(customer, movie_id, movie_name);
             frame.dispose();
         }
     }
