@@ -1,11 +1,9 @@
 package org.comp3046.it9.UI.TransactionRecord;
 
-import org.comp3046.it9.Database.Sqlite;
-import org.comp3046.it9.Database.TransactionsDb;
 import org.comp3046.it9.Entity.Customer;
 import org.comp3046.it9.Entity.Staff;
-import org.comp3046.it9.UI.Menu.member_menu;
-import org.comp3046.it9.UI.Menu.staff_menu;
+import org.comp3046.it9.UI.Menu.MemberMenu;
+import org.comp3046.it9.UI.Menu.StaffMenu;
 import org.comp3046.it9.UI.Menu.topbar;
 import org.comp3046.it9.UI.Register.JTextFieldLimit;
 
@@ -14,12 +12,10 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.sql.SQLException;
 
-public class transactionRecord {
-    private Customer customer = null;
-    private Staff staff = null;
+public class TransactionRecord {
+    private final MemberMenu memberMenu;
+    private final StaffMenu staffMenu;
 
     topbar tb;
     private JFrame frame;
@@ -31,13 +27,15 @@ public class transactionRecord {
     private JTable MovieTable;
     private JTable table;
 
-    public transactionRecord(Staff staff) {
-        this.staff = staff;
+    public TransactionRecord(StaffMenu staffMenu) {
+        this.memberMenu = null;
+        this.staffMenu = staffMenu;
         _ctor();
     }
 
-    public transactionRecord(Customer customer) {
-        this.customer = customer;
+    public TransactionRecord(MemberMenu memberMenu) {
+        this.memberMenu = memberMenu;
+        this.staffMenu = null;
         _ctor();
     }
 
@@ -65,7 +63,7 @@ public class transactionRecord {
         topbar.setBounds(0, 0, 504, 40);
 
         lblLoginer = new JLabel("Login as ");
-        if (staff != null)
+        if (staffMenu != null)
             lblLoginer.setText(lblLoginer.getText() + tb.FullName + "-Staff");
         else
             lblLoginer.setText(lblLoginer.getText() + tb.FullName + "-Member");
@@ -118,13 +116,12 @@ public class transactionRecord {
 
     private class BackAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-
-            if (staff != null)
-                new staff_menu(staff);
+            if (staffMenu != null)
+                staffMenu.setVisible(true);
             else
-                new member_menu(customer);
+                memberMenu.setVisible(true);
+            frame.setVisible(false);
             frame.dispose();
-
         }
     }
 

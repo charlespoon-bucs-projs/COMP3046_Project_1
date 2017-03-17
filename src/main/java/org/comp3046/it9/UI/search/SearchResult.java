@@ -1,20 +1,28 @@
 package org.comp3046.it9.UI.search;
 
-import org.comp3046.it9.Entity.Customer;
+import org.comp3046.it9.Entity.Movie;
+import org.comp3046.it9.UI.Menu.MemberMenu;
 import org.comp3046.it9.UI.Menu.topbar;
-import org.comp3046.it9.UI.buyTicket.payMethod;
+import org.comp3046.it9.UI.buyTicket.PayMethod;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class searchResult {
-    private Customer customer;
+public class SearchResult {
+    // parent
+    private final MemberMenu memberMenu;
+    // previous
+    private final SearchMovie searchMovie;
+    // target
+    private final Movie movie;
+    private final String[] selectedSeat; // new from this step
 
+    @Deprecated
     String movie_id, movie_name;
+
     topbar tb;
-    String[] selectedSeat;
     private JFrame frame;
     private JPanel topbar;
     private JLabel lblLoginer, lblMovieName, lblHouse, lblTime;
@@ -24,9 +32,11 @@ public class searchResult {
     private JButton btnA1, A2, A3, A4, B1, B2, B3, B4;
     private JLabel lblNewLabel;
 
-    public searchResult(Customer customer, String movie_id, String movie_name) {
-        this.movie_name = movie_name;
-        this.movie_id = movie_id;
+    public SearchResult(MemberMenu memberMenu, SearchMovie searchMovie, Movie movie) {
+        this.memberMenu = memberMenu;
+        this.searchMovie = searchMovie;
+        this.movie = movie;
+
         tb = new topbar();
         frame = new JFrame();
         frame.setBounds(100, 100, 524, 353);
@@ -146,6 +156,22 @@ public class searchResult {
 
     }
 
+    public void setVisible(boolean visible) {
+        frame.setVisible(visible);
+    }
+
+    public SearchResult getSelf() {
+        return this;
+    }
+
+    public SearchMovie getSearchMovie() {
+        return searchMovie;
+    }
+
+    public void dispose() {
+        frame.dispose();
+    }
+
     private class SeatAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             Object btn = event.getSource();
@@ -183,15 +209,15 @@ public class searchResult {
 
     private class NextAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            new payMethod(selectedSeat, movie_name, movie_id);
-            frame.dispose();
+            new PayMethod(memberMenu, getSelf(), movie, selectedSeat);
+            frame.setVisible(false);
         }
     }
 
     private class BackAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-
-            new searchMovie(customer);
+            searchMovie.setVisible(true);
+            frame.setVisible(false);
             frame.dispose();
 
         }

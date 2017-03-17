@@ -1,20 +1,27 @@
 package org.comp3046.it9.UI.buyTicket;
 
-import org.comp3046.it9.UI.Menu.member_menu;
+import org.comp3046.it9.Entity.Movie;
+import org.comp3046.it9.UI.Menu.MemberMenu;
 import org.comp3046.it9.UI.Menu.topbar;
 import org.comp3046.it9.UI.Register.JTextFieldLimit;
+import org.comp3046.it9.UI.search.SearchResult;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class payMethod {
+public class PayMethod {
+	// parent
+	private final MemberMenu memberMenu;
+	// previous
+	private final SearchResult searchResult;
+    // target
+    private final Movie movie;
+    private final String[] selectedSeat;
 
 	private JFrame frame;
-	String[] selectedSeat;
 	private JPanel topbar;
-	String movie_id, movie_name;
 	private JLabel lblLoginer, lblMovieName, lblSelectdSeat, lblpatmentMethod, lblCardNo, lblExpiryDate, lblSecurity,
 			lblnew;
 	topbar tb;
@@ -24,10 +31,13 @@ public class payMethod {
 	private JTextField textField_cardNo, textField_YY, textField_MM;
 	private JTextField textField_Security;
 
-	public payMethod(String[] selectedSeat, String movieName, String movieId) {
-		this.movie_id = movie_id;
-		this.movie_name = movie_name;
-		this.selectedSeat = selectedSeat;
+	public PayMethod(MemberMenu memberMenu, SearchResult searchResult,
+                     Movie movie, String[] selectedSeat) {
+        this.memberMenu = memberMenu;
+        this.searchResult = searchResult;
+        this.movie = movie;
+        this.selectedSeat = selectedSeat;
+
 		tb = new topbar();
 		frame = new JFrame();
 		frame.getContentPane().setLayout(null);
@@ -63,7 +73,7 @@ public class payMethod {
 
 		frame.getContentPane().add(tb.topbarLayout(topbar, tb.id, tb.FullName));
 
-		lblMovieName = new JLabel(movie_name + "ih");
+		lblMovieName = new JLabel(movie.getName() + "ih");
 		lblMovieName.setBounds(122, 50, 280, 40);
 		lblMovieName.setHorizontalAlignment(JLabel.CENTER);
 		lblMovieName.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 26));
@@ -164,11 +174,26 @@ public class payMethod {
 		btnPrint.addActionListener(new PrintAction());
 	}
 
+	public void setVisible(boolean visible) {
+        frame.setVisible(visible);
+    }
+
+    public PayMethod getSelf() {
+        return this;
+    }
+
+    public SearchResult getSearchResult() {
+        return searchResult;
+    }
+
+    public void dispose() {
+        frame.dispose();
+    }
+
 	private class PrintAction implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
-			new buyTicket(selectedSeat, movie_name);
-			frame.dispose();
-
+			new BuyTicket(memberMenu, getSelf(), movie, selectedSeat);
+			frame.setVisible(false);
 		}
 	}
 
@@ -202,8 +227,9 @@ public class payMethod {
 
 	private class CancelAction implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
-
-			new member_menu(tb.id, tb.FullName);
+            getSearchResult().getSearchMovie().dispose();
+            getSearchResult().dispose();
+            memberMenu.setVisible(true);
 			frame.dispose();
 		}
 	}

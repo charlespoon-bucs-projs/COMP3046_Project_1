@@ -2,10 +2,9 @@ package org.comp3046.it9.UI.MovieAction;
 
 import org.comp3046.it9.Database.MovieDb;
 import org.comp3046.it9.Database.Sqlite;
-import org.comp3046.it9.Entity.Customer;
 import org.comp3046.it9.Entity.Movie;
 import org.comp3046.it9.Entity.Staff;
-import org.comp3046.it9.UI.Menu.staff_menu;
+import org.comp3046.it9.UI.Menu.StaffMenu;
 import org.comp3046.it9.UI.Menu.topbar;
 import org.comp3046.it9.UI.Register.JTextFieldLimit;
 import org.jdatepicker.impl.DateComponentFormatter;
@@ -25,7 +24,7 @@ import java.util.Date;
 import java.util.Properties;
 
 public class movieSetting {
-    private Staff staff;
+    private StaffMenu staffMenu;
     private Movie movie = null;
 //    private Customer customer = null;
 
@@ -46,18 +45,19 @@ public class movieSetting {
 
     private JDatePickerImpl datePicker;
 
-    public movieSetting(Staff staff) {
-        this.staff = staff;
+    public movieSetting(StaffMenu staffMenu) {
+        this.staffMenu = staffMenu;
         _ctor();
     }
 
-    public movieSetting(Staff staff, Movie movie) {
-        this.staff = staff;
+    public movieSetting(StaffMenu staffMenu, Movie movie) {
+        this.staffMenu = staffMenu;
         this.movie = movie;
         _ctor();
     }
 
     /*
+    // not possible
     public movieSetting(boolean isAdd, Customer customer) {
         this.customer = customer;
         _ctor(isAdd);
@@ -334,8 +334,9 @@ public class movieSetting {
 
     private class BackAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-
-            new staff_menu(staff);
+            // TODO: back rewrite
+            frame.setVisible(false);
+            staffMenu.setVisible(true);
             frame.dispose();
 
         }
@@ -356,7 +357,7 @@ public class movieSetting {
             String type = (String) comboBox_Type.getSelectedItem();
             String director = textField_Director.getText();
             String location = (String) comboBox_House.getSelectedItem();
-            // TODO: time field on database?
+            // TODO: where is time field on database?
             String cast = textField_Cast.getText();
             int movieId;
             int length;

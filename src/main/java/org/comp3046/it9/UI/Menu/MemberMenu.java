@@ -1,18 +1,19 @@
 package org.comp3046.it9.UI.Menu;
 
 import org.comp3046.it9.Entity.Customer;
-import org.comp3046.it9.UI.Index.index;
-import org.comp3046.it9.UI.TransactionRecord.transactionRecord;
+import org.comp3046.it9.UI.Login.LoginFrame;
+import org.comp3046.it9.UI.TransactionRecord.TransactionRecord;
 import org.comp3046.it9.UI.member.MemberSetting;
-import org.comp3046.it9.UI.search.searchMovie;
+import org.comp3046.it9.UI.search.SearchMovie;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class member_menu {
+public class MemberMenu {
 
+    private LoginFrame loginFrame;
     private Customer customer;
 
     topbar tp;
@@ -25,7 +26,8 @@ public class member_menu {
     /**
      * Create the application.
      */
-    public member_menu(Customer customer) {
+    public MemberMenu(LoginFrame LoginFrame, Customer customer) {
+        this.loginFrame = LoginFrame;
         this.customer = customer;
 
         tp = new topbar();
@@ -38,9 +40,12 @@ public class member_menu {
         tp.clock();
     }
 
+    /*
+    @Deprecated
     public member_menu(String id, String fullName) {
         //TO-DO payMethod, buyTicket
     }
+    */
 
 
     /**
@@ -91,32 +96,44 @@ public class member_menu {
 
     }
 
+    public void setVisible(boolean visible) {
+        this.frame.setVisible(visible);
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    private MemberMenu getSelf() {
+        return this;
+    }
+
     private class AccountSettingAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            new MemberSetting(customer);
-            frame.dispose();
+            new MemberSetting(getSelf());
+            frame.setVisible(false);
         }
     }
 
     private class SearchMovieAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            new searchMovie(customer);
+            new SearchMovie(getSelf());
             frame.dispose();
         }
     }
 
     private class TransactionRecordAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            new transactionRecord(customer);
+            new TransactionRecord(getSelf());
             frame.dispose();
         }
     }
 
     private class LogoutAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            new index();
+            loginFrame.setVisible(true);
             frame.setVisible(false);
-
+            frame.dispose();
         }
     }
 

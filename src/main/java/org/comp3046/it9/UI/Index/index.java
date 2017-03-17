@@ -1,8 +1,6 @@
 package org.comp3046.it9.UI.Index;
 
 import org.comp3046.it9.UI.ForgotPassword.forget_password;
-import org.comp3046.it9.UI.Menu.member_menu;
-import org.comp3046.it9.UI.Menu.staff_menu;
 import org.comp3046.it9.UI.Register.register;
 
 import javax.swing.*;

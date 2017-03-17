@@ -5,6 +5,8 @@ import org.comp3046.it9.Database.Sqlite;
 import org.comp3046.it9.Database.StaffDb;
 import org.comp3046.it9.Entity.Customer;
 import org.comp3046.it9.Entity.Staff;
+import org.comp3046.it9.UI.Menu.MemberMenu;
+import org.comp3046.it9.UI.Menu.StaffMenu;
 import org.jooq.exception.DataAccessException;
 
 import javax.swing.*;
@@ -67,10 +69,14 @@ public class loginPanel extends JPanel {
 
         add(inputPanel, BorderLayout.NORTH);
         add(buttonPanel, BorderLayout.SOUTH);
-
-
     }
 
+    private LoginFrame getLoginFrame() {
+        Window window = SwingUtilities.windowForComponent(this);
+        if (window instanceof LoginFrame)
+            return (LoginFrame) window;
+        return null;
+    }
 
     private void addButton(String label, ActionListener listener, JPanel panel) {
         JButton button = new JButton(label);
@@ -84,20 +90,25 @@ public class loginPanel extends JPanel {
             String strUsername = username.getText();
             String strPassword = new String(password.getPassword());
 
+            LoginFrame loginFrame = getLoginFrame();
+
             try (Sqlite sqlite = new Sqlite()) {
                 // check if staff
                 StaffDb staffDb = new StaffDb(sqlite);
-                Staff staffId = staffDb.getIdFromUserCredentials(strUsername, strPassword);
-                if (staffId != null) {
-                    // TODO: what to do if it's staff? This window should also be closed
-
+                Staff staff = staffDb.getIdFromUserCredentials(strUsername, strPassword);
+                if (staff != null) {
+                    // what to do if it's staff? This window should also be closed
+                    loginFrame.setVisible(false);
+                    new StaffMenu(loginFrame, staff);
                 }
 
                 // check if customer
                 CustomerDb customerDb = new CustomerDb(sqlite);
-                Customer customerId = customerDb.getIdFromUserCredentials(strUsername, strPassword);
-                if (customerId != null) {
-                    // TODO: what to do if it's customer? This window should also be closed
+                Customer customer = customerDb.getIdFromUserCredentials(strUsername, strPassword);
+                if (customer != null) {
+                    // what to do if it's customer? This window should also be closed
+                    loginFrame.setVisible(false);
+                    new MemberMenu(loginFrame, customer);
                 }
 
                 JOptionPane.showMessageDialog(null, "The username and password is incorrect.", "Cannot login", JOptionPane.ERROR_MESSAGE);

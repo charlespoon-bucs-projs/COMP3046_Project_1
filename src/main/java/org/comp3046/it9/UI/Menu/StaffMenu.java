@@ -3,11 +3,10 @@ package org.comp3046.it9.UI.Menu;
 import org.comp3046.it9.Database.CustomerDb;
 import org.comp3046.it9.Database.Sqlite;
 import org.comp3046.it9.Entity.Customer;
-import org.comp3046.it9.Entity.Movie;
 import org.comp3046.it9.Entity.Staff;
-import org.comp3046.it9.UI.Index.index;
+import org.comp3046.it9.UI.Login.LoginFrame;
 import org.comp3046.it9.UI.MovieAction.movieSetting;
-import org.comp3046.it9.UI.TransactionRecord.transactionRecord;
+import org.comp3046.it9.UI.TransactionRecord.TransactionRecord;
 import org.comp3046.it9.UI.member.MemberSetting;
 import org.jooq.exception.DataAccessException;
 
@@ -18,7 +17,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class staff_menu {
+public class StaffMenu {
 
     JLabel lblLoginer;
     topbar tb;
@@ -28,12 +27,14 @@ public class staff_menu {
     private JButton btnLogout;
     private JPanel topbar;
 
+    private LoginFrame loginFrame;
     private Staff staff = null;
 
     /**
      * Create the application.
      */
-    public staff_menu(Staff staff) {
+    public StaffMenu(LoginFrame loginFrame, Staff staff) {
+        this.loginFrame = loginFrame;
         this.staff = staff;
         frame = new JFrame();
         frame.setBounds(100, 100, 524, 457);
@@ -103,20 +104,31 @@ public class staff_menu {
         btnLogout.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
         btnLogout.addActionListener(new LogoutAction());
         frame.getContentPane().add(btnLogout);
+    }
 
+    public void setVisible(boolean visible) {
+        frame.setVisible(visible);
+    }
+
+    private StaffMenu getSelf() {
+        return this;
+    }
+
+    private Staff getStaff() {
+        return this.staff;
     }
 
     private class AddMemberAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            new MemberSetting(staff);
+            new MemberSetting(getSelf());
             frame.setVisible(false);
         }
     }
 
     private class AddMovieAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            new movieSetting(staff);
-            frame.dispose();
+            new movieSetting(getSelf());
+            frame.setVisible(false);
         }
     }
 
@@ -146,10 +158,8 @@ public class staff_menu {
 
             // check the member id is true
 
-            new MemberSetting(staff, fetchCustomer);
-
+            new MemberSetting(getSelf(), fetchCustomer);
             frame.setVisible(false);
-
         }
     }
 
@@ -172,16 +182,15 @@ public class staff_menu {
 
     private class TransactionRecordAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            new transactionRecord(staff);
+            new TransactionRecord(getSelf());
             frame.dispose();
         }
     }
 
     private class LogoutAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            new index();
-            frame.setVisible(false);
-
+            loginFrame.setVisible(true);
+            frame.dispose();
         }
     }
 

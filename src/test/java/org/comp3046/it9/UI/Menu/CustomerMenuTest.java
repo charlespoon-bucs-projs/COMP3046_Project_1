@@ -1,7 +1,7 @@
 package org.comp3046.it9.UI.Menu;
 
 import org.comp3046.it9.Entity.Customer;
-import org.comp3046.it9.Entity.Staff;
+import org.comp3046.it9.UI.Login.LoginFrame;
 
 import java.awt.*;
 import java.text.ParseException;
@@ -15,7 +15,7 @@ public class CustomerMenuTest {
     private static final String USERNAME = "sherlock123";
     private static final int MOBILE = 23800000;
     private static final String EMAIL = "pizza@hut.com";
-    private static final String PASSWORD = "qwerty";
+    // private static final String PASSWORD = "qwerty";
     private static Date BIRTHDAY = null;
 
     static {
@@ -29,12 +29,9 @@ public class CustomerMenuTest {
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
-            try {
-                member_menu member_menu = new member_menu(CUSTOMER);
-//                member_menu.frame.setVisible(true);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            LoginFrame loginFrame = new LoginFrame();
+            loginFrame.setVisible(false);
+            new MemberMenu(loginFrame, CUSTOMER);
         });
     }
 }

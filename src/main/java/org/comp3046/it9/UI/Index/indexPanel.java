@@ -1,6 +1,6 @@
 package org.comp3046.it9.UI.Index;
 
-import org.comp3046.it9.UI.Login.loginFrame;
+import org.comp3046.it9.UI.Login.LoginFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,7 +29,7 @@ public class indexPanel extends JPanel {
 
     private class ChangeFrameAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            new loginFrame();
+            new LoginFrame();
         }
     }
 

@@ -4,8 +4,8 @@ import org.comp3046.it9.Database.CustomerDb;
 import org.comp3046.it9.Database.Sqlite;
 import org.comp3046.it9.Entity.Customer;
 import org.comp3046.it9.Entity.Staff;
-import org.comp3046.it9.UI.Menu.member_menu;
-import org.comp3046.it9.UI.Menu.staff_menu;
+import org.comp3046.it9.UI.Menu.MemberMenu;
+import org.comp3046.it9.UI.Menu.StaffMenu;
 import org.comp3046.it9.UI.Menu.topbar;
 import org.comp3046.it9.UI.Register.JTextFieldLimit;
 import org.jdatepicker.impl.DateComponentFormatter;
@@ -18,7 +18,6 @@ import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Calendar;
@@ -26,11 +25,10 @@ import java.util.Date;
 import java.util.Properties;
 
 public class MemberSetting {
-    Staff staff = null;
-    Customer customer = null;
+    private final MemberMenu memberMenu;
+    private final StaffMenu staffMenu;
+    private final Customer editingCustomer;
 
-    boolean isAdd;
-    String isModifiedMember_id;
     JRadioButton rdbtnStaff;
     topbar tp;
     MaskFormatter mf1;
@@ -51,27 +49,31 @@ public class MemberSetting {
      */
 
     // must not be adding customer by customer itself
-    public MemberSetting(Customer customer) {
-        this.isAdd = false;
+    public MemberSetting(MemberMenu memberMenu) {
+        this.memberMenu = memberMenu;
+        this.staffMenu = null;
+        this.editingCustomer = memberMenu.getCustomer();
 
         initialize();
         tp.clock();
     }
 
-    public MemberSetting(Staff staff) { // for add new member
-        this.staff = staff;
+    public MemberSetting(StaffMenu staffMenu) { // for add new member
+        this.memberMenu = null;
+        this.staffMenu = staffMenu;
+        this.editingCustomer = null;
 
         initialize();
         tp.clock();
     }
 
-    public MemberSetting(Staff staff, Customer customer) { // for
+    public MemberSetting(StaffMenu staffMenu, Customer editingCustomer) { // for
         // add
         // new
         // member
-        // this.isModifiedMember_id = isModifiedMember_id;
-        this.customer = customer;
-        this.staff = staff;
+        this.memberMenu = null;
+        this.staffMenu = staffMenu;
+        this.editingCustomer = editingCustomer;
 
         initialize();
         tp.clock();
@@ -83,7 +85,7 @@ public class MemberSetting {
     private void initialize() {
 
         frame = new JFrame();
-        if (isAdd)
+        if (this.editingCustomer == null)
             frame.setTitle("XXX Cinema - Add New Member");
         else
             frame.setTitle("XXX Cinema - Modify Member");
@@ -99,7 +101,7 @@ public class MemberSetting {
         topbar.setBounds(0, 0, 504, 40);
 
         lblLoginer = new JLabel("Login as ");
-        if (staff != null)
+        if (staffMenu != null)
             lblLoginer.setText(lblLoginer.getText() + tp.FullName + "-Staff");
         else
             lblLoginer.setText(lblLoginer.getText() + tp.FullName + "-Member");
@@ -234,7 +236,7 @@ public class MemberSetting {
         button.setBounds(27, 367, 122, 23);
         frame.getContentPane().add(button);
 
-        if (isAdd == false && staff != null) { // staff modify mem
+        if (this.editingCustomer != null && staffMenu != null) { // staff modify mem
 
             textField_FullName.setText("BenLi");
             textField_FullName.setEditable(true);
@@ -261,7 +263,7 @@ public class MemberSetting {
 
             datePicker.getComponent(1).setEnabled(false);
 
-        } else if (staff != null) {
+        } else if (staffMenu != null) {
             rdbtnStaff.setVisible(true);
             rdbtnStaff.setSelected(true);
             rdbtnStaff.setEnabled(false);
@@ -275,14 +277,13 @@ public class MemberSetting {
 
     private class BackAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            if (staff != null) {
-                new staff_menu(staff);
-                frame.dispose();
-            } else {
-                new member_menu(customer);
-                frame.dispose();
+            frame.setVisible(false);
+            if (staffMenu != null) {
+                staffMenu.setVisible(true);
+            } else { // memberMenu != null
+                memberMenu.setVisible(true);
             }
-
+            frame.dispose();
         }
     }
 
@@ -309,7 +310,7 @@ public class MemberSetting {
             Date dateOfBorn = (Date) datePicker.getModel().getValue();
             String email = textField_Email.getText();
 
-            boolean isAdd = customer == null;
+            boolean isAdd = editingCustomer == null;
 
             try (Sqlite sqlite = new Sqlite()) {
                 CustomerDb customerDb = new CustomerDb(sqlite);
@@ -328,7 +329,7 @@ public class MemberSetting {
                     );
                 } else {
                     dbOk = customerDb.updateCustomer(
-                            customer.getUid(),
+                            editingCustomer.getUid(),
                             username,
                             password,
                             salutation,
@@ -340,11 +341,16 @@ public class MemberSetting {
                 }
 
                 if (!dbOk) {
-                    JOptionPane.showMessageDialog(null, "Failed to modify data on database, unknown reason.", "Member Settings", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(
+                            null, "Failed to modify data on database, unknown reason.",
+                            "Member Settings", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
-                JOptionPane.showMessageDialog(null, "Successful to " + (isAdd ? "add" : ("modify user " + customer.getUid())) + " data.", "Member Settings", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Successful to " + (isAdd ? "add" : ("modify user " + editingCustomer.getUid())) + " data.",
+                        "Member Settings", JOptionPane.INFORMATION_MESSAGE);
 
                 // back
                 btnBack.doClick();

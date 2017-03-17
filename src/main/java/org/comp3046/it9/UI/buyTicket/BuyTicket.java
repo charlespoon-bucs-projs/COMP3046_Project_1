@@ -1,6 +1,7 @@
 package org.comp3046.it9.UI.buyTicket;
 
-import org.comp3046.it9.UI.Menu.member_menu;
+import org.comp3046.it9.Entity.Movie;
+import org.comp3046.it9.UI.Menu.MemberMenu;
 import org.comp3046.it9.UI.Menu.topbar;
 
 import javax.swing.*;
@@ -8,12 +9,16 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class buyTicket {
+public class BuyTicket {
+    // parent
+    private final MemberMenu memberMenu;
+    // previous
+    private final PayMethod payMethod;
+    // target
+    private final Movie movie;
+    private final String[] selectedSeat;
 
 	private JFrame frame;
-
-	String[] selectedSeat;
-	String movieName;
 	private JPanel topbar;
 	private JLabel lblLoginer, lblID, lblMovieName, lblTime, lblLocation, lblSeat, lblTotal;
 	topbar tb;
@@ -24,8 +29,12 @@ public class buyTicket {
 	/**
 	 * Create the application.
 	 */
-	public buyTicket(String[] selectedSeat, String movieName) {
+	public BuyTicket(MemberMenu memberMenu, PayMethod payMethod, Movie movie, String[] selectedSeat) {
+        this.memberMenu = memberMenu;
+        this.payMethod = payMethod;
+        this.movie = movie;
 		this.selectedSeat = selectedSeat;
+
 		tb = new topbar();
 		frame = new JFrame();
 		frame.getContentPane().setLayout(null);
@@ -113,19 +122,17 @@ public class buyTicket {
 
 	private class PrintAction implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
-
-			new member_menu(tb.id, tb.FullName);
-			frame.dispose();
-
+            btnBack.doClick(); // ha
 		}
 	}
 
 	private class BackAction implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
-
-			new member_menu(tb.id, tb.FullName);
-			frame.dispose();
-
+            payMethod.getSearchResult().getSearchMovie().dispose();
+            payMethod.getSearchResult().dispose();
+            payMethod.dispose();
+            memberMenu.setVisible(true);
+            frame.dispose();
 		}
 	}
 }

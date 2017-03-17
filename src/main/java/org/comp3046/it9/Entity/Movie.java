@@ -14,16 +14,8 @@ public class Movie {
     private final String cast;
     private final String location;
 
-    public Movie(int id,
-                 String name,
-                 String type,
-                 Date date,
-                 String typeClass,
-                 String language,
-                 int length,
-                 String director,
-                 String cast,
-                 String location) {
+    public Movie(int id, String name, String type, Date date, String typeClass, String language, int length,
+                 String director, String cast, String location) {
         this.id = id;
         this.name = name;
         this.type = type;

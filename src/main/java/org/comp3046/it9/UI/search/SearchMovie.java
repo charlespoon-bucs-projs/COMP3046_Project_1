@@ -1,7 +1,7 @@
 package org.comp3046.it9.UI.search;
 
-import org.comp3046.it9.Entity.Customer;
-import org.comp3046.it9.UI.Menu.member_menu;
+import org.comp3046.it9.Entity.Movie;
+import org.comp3046.it9.UI.Menu.MemberMenu;
 import org.comp3046.it9.UI.Menu.topbar;
 
 import javax.swing.*;
@@ -9,9 +9,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class searchMovie {
+public class SearchMovie {
+    private final MemberMenu memberMenu;
 
-    private Customer customer;
     topbar tb;
     private JFrame frame;
     private JPanel topbar;
@@ -23,8 +23,8 @@ public class searchMovie {
     /**
      * Create the application.
      */
-    public searchMovie(Customer customer) {
-        this.customer = customer;
+    public SearchMovie(MemberMenu memberMenu) {
+        this.memberMenu = memberMenu;
 
         tb = new topbar();
         frame = new JFrame();
@@ -72,6 +72,7 @@ public class searchMovie {
 
         comboBox_MovieName = new JComboBox();
         comboBox_MovieName.setBounds(109, 117, 307, 40);
+        // TODO: no more dummy movie titles
         comboBox_MovieName.addItem("Movie 1");
         comboBox_MovieName.addItem("Movie 2");
         comboBox_MovieName.addItem("Movie 3");
@@ -115,10 +116,22 @@ public class searchMovie {
 
     }
 
+    public void setVisible(boolean visible) {
+        frame.setVisible(visible);
+    }
+
+    public SearchMovie getSelf() {
+        return this;
+    }
+
+    public void dispose() {
+        frame.dispose();
+    }
+
     private class BackAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-
-            new member_menu(customer);
+            memberMenu.setVisible(true);
+            frame.setVisible(false);
             frame.dispose();
 
         }
@@ -126,10 +139,14 @@ public class searchMovie {
 
     private class SubmitAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            String movie_id = " ";
-            String movie_name = "Name";
-            new searchResult(customer, movie_id, movie_name);
-            frame.dispose();
+            //noinspection ConstantIfStatement,ConstantConditions
+            if (true) throw new UnsupportedOperationException("not yet implemented");
+
+            // TODO: gimme movie entity
+            Movie movie = null;
+
+            new SearchResult(memberMenu, getSelf(), movie);
+            frame.setVisible(false);
         }
     }
 
