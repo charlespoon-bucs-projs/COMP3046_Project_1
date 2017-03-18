@@ -16,7 +16,7 @@ public class MemberMenu {
     private LoginFrame loginFrame;
     private Customer customer;
 
-    TopBar tp;
+    private TopBar tp;
     private JFrame frame;
     private JLabel lblLoginer;
     private JSeparator separator;

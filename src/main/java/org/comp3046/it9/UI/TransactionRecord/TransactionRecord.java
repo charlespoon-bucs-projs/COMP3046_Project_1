@@ -15,7 +15,7 @@ public class TransactionRecord {
     private final MemberMenu memberMenu;
     private final StaffMenu staffMenu;
 
-    TopBar tb;
+    private TopBar tb;
     private JFrame frame;
     private JPanel topbar;
     private JLabel lblLoginer, lblMobile;
@@ -61,10 +61,18 @@ public class TransactionRecord {
         topbar.setBounds(0, 0, 504, 40);
 
         lblLoginer = new JLabel("Login as ");
-        if (staffMenu != null)
-            lblLoginer.setText(lblLoginer.getText() + tb.FullName + "-Staff");
-        else
-            lblLoginer.setText(lblLoginer.getText() + tb.FullName + "-Member");
+        int id = 0;
+        String name = "";
+        if (staffMenu != null){
+            id = staffMenu.getStaff().getId();
+            name = staffMenu.getStaff().getName();
+            lblLoginer.setText(lblLoginer.getText() + name + "-Staff");
+        }
+        else {
+            id = memberMenu.getCustomer().getUid();
+            name = memberMenu.getCustomer().getName();
+            lblLoginer.setText(lblLoginer.getText() + name + "-Member");
+        }
         lblLoginer.setBounds(304, 10, 200, 15);
 
         lblLoginer.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
@@ -74,7 +82,7 @@ public class TransactionRecord {
         separator.setBounds(10, 35, 534, 2);
         topbar.add(separator);
 
-        frame.getContentPane().add(tb.topbarLayout(topbar, tb.id, tb.FullName));
+        frame.getContentPane().add(tb.topbarLayout(topbar, id + "", name));
 
         btnBack = new JButton("Back");
         btnBack.setBounds(10, 52, 87, 23);

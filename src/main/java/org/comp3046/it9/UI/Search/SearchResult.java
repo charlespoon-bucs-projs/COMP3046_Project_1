@@ -20,9 +20,11 @@ public class SearchResult {
     private final String[] selectedSeat; // new from this step
 
     @Deprecated
-    String movie_id, movie_name;
+    String movie_id;
+    @Deprecated
+    private String movie_name;
 
-    TopBar tb;
+    private TopBar tb;
     private JFrame frame;
     private JPanel topbar;
     private JLabel lblLoginer, lblMovieName, lblHouse, lblTime;
@@ -62,7 +64,7 @@ public class SearchResult {
         topbar.setBounds(0, 0, 504, 40);
 
         lblLoginer = new JLabel("Login as ");
-        lblLoginer.setText(lblLoginer.getText() + tb.FullName + "-Member");
+        lblLoginer.setText(lblLoginer.getText() + memberMenu.getCustomer().getName() + "-Member");
         lblLoginer.setBounds(304, 10, 200, 15);
 
         lblLoginer.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
@@ -72,7 +74,9 @@ public class SearchResult {
         separator.setBounds(10, 35, 534, 2);
         topbar.add(separator);
 
-        frame.getContentPane().add(tb.topbarLayout(topbar, tb.id, tb.FullName));
+        frame.getContentPane().add(tb.topbarLayout(
+                topbar, memberMenu.getCustomer().getUid() + "", memberMenu.getCustomer().getName()
+        ));
 
         btnBack = new JButton("Back");
         btnBack.setBounds(10, 50, 87, 23);
@@ -160,7 +164,7 @@ public class SearchResult {
         frame.setVisible(visible);
     }
 
-    public SearchResult getSelf() {
+    private SearchResult getSelf() {
         return this;
     }
 

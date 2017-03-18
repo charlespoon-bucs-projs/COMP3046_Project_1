@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Index {
+class Index {
 
     private JFrame frame;
     private JTextField textField_username;
@@ -18,7 +18,7 @@ public class Index {
     /**
      * Create the application.
      */
-    public Index() {
+    private Index() {
         frame = new JFrame();
         frame.setBounds(100, 100, 450, 300);
         frame.setTitle("XXX Cinema - Login");

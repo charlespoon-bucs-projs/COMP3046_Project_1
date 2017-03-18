@@ -5,7 +5,7 @@ import org.comp3046.it9.UI.Login.LoginFrame;
 
 import java.awt.*;
 
-public class StaffMenuTest {
+class StaffMenuTest {
     private static final int SID = 1;
     private static final String NAME = "Watson";
     private static final String USERNAME = "waston123";

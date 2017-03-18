@@ -8,7 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class CustomerMenuTest {
+class CustomerMenuTest {
     private static final int UID = 1;
     private static final String NAME = "Sherlock";
     private static final String SALUTATION = "Mr";

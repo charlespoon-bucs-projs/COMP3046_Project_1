@@ -27,10 +27,11 @@ public class PayMethod {
 	private JPanel topbar;
 	private JLabel lblLoginer, lblMovieName, lblSelectdSeat, lblpatmentMethod, lblCardNo, lblExpiryDate, lblSecurity,
 			lblnew;
-	TopBar tb;
+	private TopBar tb;
 	private JButton btnCancel, btnPrint;
 	private JSeparator separator;
-	JRadioButton rdbtnCash, rdbtnCreditCard;
+	private JRadioButton rdbtnCash;
+	private JRadioButton rdbtnCreditCard;
 	private JTextField textField_cardNo, textField_YY, textField_MM;
 	private JTextField textField_Security;
 
@@ -64,7 +65,7 @@ public class PayMethod {
 		topbar.setBounds(0, 0, 504, 40);
 
 		lblLoginer = new JLabel("Login as ");
-		lblLoginer.setText(lblLoginer.getText() + tb.FullName + "-Member");
+		lblLoginer.setText(lblLoginer.getText() + memberMenu.getCustomer().getName() + "-Member");
 		lblLoginer.setBounds(304, 10, 200, 15);
 
 		lblLoginer.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
@@ -74,7 +75,9 @@ public class PayMethod {
 		separator.setBounds(10, 35, 534, 2);
 		topbar.add(separator);
 
-		frame.getContentPane().add(tb.topbarLayout(topbar, tb.id, tb.FullName));
+		frame.getContentPane().add(tb.topbarLayout(
+				topbar, memberMenu.getCustomer().getUid() + "", memberMenu.getCustomer().getName()
+		));
 
 		lblMovieName = new JLabel(movie.getName() + "ih");
 		lblMovieName.setBounds(122, 50, 280, 40);
@@ -181,7 +184,7 @@ public class PayMethod {
         frame.setVisible(visible);
     }
 
-    public PayMethod getSelf() {
+    private PayMethod getSelf() {
         return this;
     }
 

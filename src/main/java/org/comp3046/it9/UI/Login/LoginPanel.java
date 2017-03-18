@@ -16,7 +16,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class LoginPanel extends JPanel {
+class LoginPanel extends JPanel {
     private LoginFrame loginFrame;
 
     private JTextField username;

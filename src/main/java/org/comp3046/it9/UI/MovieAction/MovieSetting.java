@@ -20,17 +20,19 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 import java.util.Properties;
 
 public class MovieSetting {
     private StaffMenu staffMenu;
-    private Movie movie = null;
+    private boolean editMovie;
+    private Map<Integer, Movie> cachedMoviesToEdit;
 //    private Customer customer = null;
 
-    TopBar tb;
-//    boolean isAdd;
+    private TopBar tb;
+    //    boolean isAdd;
     MaskFormatter mf1;
-    UtilDateModel model;
+    private UtilDateModel model;
     private JFrame frame;
     private JPanel topbar;
     private JLabel lblLoginer, lblMovieImage, lblMovieName, lblDate, lblType, lblClass, lblLang, lblLeng, lblDirector,
@@ -38,8 +40,14 @@ public class MovieSetting {
     private JButton btnBack, btnSubmit, btnReset, btnDelete;
     private JSeparator separator;
     private JTextField textField_MovieName, textField_Director, textField_Price, textField_Leng, textField_Cast;
-    private JComboBox comboBox_Type, comboBox_Class, comboBox_Lang, comboBox_House, comboBox_hours, comboBox_apm,
-            comboBox_minutes, comboBox_ID;
+    private JComboBox<String> comboBox_Type;
+    private JComboBox<String> comboBox_Class;
+    private JComboBox<String> comboBox_Lang;
+    private JComboBox<String> comboBox_House;
+    private JComboBox<String> comboBox_hours;
+    private JComboBox<String> comboBox_apm;
+    private JComboBox<String> comboBox_minutes;
+    private JComboBox<Integer> comboBox_ID;
     private JLabel lblId;
 
     private JDatePickerImpl datePicker;
@@ -49,9 +57,9 @@ public class MovieSetting {
         _ctor();
     }
 
-    public MovieSetting(StaffMenu staffMenu, Movie movie) {
+    public MovieSetting(StaffMenu staffMenu, Object editMovie) {
         this.staffMenu = staffMenu;
-        this.movie = movie;
+        this.editMovie = true;
         _ctor();
     }
 
@@ -67,6 +75,23 @@ public class MovieSetting {
 //        this.isAdd = isAdd;
         initialize();
         tb.clock();
+
+        // async
+        if (this.editMovie)
+            new Thread(() -> {
+                try (Sqlite sqlite = new Sqlite()) {
+                    MovieDb movieDb = new MovieDb(sqlite);
+                    this.cachedMoviesToEdit = movieDb.getMoviesList();
+                    this.cachedMoviesToEdit.keySet().forEach(k -> comboBox_ID.addItem(k));
+                } catch (SQLException | IOException e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "Cannot fetch movie data from database: " + e.getMessage(),
+                            "Movie setting",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }).start();
     }
 
     /**
@@ -86,7 +111,7 @@ public class MovieSetting {
         topbar.setBounds(0, 0, 504, 40);
 
         lblLoginer = new JLabel("Login as ");
-        lblLoginer.setText(lblLoginer.getText() + tb.FullName + "-Staff");
+        lblLoginer.setText(lblLoginer.getText() + staffMenu.getStaff().getName() + "-Staff");
         lblLoginer.setBounds(304, 10, 200, 15);
 
         lblLoginer.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
@@ -96,7 +121,13 @@ public class MovieSetting {
         separator.setBounds(10, 35, 534, 2);
         topbar.add(separator);
 
-        frame.getContentPane().add(tb.topbarLayout(topbar, tb.id, tb.FullName));
+        frame.getContentPane().add(
+                tb.topbarLayout(
+                        topbar,
+                        staffMenu.getStaff().getId() + "",
+                        staffMenu.getStaff().getName()
+                )
+        );
 
         btnBack = new JButton("Back");
         btnBack.setBounds(10, 52, 87, 23);
@@ -157,7 +188,7 @@ public class MovieSetting {
         lblClass.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
         frame.getContentPane().add(lblClass);
 
-        comboBox_Class = new JComboBox();
+        comboBox_Class = new JComboBox<>();
         comboBox_Class.setBounds(411, 149, 87, 28);
         comboBox_Class.addItem("I");
         comboBox_Class.addItem("II");
@@ -171,7 +202,7 @@ public class MovieSetting {
         lblType.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
         frame.getContentPane().add(lblType);
 
-        comboBox_Type = new JComboBox();
+        comboBox_Type = new JComboBox<>();
         comboBox_Type.setBounds(411, 194, 87, 28);
 
         comboBox_Type.addItem("Action");
@@ -184,7 +215,7 @@ public class MovieSetting {
         lblLang.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
         frame.getContentPane().add(lblLang);
 
-        comboBox_Lang = new JComboBox();
+        comboBox_Lang = new JComboBox<>();
         comboBox_Lang.setBounds(258, 194, 92, 28);
         comboBox_Lang.addItem("Chinese");
         comboBox_Lang.addItem("English");
@@ -228,7 +259,7 @@ public class MovieSetting {
         lblHouse.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
         frame.getContentPane().add(lblHouse);
 
-        comboBox_House = new JComboBox();
+        comboBox_House = new JComboBox<>();
         comboBox_House.setBounds(411, 278, 87, 28);
         comboBox_House.addItem("House A");
         comboBox_House.addItem("House B");
@@ -241,7 +272,7 @@ public class MovieSetting {
         lblTime.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
         frame.getContentPane().add(lblTime);
 
-        comboBox_hours = new JComboBox();
+        comboBox_hours = new JComboBox<String>();
         comboBox_hours.setBounds(262, 314, 62, 28);
         comboBox_hours.addItem("00");
         comboBox_hours.addItem("01");
@@ -270,13 +301,13 @@ public class MovieSetting {
         comboBox_hours.addItem("24");
         frame.getContentPane().add(comboBox_hours);
 
-        comboBox_apm = new JComboBox();
+        comboBox_apm = new JComboBox<>();
         comboBox_apm.setBounds(452, 314, 46, 28);
         comboBox_apm.addItem("am");
         comboBox_apm.addItem("pm");
         frame.getContentPane().add(comboBox_apm);
 
-        comboBox_minutes = new JComboBox();
+        comboBox_minutes = new JComboBox<String>();
         comboBox_minutes.setBounds(334, 314, 87, 28);
         comboBox_minutes.addItem("00 min");
         comboBox_minutes.addItem("15 min");
@@ -298,6 +329,7 @@ public class MovieSetting {
         btnDelete.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
         btnDelete.setBounds(10, 393, 122, 23);
         btnDelete.addActionListener(new DeleteAction());
+        btnDelete.setEnabled(this.editMovie); // only editing movie can use this button
         frame.getContentPane().add(btnDelete);
 
         btnSubmit = new JButton("Submit");
@@ -312,8 +344,10 @@ public class MovieSetting {
         btnDelete.addActionListener(new ResetAction());
         frame.getContentPane().add(btnReset);
 
-        comboBox_ID = new JComboBox();
+        comboBox_ID = new JComboBox<>();
         comboBox_ID.setBounds(235, 85, 263, 31);
+        comboBox_ID.setEnabled(this.editMovie);
+        comboBox_ID.addActionListener(new IDSelectionListener());
         frame.getContentPane().add(comboBox_ID);
 
         lblId = new JLabel("ID");
@@ -321,12 +355,12 @@ public class MovieSetting {
         lblId.setBounds(168, 85, 62, 35);
         frame.getContentPane().add(lblId);
 
-        if (movie == null) // check the staff want to add or modify
-            frame.setTitle("XXX Cinema - Add New Movie");
-        else {
+        if (this.editMovie) // check the staff want to add or modify
+        {
             frame.setTitle("XXX Cinema - Modify Movie");
             textField_MovieName.setText("ACB Movie");
-
+        } else {
+            frame.setTitle("XXX Cinema - Add New Movie");
         }
 
     }
@@ -349,28 +383,15 @@ public class MovieSetting {
 
     private class SubmitAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            String name = textField_MovieName.getText();
-            Date date = (Date) datePicker.getModel().getValue();
-            String typeClass = (String) comboBox_Class.getSelectedItem();
-            String language = (String) comboBox_Lang.getSelectedItem();
-            String type = (String) comboBox_Type.getSelectedItem();
-            String director = textField_Director.getText();
-            String location = (String) comboBox_House.getSelectedItem();
-            // TODO: where is time field on database?
-            String cast = textField_Cast.getText();
-            int movieId;
-            int length;
-            int price;
+            Movie m;
             try {
-                movieId = Integer.parseInt((String) comboBox_ID.getSelectedItem());
-                length = Integer.parseInt(textField_Leng.getText());
-                price = Integer.parseInt(textField_Price.getText());
+                m = fetchMovieFromFields();
             } catch (NumberFormatException ignored) {
                 JOptionPane.showMessageDialog(null, "Not a number.", "Movie setting", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
-            boolean isAdd = movie == null;
+            boolean isAdd = !editMovie;
 
             try (Sqlite sqlite = new Sqlite()) {
                 MovieDb movieDb = new MovieDb(sqlite);
@@ -378,9 +399,12 @@ public class MovieSetting {
                 boolean dbOk = false;
 
                 if (isAdd) {
-                    dbOk = movieDb.createMovie(name, type, date, typeClass, language, length, director, cast, location);
+                    dbOk = movieDb.createMovie(m.getName(), m.getType(), m.getDate(),
+                            m.getTypeClass(), m.getLanguage(), m.getLength(),
+                            m.getDirector(), m.getCast(), m.getLocation(),
+                            m.getPrice());
                 } else {
-                    dbOk = movieDb.updateMovie(movie.getId(), name, type, date, typeClass, language, length, director, cast, location);
+                    dbOk = movieDb.updateMovie(m);
                 }
 
                 if (!dbOk) {
@@ -388,21 +412,24 @@ public class MovieSetting {
                     return;
                 }
 
-                JOptionPane.showMessageDialog(null, "Successful to " + (isAdd ? "add" : ("modify movie " + movie.getId())) + " data.", "Movie Settings", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Successful to " + (isAdd ? "add" : ("modify movie " + m.getId())) + " data.", "Movie Settings", JOptionPane.INFORMATION_MESSAGE);
 
                 // back
                 btnBack.doClick();
             } catch (SQLException | IOException e) {
-                JOptionPane.showMessageDialog(null, "Error: \r\n\r\n" + e.getMessage() , "Modify member", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Error: \r\n\r\n" + e.getMessage(), "Modify member", JOptionPane.ERROR_MESSAGE);
                 e.printStackTrace();
-                return;
             }
         }
     }
 
     private class ResetAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            // TODO: reset movie setting
+            if (editMovie) {
+                new IDSelectionListener().actionPerformed(event);
+            } else {
+                pasteMovieToFields(null);
+            }
         }
     }
 
@@ -433,5 +460,71 @@ public class MovieSetting {
 
             }
         }
+    }
+
+    private class IDSelectionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // selection changes
+            int selectedMovieId = (int) comboBox_ID.getSelectedItem();
+            Movie movie = cachedMoviesToEdit.get(selectedMovieId);
+            pasteMovieToFields(movie);
+        }
+    }
+
+    private void pasteMovieToFields(Movie m) {
+        if (m == null) {
+            textField_MovieName.setText("");
+            // no use for ID
+            ((UtilDateModel) datePicker.getModel()).setDate(
+                    Calendar.getInstance().get(Calendar.YEAR),
+                    Calendar.getInstance().get(Calendar.MONTH),
+                    Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+            comboBox_Class.setSelectedIndex(0);
+            comboBox_Lang.setSelectedIndex(0);
+            comboBox_Type.setSelectedIndex(0);
+            textField_Director.setText("");
+            textField_Leng.setText("");
+            textField_Price.setText("");
+            comboBox_House.setSelectedIndex(0);
+            comboBox_hours.setSelectedIndex(0);
+            comboBox_minutes.setSelectedIndex(0);
+            comboBox_apm.setSelectedIndex(0);
+            textField_Cast.setText("");
+        } else {
+            textField_MovieName.setText(m.getName());
+            // shall not edit ID to make infinite loop
+            ((UtilDateModel) datePicker.getModel()).setValue(m.getDate());
+            comboBox_Class.setSelectedItem(m.getTypeClass());
+            comboBox_Lang.setSelectedItem(m.getLanguage());
+            comboBox_Type.setSelectedItem(m.getType());
+            textField_Director.setText(m.getDirector());
+            textField_Leng.setText(m.getLength() + "");
+            textField_Price.setText(m.getPrice() + "");
+            comboBox_House.setSelectedItem(m.getLocation());
+            // TODO: DATABASE MOVIE TABLE DOES NOT HAVE START TIME FIELD !
+            textField_Cast.setText(m.getCast());
+        }
+    }
+
+    private Movie fetchMovieFromFields() throws NumberFormatException {
+        int id;
+        if (editMovie) // HACK
+            id = (int) comboBox_ID.getSelectedItem();
+        else
+            id = Integer.MIN_VALUE;
+        String name = textField_MovieName.getText();
+        String type = (String) comboBox_Type.getSelectedItem();
+        Date date = (Date) datePicker.getModel().getValue();
+        String typeClass = (String) comboBox_Class.getSelectedItem();
+        String language = (String) comboBox_Lang.getSelectedItem();
+        String director = textField_Director.getText();
+        int length = Integer.parseInt(textField_Leng.getText());
+        int price = Integer.parseInt(textField_Price.getText());
+        String location = (String) comboBox_House.getSelectedItem();
+        // TODO: DATABASE MOVIE TABLE DOES NOT HAVE START TIME FIELD !
+        String cast = textField_Cast.getText();
+
+        return new Movie(id, name, type, date, typeClass, language, length, director, cast, location, price);
     }
 }

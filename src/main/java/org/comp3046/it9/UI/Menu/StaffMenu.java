@@ -19,8 +19,8 @@ import java.sql.SQLException;
 
 public class StaffMenu {
 
-    JLabel lblLoginer;
-    TopBar tb;
+    private JLabel lblLoginer;
+    private TopBar tb;
     private JFrame frame;
     private JSeparator separator;
     private JButton btnAddMember, btnAddMovie, btnModifyMember, btnModifyMovie, btnTransactionRecord;
@@ -114,7 +114,7 @@ public class StaffMenu {
         return this;
     }
 
-    private Staff getStaff() {
+    public Staff getStaff() {
         return this.staff;
     }
 

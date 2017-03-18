@@ -22,7 +22,8 @@ public class MovieDb {
     public boolean createMovie(String name, String type, Date date,
                                String typeClass, String language,
                                int length, String director,
-                               String cast, String location) {
+                               String cast, String location,
+                               int price) {
         DSLContext dsl = this.sqlite.getDsl();
 
         try {
@@ -35,7 +36,8 @@ public class MovieDb {
                     MOVIE.MOVIE_LENGTH,
                     MOVIE.MOVIE_DIRECTOR,
                     MOVIE.MOVIE_CAST,
-                    MOVIE.MOVIE_LOCATION)
+                    MOVIE.MOVIE_LOCATION,
+                    MOVIE.MOVIE_PRICE)
                     .values(
                             name,
                             type,
@@ -45,7 +47,8 @@ public class MovieDb {
                             length,
                             director,
                             cast,
-                            location
+                            location,
+                            price
                     )
                     .execute() == 1;
             // IF need to know new ID, call SQL "SELECT last_insert_rowid()"
@@ -57,13 +60,17 @@ public class MovieDb {
     }
 
     public boolean createMovie(Movie m) {
-        return this.createMovie(m.getName(), m.getType(), m.getDate(), m.getTypeClass(), m.getLanguage(), m.getLength(), m.getDirector(), m.getCast(), m.getLocation());
+        return this.createMovie(
+                m.getName(), m.getType(), m.getDate(),
+                m.getTypeClass(), m.getLanguage(), m.getLength(),
+                m.getDirector(), m.getCast(), m.getLocation(),
+                m.getPrice());
     }
 
     public boolean updateMovie(int movieId, String name, String type, Date date,
                                String typeClass, String language,
                                int length, String director,
-                               String cast, String location) {
+                               String cast, String location, int price) {
         DSLContext dsl = this.sqlite.getDsl();
 
         try {
@@ -77,6 +84,7 @@ public class MovieDb {
                     .set(MOVIE.MOVIE_DIRECTOR, director)
                     .set(MOVIE.MOVIE_CAST, cast)
                     .set(MOVIE.MOVIE_LOCATION, location)
+                    .set(MOVIE.MOVIE_PRICE, price)
                     .where(MOVIE.MID.equal(movieId))
                     .execute() == 1;
         } catch (DataAccessException e) {
@@ -84,6 +92,14 @@ public class MovieDb {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public boolean updateMovie(Movie m) {
+        return this.updateMovie(
+                m.getId(), m.getName(), m.getType(),
+                m.getDate(), m.getTypeClass(), m.getLanguage(),
+                m.getLength(), m.getDirector(), m.getCast(),
+                m.getLocation(), m.getPrice());
     }
 
     public boolean removeMovie(int movieId) {
@@ -128,8 +144,8 @@ public class MovieDb {
                 r.get(MOVIE.MOVIE_LENGTH),
                 r.get(MOVIE.MOVIE_DIRECTOR),
                 r.get(MOVIE.MOVIE_CAST),
-                r.get(MOVIE.MOVIE_LOCATION)
-
+                r.get(MOVIE.MOVIE_LOCATION),
+                r.get(MOVIE.MOVIE_PRICE)
         )).collect(Collectors.toMap(Movie::getId, c -> c));
     }
 
@@ -169,7 +185,7 @@ public class MovieDb {
                 fetchSingle.get(MOVIE.MOVIE_LENGTH),
                 fetchSingle.get(MOVIE.MOVIE_DIRECTOR),
                 fetchSingle.get(MOVIE.MOVIE_CAST),
-                fetchSingle.get(MOVIE.MOVIE_LOCATION)
-        );
+                fetchSingle.get(MOVIE.MOVIE_LOCATION),
+                fetchSingle.get(MOVIE.MOVIE_PRICE));
     }
 }

@@ -11,20 +11,20 @@ import java.util.stream.Collectors;
 
 import static org.comp3046.it9.Database.JooqGenerated.Tables.TRANSACTIONS;
 
-public class TransactionsDb {
+class TransactionsDb {
     private Sqlite sqlite;
 
     public TransactionsDb(Sqlite sqlite) {
         this.sqlite = sqlite;
     }
 
-    public boolean createTransaction(int staffId,
-                                     int customerId,
-                                     int movieId,
-                                     String seat,
-                                     int total,
-                                     int numberOfTickets,
-                                     boolean cancelled) {
+    private boolean createTransaction(int staffId,
+                                      int customerId,
+                                      int movieId,
+                                      String seat,
+                                      int total,
+                                      int numberOfTickets,
+                                      boolean cancelled) {
         DSLContext dsl = this.sqlite.getDsl();
 
         try {

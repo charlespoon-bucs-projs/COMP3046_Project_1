@@ -20,8 +20,8 @@ import java.util.Properties;
 
 public class Register {
 
-    MaskFormatter mf1;
-    UtilDateModel model;
+    private MaskFormatter mf1;
+    private UtilDateModel model;
     private JFrame frame;
     private JTextField textField_FullName, textField_Username, textField_Mobile_Number, textField_Email,
             textField_Confirm_Email, textField_Password, textField_Confirm_Password;

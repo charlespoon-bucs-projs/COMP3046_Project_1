@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class IndexPanel extends JPanel {
+class IndexPanel extends JPanel {
     private JPanel controlPanel;
 
     public IndexPanel() {

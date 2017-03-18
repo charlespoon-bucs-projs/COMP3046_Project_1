@@ -28,17 +28,17 @@ public class MemberSetting {
     private final StaffMenu staffMenu;
     private final Customer editingCustomer;
 
-    JRadioButton rdbtnStaff;
-    TopBar tp;
+    private JRadioButton rdbtnStaff;
+    private TopBar tp;
     MaskFormatter mf1;
-    UtilDateModel model;
-    JDatePickerImpl datePicker;
+    private UtilDateModel model;
+    private JDatePickerImpl datePicker;
     private JFrame frame;
     private JLabel lblLoginer, lblFullName, lblSalutation, lblUsername, lblBirthday, lblMobileNumber, lblEmail,
             lblPassword;
     private JTextField textField_FullName, textField_Username, textField_Mobile_Number, textField_Email,
             textField_Password;
-    private JComboBox comboBox_Salutation;
+    private JComboBox<String> comboBox_Salutation;
     private JButton btnSubmit, btnReset, btnBack;
     private JPanel topbar;
     private JSeparator separator;
@@ -100,10 +100,18 @@ public class MemberSetting {
         topbar.setBounds(0, 0, 504, 40);
 
         lblLoginer = new JLabel("Login as ");
-        if (staffMenu != null)
-            lblLoginer.setText(lblLoginer.getText() + tp.FullName + "-Staff");
-        else
-            lblLoginer.setText(lblLoginer.getText() + tp.FullName + "-Member");
+        int id = 0;
+        String name = "";
+        if (staffMenu != null){
+            id = staffMenu.getStaff().getId();
+            name = staffMenu.getStaff().getName();
+            lblLoginer.setText(lblLoginer.getText() + name + "-Staff");
+        }
+        else {
+            id = memberMenu.getCustomer().getUid();
+            name = memberMenu.getCustomer().getName();
+            lblLoginer.setText(lblLoginer.getText() + name + "-Member");
+        }
 
         lblLoginer.setBounds(304, 10, 200, 15);
 
@@ -114,7 +122,8 @@ public class MemberSetting {
         separator.setBounds(10, 35, 534, 2);
         topbar.add(separator);
 
-        frame.getContentPane().add(tp.topbarLayout(topbar, tp.id, tp.FullName));
+
+        frame.getContentPane().add(tp.topbarLayout(topbar, id + "", name));
 
         btnBack = new JButton("Back");
         btnBack.setBounds(10, 52, 87, 23);
@@ -138,7 +147,7 @@ public class MemberSetting {
         lblSalutation.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
         frame.getContentPane().add(lblSalutation);
 
-        comboBox_Salutation = new JComboBox();
+        comboBox_Salutation = new JComboBox<>();
         comboBox_Salutation.setBounds(310, 112, 70, 21);
         comboBox_Salutation.addItem("Mr.");
         comboBox_Salutation.addItem("Ms.");

@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class BuyTicket {
+class BuyTicket {
     // parent
     private final MemberMenu memberMenu;
     // previous
@@ -21,7 +21,7 @@ public class BuyTicket {
 	private JFrame frame;
 	private JPanel topbar;
 	private JLabel lblLoginer, lblID, lblMovieName, lblTime, lblLocation, lblSeat, lblTotal;
-	TopBar tb;
+	private TopBar tb;
 	private JButton btnBack, btnPrint;
 	private JSeparator separator;
 	private JLabel lblNewLabel;
@@ -59,7 +59,7 @@ public class BuyTicket {
 		topbar.setBounds(0, 0, 504, 40);
 
 		lblLoginer = new JLabel("Login as ");
-		lblLoginer.setText(lblLoginer.getText() + tb.FullName + "-Member");
+		lblLoginer.setText(lblLoginer.getText() + memberMenu.getCustomer().getName() + "-Member");
 		lblLoginer.setBounds(304, 10, 200, 15);
 
 		lblLoginer.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
@@ -69,7 +69,9 @@ public class BuyTicket {
 		separator.setBounds(10, 35, 534, 2);
 		topbar.add(separator);
 
-		frame.getContentPane().add(tb.topbarLayout(topbar, tb.id, tb.FullName));
+		frame.getContentPane().add(tb.topbarLayout(
+		        topbar, memberMenu.getCustomer().getUid() + "", memberMenu.getCustomer().getName()
+        ));
 
 		lblNewLabel = new JLabel("Thank you for putchase");
 		lblNewLabel.setBounds(122, 50, 280, 40);

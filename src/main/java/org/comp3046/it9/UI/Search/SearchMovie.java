@@ -12,13 +12,15 @@ import java.awt.event.ActionListener;
 public class SearchMovie {
     private final MemberMenu memberMenu;
 
-    TopBar tb;
+    private TopBar tb;
     private JFrame frame;
     private JPanel topbar;
     private JLabel lblLoginer, lblMovieName, lblHouse, lblTime;
     private JButton btnBack, btnSubmit, btnReset;
     private JSeparator separator;
-    private JComboBox comboBox_MovieName, comboBox_House, comboBox_Time;
+    private JComboBox<String> comboBox_MovieName;
+    private JComboBox<String> comboBox_House;
+    private JComboBox<String> comboBox_Time;
 
     /**
      * Create the application.
@@ -47,7 +49,7 @@ public class SearchMovie {
         topbar.setBounds(0, 0, 504, 40);
 
         lblLoginer = new JLabel("Login as ");
-        lblLoginer.setText(lblLoginer.getText() + tb.FullName + "-Member");
+        lblLoginer.setText(lblLoginer.getText() + memberMenu.getCustomer().getName() + "-Member");
         lblLoginer.setBounds(304, 10, 200, 15);
 
         lblLoginer.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
@@ -57,7 +59,12 @@ public class SearchMovie {
         separator.setBounds(10, 35, 534, 2);
         topbar.add(separator);
 
-        frame.getContentPane().add(tb.topbarLayout(topbar, tb.id, tb.FullName));
+        frame.getContentPane().add(
+                tb.topbarLayout(
+                        topbar,
+                        memberMenu.getCustomer().getUid() + "",
+                        memberMenu.getCustomer().getName())
+        );
 
         btnBack = new JButton("Back");
         btnBack.setBounds(10, 52, 87, 23);
@@ -70,7 +77,7 @@ public class SearchMovie {
         lblMovieName.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 20));
         frame.getContentPane().add(lblMovieName);
 
-        comboBox_MovieName = new JComboBox();
+        comboBox_MovieName = new JComboBox<>();
         comboBox_MovieName.setBounds(109, 117, 307, 40);
         // TODO: no more dummy movie titles
         comboBox_MovieName.addItem("Movie 1");
@@ -83,7 +90,7 @@ public class SearchMovie {
         lblHouse.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 20));
         frame.getContentPane().add(lblHouse);
 
-        comboBox_House = new JComboBox();
+        comboBox_House = new JComboBox<String>();
         comboBox_House.setBounds(109, 212, 307, 40);
         comboBox_House.addItem("A");
         comboBox_House.addItem("B");
@@ -95,7 +102,7 @@ public class SearchMovie {
         lblTime.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 20));
         frame.getContentPane().add(lblTime);
 
-        comboBox_Time = new JComboBox();
+        comboBox_Time = new JComboBox<>();
         comboBox_Time.setBounds(109, 307, 307, 40);
         comboBox_Time.addItem("time 1");
         comboBox_Time.addItem("time 2");
@@ -120,7 +127,7 @@ public class SearchMovie {
         frame.setVisible(visible);
     }
 
-    public SearchMovie getSelf() {
+    private SearchMovie getSelf() {
         return this;
     }
 

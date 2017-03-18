@@ -115,7 +115,7 @@ public class CustomerDb {
         }
     }
 
-    @Deprecated
+    // @Deprecated
     public String forgetPasswordCheckEmail(String email) throws UnsupportedOperationException {
         // DON'T DO THIS ON PRODUCTION!!!
 

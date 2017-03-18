@@ -77,7 +77,6 @@ public class ForgetPassword {
 
                 String newPassword;
                 try {
-                    //noinspection deprecation
                     newPassword = customerDb.forgetPasswordCheckEmail(email);
                 } catch (UnsupportedOperationException e) {
                     JOptionPane.showMessageDialog(null, "User not found.", "Forget password", JOptionPane.WARNING_MESSAGE);

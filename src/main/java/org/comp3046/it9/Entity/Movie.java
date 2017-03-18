@@ -13,9 +13,10 @@ public class Movie {
     private final String director;
     private final String cast;
     private final String location;
+    private final int price;
 
     public Movie(int id, String name, String type, Date date, String typeClass, String language, int length,
-                 String director, String cast, String location) {
+                 String director, String cast, String location, int price) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -26,6 +27,7 @@ public class Movie {
         this.director = director;
         this.cast = cast;
         this.location = location;
+        this.price = price;
     }
 
     public int getId() {
@@ -66,5 +68,9 @@ public class Movie {
 
     public String getLocation() {
         return location;
+    }
+
+    public int getPrice() {
+        return price;
     }
 }

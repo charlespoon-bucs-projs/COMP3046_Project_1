@@ -18,7 +18,7 @@ public class StaffDb {
         this.sqlite = sqlite;
     }
 
-    public boolean createStaff(String name, String username, String password) {
+    private boolean createStaff(String name, String username, String password) {
         DSLContext dsl = this.sqlite.getDsl();
 
         try {
