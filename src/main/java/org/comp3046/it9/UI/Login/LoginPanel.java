@@ -22,7 +22,7 @@ class LoginPanel extends JPanel {
     private JTextField username;
     private JPasswordField password;
 
-    public LoginPanel(LoginFrame loginFrame) {
+    LoginPanel(LoginFrame loginFrame) {
         this.loginFrame = loginFrame;
 
         setLayout(new BorderLayout());
@@ -97,6 +97,7 @@ class LoginPanel extends JPanel {
                     // what to do if it's staff? This window should also be closed
                     loginFrame.setVisible(false);
                     new StaffMenu(loginFrame, staff);
+                    return;
                 }
 
                 // check if customer
@@ -106,6 +107,7 @@ class LoginPanel extends JPanel {
                     // what to do if it's customer? This window should also be closed
                     loginFrame.setVisible(false);
                     new MemberMenu(loginFrame, customer);
+                    return;
                 }
 
                 JOptionPane.showMessageDialog(null, "The username and password is incorrect.", "Cannot login", JOptionPane.ERROR_MESSAGE);
