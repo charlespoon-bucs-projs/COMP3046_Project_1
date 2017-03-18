@@ -42,7 +42,6 @@ public class Register {
         try {
             mf1 = new MaskFormatter("00000000");
         } catch (ParseException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         initialize();

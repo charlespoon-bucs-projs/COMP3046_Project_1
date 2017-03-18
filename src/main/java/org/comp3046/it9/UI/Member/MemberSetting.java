@@ -304,7 +304,7 @@ public class MemberSetting {
             textField_Password.setText("");
             textField_Mobile_Number.setText("");
             textField_Email.setText("");
-            // TODO: how to reset date of birth?
+            ((UtilDateModel)datePicker.getModel()).setValue(new Date()); // reset date of birth to today
         }
     }
 

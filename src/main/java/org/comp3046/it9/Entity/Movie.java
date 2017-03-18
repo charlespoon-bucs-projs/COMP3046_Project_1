@@ -14,9 +14,11 @@ public class Movie {
     private final String cast;
     private final String location;
     private final int price;
+    private final int startHour;
+    private final int startMinute;
 
     public Movie(int id, String name, String type, Date date, String typeClass, String language, int length,
-                 String director, String cast, String location, int price) {
+                 String director, String cast, String location, int price, int startHour, int startMinute) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -28,6 +30,8 @@ public class Movie {
         this.cast = cast;
         this.location = location;
         this.price = price;
+        this.startHour = startHour;
+        this.startMinute = startMinute;
     }
 
     public int getId() {
@@ -72,5 +76,13 @@ public class Movie {
 
     public int getPrice() {
         return price;
+    }
+
+    public int getStartHour() {
+        return startHour;
+    }
+
+    public int getStartMinute() {
+        return startMinute;
     }
 }

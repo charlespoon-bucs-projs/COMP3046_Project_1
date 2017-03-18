@@ -28,7 +28,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Movie extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1704907464;
+    private static final long serialVersionUID = -794422456;
 
     /**
      * The reference instance of <code>Movie</code>
@@ -97,6 +97,16 @@ public class Movie extends TableImpl<Record> {
      * The column <code>Movie.Movie_price</code>.
      */
     public final TableField<Record, Integer> MOVIE_PRICE = createField("Movie_price", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+    /**
+     * The column <code>Movie.Movie_startHour</code>.
+     */
+    public final TableField<Record, Integer> MOVIE_STARTHOUR = createField("Movie_startHour", org.jooq.impl.SQLDataType.INTEGER, this, "");
+
+    /**
+     * The column <code>Movie.Movie_startMinute</code>.
+     */
+    public final TableField<Record, Integer> MOVIE_STARTMINUTE = createField("Movie_startMinute", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
      * Create a <code>Movie</code> table reference

@@ -274,7 +274,6 @@ public class MovieSetting {
 
         comboBox_hours = new JComboBox<String>();
         comboBox_hours.setBounds(262, 314, 62, 28);
-        comboBox_hours.addItem("00");
         comboBox_hours.addItem("01");
         comboBox_hours.addItem("02");
         comboBox_hours.addItem("03");
@@ -301,11 +300,13 @@ public class MovieSetting {
         comboBox_hours.addItem("24");
         frame.getContentPane().add(comboBox_hours);
 
+        /*
         comboBox_apm = new JComboBox<>();
         comboBox_apm.setBounds(452, 314, 46, 28);
         comboBox_apm.addItem("am");
         comboBox_apm.addItem("pm");
         frame.getContentPane().add(comboBox_apm);
+        */
 
         comboBox_minutes = new JComboBox<String>();
         comboBox_minutes.setBounds(334, 314, 87, 28);
@@ -367,11 +368,9 @@ public class MovieSetting {
 
     private class BackAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            // TODO: back rewrite
             frame.setVisible(false);
             staffMenu.setVisible(true);
             frame.dispose();
-
         }
     }
 
@@ -399,10 +398,7 @@ public class MovieSetting {
                 boolean dbOk = false;
 
                 if (isAdd) {
-                    dbOk = movieDb.createMovie(m.getName(), m.getType(), m.getDate(),
-                            m.getTypeClass(), m.getLanguage(), m.getLength(),
-                            m.getDirector(), m.getCast(), m.getLocation(),
-                            m.getPrice());
+                    dbOk = movieDb.createMovie(m);
                 } else {
                     dbOk = movieDb.updateMovie(m);
                 }
@@ -502,7 +498,8 @@ public class MovieSetting {
             textField_Leng.setText(m.getLength() + "");
             textField_Price.setText(m.getPrice() + "");
             comboBox_House.setSelectedItem(m.getLocation());
-            // TODO: DATABASE MOVIE TABLE DOES NOT HAVE START TIME FIELD !
+            comboBox_hours.setSelectedIndex(m.getStartHour());
+            comboBox_minutes.setSelectedIndex(m.getStartMinute() / 15);
             textField_Cast.setText(m.getCast());
         }
     }
@@ -522,9 +519,10 @@ public class MovieSetting {
         int length = Integer.parseInt(textField_Leng.getText());
         int price = Integer.parseInt(textField_Price.getText());
         String location = (String) comboBox_House.getSelectedItem();
-        // TODO: DATABASE MOVIE TABLE DOES NOT HAVE START TIME FIELD !
+        int startHour = Integer.parseInt((String) comboBox_hours.getSelectedItem());
+        int startMinute = Integer.parseInt(((String) comboBox_minutes.getSelectedItem()).substring(0, 2));
         String cast = textField_Cast.getText();
 
-        return new Movie(id, name, type, date, typeClass, language, length, director, cast, location, price);
+        return new Movie(id, name, type, date, typeClass, language, length, director, cast, location, price, startHour, startMinute);
     }
 }

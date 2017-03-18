@@ -205,7 +205,7 @@ public class PayMethod {
             // TODO: calculate me total price!!!
             int totalPrice = 55 * selectedSeat.length;
 
-            // TODO: really buy ticket, write record into db
+            // really buy ticket, write record into db
             try (Sqlite sqlite = new Sqlite()) {
                 TransactionsDb tr = new TransactionsDb(sqlite);
 

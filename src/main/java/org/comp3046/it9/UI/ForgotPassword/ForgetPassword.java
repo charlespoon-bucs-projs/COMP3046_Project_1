@@ -68,7 +68,7 @@ public class ForgetPassword {
 
     private class SubmitAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            // TODO: forget password submit
+            // forget password submit
 
             String email = textField_email.getText();
 

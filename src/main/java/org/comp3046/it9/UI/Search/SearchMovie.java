@@ -1,5 +1,7 @@
 package org.comp3046.it9.UI.Search;
 
+import org.comp3046.it9.Database.MovieDb;
+import org.comp3046.it9.Database.Sqlite;
 import org.comp3046.it9.Entity.Movie;
 import org.comp3046.it9.UI.Menu.MemberMenu;
 import org.comp3046.it9.UI.Menu.TopBar;
@@ -8,9 +10,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class SearchMovie {
     private final MemberMenu memberMenu;
+
+    private Map<Integer, Movie> moviesList = null;
+    private Stream<Movie> _cacheForTimeFilter = null;
+    private Map<String, Movie> _cacheForSearchResult = null;
 
     private TopBar tb;
     private JFrame frame;
@@ -35,6 +46,36 @@ public class SearchMovie {
         frame.setTitle("XXX Cinema - Search Movie");
         initialize();
         tb.clock();
+
+        loadMoviesFromDb();
+    }
+
+    private void loadMoviesFromDb() {
+        comboBox_MovieName.setEnabled(false);
+        comboBox_House.setEnabled(false);
+        comboBox_Time.setEnabled(false);
+
+        new Thread(() -> {
+            try (Sqlite sqlite = new Sqlite()) {
+                MovieDb movieDb = new MovieDb(sqlite);
+
+                moviesList = movieDb.getMoviesList();
+
+                comboBox_MovieName.removeAllItems();
+                moviesList.values().stream().map(Movie::getName).distinct().forEach(mt -> comboBox_MovieName.addItem(mt));
+            } catch (SQLException | IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Cannot fetch movie data from database: " + e.getMessage(),
+                        "Search movie",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+
+            comboBox_MovieName.setEnabled(true);
+            comboBox_House.setEnabled(true);
+            comboBox_Time.setEnabled(true);
+        }).start();
     }
 
     /**
@@ -79,10 +120,7 @@ public class SearchMovie {
 
         comboBox_MovieName = new JComboBox<>();
         comboBox_MovieName.setBounds(109, 117, 307, 40);
-        // TODO: no more dummy movie titles
-        comboBox_MovieName.addItem("Movie 1");
-        comboBox_MovieName.addItem("Movie 2");
-        comboBox_MovieName.addItem("Movie 3");
+        comboBox_MovieName.addActionListener(new MovieNameChangedListener());
         frame.getContentPane().add(comboBox_MovieName);
 
         lblHouse = new JLabel("House");
@@ -92,9 +130,7 @@ public class SearchMovie {
 
         comboBox_House = new JComboBox<String>();
         comboBox_House.setBounds(109, 212, 307, 40);
-        comboBox_House.addItem("A");
-        comboBox_House.addItem("B");
-        comboBox_House.addItem("C");
+        comboBox_House.addActionListener(new HouseSelectionChangeListener());
         frame.getContentPane().add(comboBox_House);
 
         lblTime = new JLabel("Show Time");
@@ -104,9 +140,6 @@ public class SearchMovie {
 
         comboBox_Time = new JComboBox<>();
         comboBox_Time.setBounds(109, 307, 307, 40);
-        comboBox_Time.addItem("time 1");
-        comboBox_Time.addItem("time 2");
-        comboBox_Time.addItem("time 3");
         frame.getContentPane().add(comboBox_Time);
 
         btnSubmit = new JButton("Buy Ticket");
@@ -146,11 +179,13 @@ public class SearchMovie {
 
     private class SubmitAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            //noinspection ConstantIfStatement,ConstantConditions
-            if (true) throw new UnsupportedOperationException("not yet implemented");
+            if (_cacheForSearchResult == null) {
+                JOptionPane.showMessageDialog(null, "Start time is not selected", "Search Movie", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
 
-            // TODO: gimme movie entity
-            Movie movie = null;
+            String strTimeKey = (String) comboBox_Time.getSelectedItem();
+            Movie movie = _cacheForSearchResult.get(strTimeKey);
 
             new SearchResult(memberMenu, getSelf(), movie);
             frame.setVisible(false);
@@ -166,4 +201,33 @@ public class SearchMovie {
         }
     }
 
+    private class MovieNameChangedListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String movieName = (String) comboBox_MovieName.getSelectedItem();
+            comboBox_House.removeAllItems();
+            _cacheForTimeFilter = moviesList.values().stream().filter(m -> m.getName().equals(movieName));
+            _cacheForTimeFilter.map(Movie::getLocation).distinct().forEach(ml -> comboBox_House.addItem(ml));
+        }
+    }
+
+    private class HouseSelectionChangeListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (_cacheForTimeFilter == null) return;
+
+            String movieName = (String) comboBox_MovieName.getSelectedItem();
+            String location = (String) comboBox_House.getSelectedItem();
+            comboBox_Time.removeAllItems();
+
+            _cacheForSearchResult = _cacheForTimeFilter
+                    .filter(m -> m.getLocation().equals(location))
+                    .collect(Collectors.toMap(
+                            m -> m.getStartHour() + ":" + m.getStartMinute(),
+                            m -> m
+                    ));
+
+            _cacheForSearchResult.keySet().stream().distinct().forEach(mt -> comboBox_Time.addItem(mt));
+        }
+    }
 }
