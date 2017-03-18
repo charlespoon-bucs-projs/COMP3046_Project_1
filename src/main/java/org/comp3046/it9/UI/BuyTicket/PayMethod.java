@@ -1,5 +1,7 @@
 package org.comp3046.it9.UI.BuyTicket;
 
+import org.comp3046.it9.Database.Sqlite;
+import org.comp3046.it9.Database.TransactionsDb;
 import org.comp3046.it9.Entity.Movie;
 import org.comp3046.it9.UI.Menu.MemberMenu;
 import org.comp3046.it9.UI.Menu.TopBar;
@@ -12,6 +14,8 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.regex.Pattern;
 
 public class PayMethod {
@@ -198,7 +202,26 @@ public class PayMethod {
 
 	private class PrintAction implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
-			new BuyTicket(memberMenu, getSelf(), movie, selectedSeat);
+            // TODO: calculate me total price!!!
+            int totalPrice = 55 * selectedSeat.length;
+
+            // TODO: really buy ticket, write record into db
+            try (Sqlite sqlite = new Sqlite()) {
+                TransactionsDb tr = new TransactionsDb(sqlite);
+
+                tr.createTransaction(
+                        memberMenu.getCustomer().getUid(),
+                        movie.getId(),
+                        String.join(", ",selectedSeat),
+                        totalPrice,
+                        selectedSeat.length,
+                        false);
+            } catch (SQLException | IOException e) {
+                JOptionPane.showMessageDialog(null, "Error: \r\n\r\n" + e.getMessage() , "Buy Ticket", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            }
+
+            new BuyTicketSuccess(memberMenu, getSelf(), movie, selectedSeat);
 			frame.setVisible(false);
 		}
 	}

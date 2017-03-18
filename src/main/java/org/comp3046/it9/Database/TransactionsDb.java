@@ -2,7 +2,7 @@ package org.comp3046.it9.Database;
 
 import org.comp3046.it9.Entity.Transaction;
 import org.jooq.DSLContext;
-import org.jooq.Record8;
+import org.jooq.Record7;
 import org.jooq.Result;
 import org.jooq.exception.DataAccessException;
 
@@ -19,8 +19,7 @@ public class TransactionsDb {
         this.sqlite = sqlite;
     }
 
-    private boolean createTransaction(int staffId,
-                                      int customerId,
+    public boolean createTransaction(int customerId,
                                       int movieId,
                                       String seat,
                                       int total,
@@ -30,7 +29,6 @@ public class TransactionsDb {
 
         try {
             return dsl.insertInto(TRANSACTIONS,
-                    TRANSACTIONS.STAFFID,
                     TRANSACTIONS.CUSTOMERID,
                     TRANSACTIONS.MOVIEID,
                     TRANSACTIONS.SEAT,
@@ -38,7 +36,6 @@ public class TransactionsDb {
                     TRANSACTIONS.NUMBEROFTICKETS,
                     TRANSACTIONS.ISCANCELLED)
                     .values(
-                            staffId,
                             customerId,
                             movieId,
                             seat,
@@ -55,12 +52,12 @@ public class TransactionsDb {
         }
     }
 
-    public boolean createTransaction(Transaction t) {
-        return this.createTransaction(t.getStaffId(), t.getCustomerId(), t.getMovieId(), t.getSeat(), t.getTotal(), t.getNumberOfTickets(), t.isCancelled());
+    @Deprecated
+    private boolean createTransaction(Transaction t) {
+        return this.createTransaction(t.getCustomerId(), t.getMovieId(), t.getSeat(), t.getTotal(), t.getNumberOfTickets(), t.isCancelled());
     }
 
     public boolean updateTransaction(int tid,
-                                     int staffId,
                                      int customerId,
                                      int movieId,
                                      String seat,
@@ -71,7 +68,6 @@ public class TransactionsDb {
 
         try {
             return dsl.update(TRANSACTIONS)
-                    .set(TRANSACTIONS.STAFFID, staffId)
                     .set(TRANSACTIONS.CUSTOMERID, customerId)
                     .set(TRANSACTIONS.MOVIEID, movieId)
                     .set(TRANSACTIONS.SEAT, seat)
@@ -90,9 +86,8 @@ public class TransactionsDb {
     public Map<Integer, Transaction> getTransactions() {
         DSLContext dsl = this.sqlite.getDsl();
 
-        Result<Record8<Integer, Integer, Integer, Integer, String, Integer, Integer, Integer>> fetch = dsl
+        Result<Record7<Integer, Integer, Integer, String, Integer, Integer, Integer>> fetch = dsl
                 .select(TRANSACTIONS.TID,
-                        TRANSACTIONS.STAFFID,
                         TRANSACTIONS.CUSTOMERID,
                         TRANSACTIONS.MOVIEID,
                         TRANSACTIONS.SEAT,
@@ -104,7 +99,6 @@ public class TransactionsDb {
 
         return fetch.stream().map(r -> new Transaction(
                 r.get(TRANSACTIONS.TID),
-                r.get(TRANSACTIONS.STAFFID),
                 r.get(TRANSACTIONS.CUSTOMERID),
                 r.get(TRANSACTIONS.MOVIEID),
                 r.get(TRANSACTIONS.SEAT),
@@ -117,9 +111,8 @@ public class TransactionsDb {
     public Map<Integer, Transaction> getTransactionsByMemberMobile(int mobile) {
         DSLContext dsl = this.sqlite.getDsl();
 
-        Result<Record8<Integer, Integer, Integer, Integer, String, Integer, Integer, Integer>> fetch = dsl
+        Result<Record7<Integer, Integer, Integer, String, Integer, Integer, Integer>> fetch = dsl
                 .select(TRANSACTIONS.TID,
-                        TRANSACTIONS.STAFFID,
                         TRANSACTIONS.CUSTOMERID,
                         TRANSACTIONS.MOVIEID,
                         TRANSACTIONS.SEAT,
@@ -134,7 +127,6 @@ public class TransactionsDb {
 
         return fetch.stream().map(r -> new Transaction(
                 r.get(TRANSACTIONS.TID),
-                r.get(TRANSACTIONS.STAFFID),
                 r.get(TRANSACTIONS.CUSTOMERID),
                 r.get(TRANSACTIONS.MOVIEID),
                 r.get(TRANSACTIONS.SEAT),
@@ -147,9 +139,8 @@ public class TransactionsDb {
     public Map<Integer, Transaction> getTransactionsByMemberId(int memberId) {
         DSLContext dsl = this.sqlite.getDsl();
 
-        Result<Record8<Integer, Integer, Integer, Integer, String, Integer, Integer, Integer>> fetch = dsl
+        Result<Record7<Integer, Integer, Integer, String, Integer, Integer, Integer>> fetch = dsl
                 .select(TRANSACTIONS.TID,
-                        TRANSACTIONS.STAFFID,
                         TRANSACTIONS.CUSTOMERID,
                         TRANSACTIONS.MOVIEID,
                         TRANSACTIONS.SEAT,
@@ -162,7 +153,6 @@ public class TransactionsDb {
 
         return fetch.stream().map(r -> new Transaction(
                 r.get(TRANSACTIONS.TID),
-                r.get(TRANSACTIONS.STAFFID),
                 r.get(TRANSACTIONS.CUSTOMERID),
                 r.get(TRANSACTIONS.MOVIEID),
                 r.get(TRANSACTIONS.SEAT),
@@ -175,9 +165,8 @@ public class TransactionsDb {
     public Transaction getTransactionById(int tid) {
         DSLContext dsl = this.sqlite.getDsl();
 
-        Result<Record8<Integer, Integer, Integer, Integer, String, Integer, Integer, Integer>> fetch = dsl
+        Result<Record7<Integer, Integer, Integer, String, Integer, Integer, Integer>> fetch = dsl
                 .select(TRANSACTIONS.TID,
-                        TRANSACTIONS.STAFFID,
                         TRANSACTIONS.CUSTOMERID,
                         TRANSACTIONS.MOVIEID,
                         TRANSACTIONS.SEAT,
@@ -194,10 +183,9 @@ public class TransactionsDb {
         else if (fetch.size() > 1)
             throw new DataAccessException("size > 1");
 
-        Record8<Integer, Integer, Integer, Integer, String, Integer, Integer, Integer> fetch1 = fetch.get(0);
+        Record7<Integer, Integer, Integer, String, Integer, Integer, Integer> fetch1 = fetch.get(0);
         return new Transaction(
                 fetch1.get(TRANSACTIONS.TID),
-                fetch1.get(TRANSACTIONS.STAFFID),
                 fetch1.get(TRANSACTIONS.CUSTOMERID),
                 fetch1.get(TRANSACTIONS.MOVIEID),
                 fetch1.get(TRANSACTIONS.SEAT),

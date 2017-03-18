@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class BuyTicket {
+class BuyTicketSuccess {
     // parent
     private final MemberMenu memberMenu;
     // previous
@@ -29,7 +29,7 @@ class BuyTicket {
 	/**
 	 * Create the application.
 	 */
-	public BuyTicket(MemberMenu memberMenu, PayMethod payMethod, Movie movie, String[] selectedSeat) {
+	public BuyTicketSuccess(MemberMenu memberMenu, PayMethod payMethod, Movie movie, String[] selectedSeat) {
         this.memberMenu = memberMenu;
         this.payMethod = payMethod;
         this.movie = movie;
