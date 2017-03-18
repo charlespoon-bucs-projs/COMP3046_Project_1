@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 import static org.comp3046.it9.Database.JooqGenerated.tables.Customer.CUSTOMER;
 
 public class CustomerDb {
-    private Sqlite sqlite;
+    private final Sqlite sqlite;
 
     public CustomerDb(Sqlite sqlite) {
         this.sqlite = sqlite;

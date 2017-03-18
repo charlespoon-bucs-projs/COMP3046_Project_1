@@ -13,7 +13,7 @@ import static org.comp3046.it9.Database.JooqGenerated.Tables.CUSTOMER;
 import static org.comp3046.it9.Database.JooqGenerated.Tables.TRANSACTIONS;
 
 public class TransactionsDb {
-    private Sqlite sqlite;
+    private final Sqlite sqlite;
 
     public TransactionsDb(Sqlite sqlite) {
         this.sqlite = sqlite;

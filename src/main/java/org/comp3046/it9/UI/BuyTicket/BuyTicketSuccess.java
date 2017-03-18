@@ -18,10 +18,10 @@ class BuyTicketSuccess {
     private final Movie movie;
     private final String[] selectedSeat;
 
-	private JFrame frame;
+	private final JFrame frame;
 	private JPanel topbar;
 	private JLabel lblLoginer, lblID, lblMovieName, lblTime, lblLocation, lblSeat, lblTotal;
-	private TopBar tb;
+	private final TopBar tb;
 	private JButton btnBack, btnPrint;
 	private JSeparator separator;
 	private JLabel lblNewLabel;

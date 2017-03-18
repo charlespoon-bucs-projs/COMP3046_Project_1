@@ -6,7 +6,7 @@ import java.util.Date;
 
 class Utils {
     public static class Convert {
-        private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
+        private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
 
         public static String dateToString(Date value) {
             return dateFormat.format(value);
@@ -16,7 +16,8 @@ class Utils {
             return dateFormat.parse(value);
         }
 
-        public static Date stringToDate(String value, Object ignoreException) {
+        public static Date stringToDate(String value,
+                                        @SuppressWarnings({"SameParameterValue", "UnusedParameters"}) Object ignoreException) {
             try {
                 return dateFormat.parse(value);
             } catch (ParseException ignored) {

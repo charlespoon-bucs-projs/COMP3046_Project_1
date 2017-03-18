@@ -24,8 +24,8 @@ public class SearchResult {
     @Deprecated
     private String movie_name;
 
-    private TopBar tb;
-    private JFrame frame;
+    private final TopBar tb;
+    private final JFrame frame;
     private JPanel topbar;
     private JLabel lblLoginer, lblMovieName, lblHouse, lblTime;
     private JButton btnBack, btnNext, btnReset;

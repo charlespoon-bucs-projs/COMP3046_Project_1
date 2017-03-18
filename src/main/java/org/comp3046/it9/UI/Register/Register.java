@@ -20,9 +20,8 @@ import java.util.Properties;
 
 public class Register {
 
-    private MaskFormatter mf1;
     private UtilDateModel model;
-    private JFrame frame;
+    private final JFrame frame;
     private JTextField textField_FullName, textField_Username, textField_Mobile_Number, textField_Email,
             textField_Confirm_Email, textField_Password, textField_Confirm_Password;
     private JComboBox<String> comboBox_Salutation;
@@ -39,11 +38,11 @@ public class Register {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         frame.getContentPane().setLayout(null);
-        try {
-            mf1 = new MaskFormatter("00000000");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            MaskFormatter mf1 = new MaskFormatter("00000000");
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
         initialize();
     }
 

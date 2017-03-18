@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 import static org.comp3046.it9.Database.JooqGenerated.Tables.STAFF;
 
 public class StaffDb {
-    private Sqlite sqlite;
+    private final Sqlite sqlite;
 
     public StaffDb(Sqlite sqlite) {
         this.sqlite = sqlite;

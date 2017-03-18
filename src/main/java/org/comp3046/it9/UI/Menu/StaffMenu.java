@@ -20,14 +20,14 @@ import java.sql.SQLException;
 public class StaffMenu {
 
     private JLabel lblLoginer;
-    private TopBar tb;
-    private JFrame frame;
+    private final TopBar tb;
+    private final JFrame frame;
     private JSeparator separator;
     private JButton btnAddMember, btnAddMovie, btnModifyMember, btnModifyMovie, btnTransactionRecord;
     private JButton btnLogout;
     private JPanel topbar;
 
-    private LoginFrame loginFrame;
+    private final LoginFrame loginFrame;
     private Staff staff = null;
 
     /**
@@ -121,14 +121,14 @@ public class StaffMenu {
     private class AddMemberAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             new MemberSetting(getSelf());
-            frame.setVisible(false);
+            setVisible(false);
         }
     }
 
     private class AddMovieAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             new MovieSetting(getSelf());
-            frame.setVisible(false);
+            setVisible(false);
         }
     }
 
@@ -159,21 +159,21 @@ public class StaffMenu {
             // check the member id is true
 
             new MemberSetting(getSelf(), fetchCustomer);
-            frame.setVisible(false);
+            setVisible(false);
         }
     }
 
     private class ModifyMovieAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             new MovieSetting(getSelf(), null);
-            frame.setVisible(false);
+            setVisible(false);
         }
     }
 
     private class TransactionRecordAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             new TransactionRecord(getSelf());
-            frame.setVisible(false);
+            setVisible(false);
         }
     }
 

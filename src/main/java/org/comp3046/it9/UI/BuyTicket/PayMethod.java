@@ -27,11 +27,11 @@ public class PayMethod {
     private final Movie movie;
     private final String[] selectedSeat;
 
-	private JFrame frame;
+	private final JFrame frame;
 	private JPanel topbar;
 	private JLabel lblLoginer, lblMovieName, lblSelectdSeat, lblpatmentMethod, lblCardNo, lblExpiryDate, lblSecurity,
 			lblnew;
-	private TopBar tb;
+	private final TopBar tb;
 	private JButton btnCancel, btnPrint;
 	private JSeparator separator;
 	private JRadioButton rdbtnCash;

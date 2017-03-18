@@ -6,16 +6,11 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class TopBar {
-    private String id, FullName;
-    JSeparator s;
-    private JLabel time, loginer;
-
-    public TopBar() {
-    }
+    private JLabel time;
 
     public JPanel topbarLayout(JPanel jPanel, String id, String FullName) {
-        this.id = id;
-        this.FullName = FullName;
+//        String id1 = id;
+//        String fullName = FullName;
         time = new JLabel("Time:	");
 
         time.setBounds(10, 10, 225, 15);

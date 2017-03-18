@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.Properties;
 
 public class MovieSetting {
-    private StaffMenu staffMenu;
+    private final StaffMenu staffMenu;
     private boolean editMovie;
     private Map<Integer, Movie> cachedMoviesToEdit;
     private Movie movieEditing;
@@ -57,7 +57,8 @@ public class MovieSetting {
         _ctor();
     }
 
-    public MovieSetting(StaffMenu staffMenu, Object editMovie) {
+    public MovieSetting(StaffMenu staffMenu,
+                        @SuppressWarnings({"SameParameterValue", "UnusedParameters"}) Object editMovie) {
         this.staffMenu = staffMenu;
         this.editMovie = true;
         _ctor();
@@ -385,7 +386,15 @@ public class MovieSetting {
 
             try (Sqlite sqlite = new Sqlite()) {
                 MovieDb movieDb = new MovieDb(sqlite);
-                movieDb.removeMovie(movieEditing.getId());
+                boolean dbOk = movieDb.removeMovie(movieEditing.getId());
+                if (!dbOk) {
+                    JOptionPane.showMessageDialog(null, "Failed to modify data on database, unknown reason.", "Movie Settings", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                JOptionPane.showMessageDialog(null, String.format("Successful to delete data of movie \"%s\".", movieEditing.getName()), "Movie Settings", JOptionPane.INFORMATION_MESSAGE);
+
+                // cleanup
+                cachedMoviesToEdit.remove(movieEditing.getId()); // delete cache first, or may affected by new selection below
                 comboBox_ID.setSelectedIndex(comboBox_ID.getSelectedIndex() - 1); // may set as -1. see doc
             } catch (SQLException | IOException e) {
                 e.printStackTrace();

@@ -13,7 +13,7 @@ import java.sql.SQLException;
 
 public class ForgetPassword {
 
-    private JFrame frame;
+    private final JFrame frame;
     private JTextField textField_email;
 
     /*

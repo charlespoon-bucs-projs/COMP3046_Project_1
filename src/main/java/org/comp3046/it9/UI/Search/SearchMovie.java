@@ -23,8 +23,8 @@ public class SearchMovie {
     private Stream<Movie> _cacheForTimeFilter = null;
     private Map<String, Movie> _cacheForSearchResult = null;
 
-    private TopBar tb;
-    private JFrame frame;
+    private final TopBar tb;
+    private final JFrame frame;
     private JPanel topbar;
     private JLabel lblLoginer, lblMovieName, lblHouse, lblTime;
     private JButton btnBack, btnSubmit, btnReset;
@@ -171,7 +171,6 @@ public class SearchMovie {
     private class BackAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             memberMenu.setVisible(true);
-            frame.setVisible(false);
             frame.dispose();
 
         }
@@ -188,7 +187,7 @@ public class SearchMovie {
             Movie movie = _cacheForSearchResult.get(strTimeKey);
 
             new SearchResult(memberMenu, getSelf(), movie);
-            frame.setVisible(false);
+            setVisible(false);
         }
     }
 

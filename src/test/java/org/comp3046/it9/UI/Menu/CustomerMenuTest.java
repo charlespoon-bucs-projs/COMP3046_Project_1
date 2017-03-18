@@ -16,7 +16,7 @@ class CustomerMenuTest {
     private static final int MOBILE = 23800000;
     private static final String EMAIL = "pizza@hut.com";
     // private static final String PASSWORD = "qwerty";
-    private static Date BIRTHDAY = null;
+    private static Date BIRTHDAY;
 
     static {
         try {

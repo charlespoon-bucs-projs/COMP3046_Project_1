@@ -13,11 +13,11 @@ import java.awt.event.ActionListener;
 
 public class MemberMenu {
 
-    private LoginFrame loginFrame;
-    private Customer customer;
+    private final LoginFrame loginFrame;
+    private final Customer customer;
 
-    private TopBar tp;
-    private JFrame frame;
+    private final TopBar tp;
+    private final JFrame frame;
     private JLabel lblLoginer;
     private JSeparator separator;
     private JButton btnAccountSetting, btnSearchMovie, btnTransactionRecord, btnLogout;
@@ -111,28 +111,27 @@ public class MemberMenu {
     private class AccountSettingAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             new MemberSetting(getSelf());
-            frame.setVisible(false);
+            setVisible(false);
         }
     }
 
     private class SearchMovieAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             new SearchMovie(getSelf());
-            frame.dispose();
+            setVisible(false);
         }
     }
 
     private class TransactionRecordAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             new TransactionRecord(getSelf());
-            frame.dispose();
+            setVisible(false);
         }
     }
 
     private class LogoutAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             loginFrame.setVisible(true);
-            frame.setVisible(false);
             frame.dispose();
         }
     }

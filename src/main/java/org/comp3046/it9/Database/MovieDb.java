@@ -2,7 +2,6 @@ package org.comp3046.it9.Database;
 
 import org.comp3046.it9.Entity.Movie;
 import org.jooq.DSLContext;
-import org.jooq.Record11;
 import org.jooq.Record13;
 import org.jooq.Result;
 import org.jooq.exception.DataAccessException;
@@ -14,17 +13,17 @@ import java.util.stream.Collectors;
 import static org.comp3046.it9.Database.JooqGenerated.tables.Movie.MOVIE;
 
 public class MovieDb {
-    private Sqlite sqlite;
+    private final Sqlite sqlite;
 
     public MovieDb(Sqlite sqlite) {
         this.sqlite = sqlite;
     }
 
-    public boolean createMovie(String name, String type, Date date,
-                               String typeClass, String language,
-                               int length, String director,
-                               String cast, String location,
-                               int price, int startHour, int startMinute) {
+    private boolean createMovie(String name, String type, Date date,
+                                String typeClass, String language,
+                                int length, String director,
+                                String cast, String location,
+                                int price, int startHour, int startMinute) {
         DSLContext dsl = this.sqlite.getDsl();
 
         try {
@@ -72,11 +71,11 @@ public class MovieDb {
                 m.getPrice(), m.getStartHour(), m.getStartMinute());
     }
 
-    public boolean updateMovie(int movieId, String name, String type, Date date,
-                               String typeClass, String language,
-                               int length, String director,
-                               String cast, String location, int price,
-                               int startHour, int startMinute) {
+    private boolean updateMovie(int movieId, String name, String type, Date date,
+                                String typeClass, String language,
+                                int length, String director,
+                                String cast, String location, int price,
+                                int startHour, int startMinute) {
         DSLContext dsl = this.sqlite.getDsl();
 
         try {
