@@ -27,7 +27,7 @@ public class MovieSetting {
     private StaffMenu staffMenu;
     private boolean editMovie;
     private Map<Integer, Movie> cachedMoviesToEdit;
-//    private Customer customer = null;
+    private Movie movieEditing;
 
     private TopBar tb;
     //    boolean isAdd;
@@ -376,7 +376,25 @@ public class MovieSetting {
 
     private class DeleteAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            // TODO: assume you have Movie entity
+            String msg = "";
+            msg += String.format("Are you sure you want to remove movie \"%s\"? \r\n", movieEditing.getName());
+            msg += "This action cannot be undone.";
+
+            int ans = JOptionPane.showConfirmDialog(null, msg, "Remove movie", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            if (ans != 0) return;
+
+            try (Sqlite sqlite = new Sqlite()) {
+                MovieDb movieDb = new MovieDb(sqlite);
+                movieDb.removeMovie(movieEditing.getId());
+                comboBox_ID.setSelectedIndex(comboBox_ID.getSelectedIndex() - 1); // may set as -1. see doc
+            } catch (SQLException | IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Error: \r\n\r\n" + e.getMessage(),
+                        "Error deleting movie",
+                        JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
@@ -463,8 +481,8 @@ public class MovieSetting {
         public void actionPerformed(ActionEvent e) {
             // selection changes
             int selectedMovieId = (int) comboBox_ID.getSelectedItem();
-            Movie movie = cachedMoviesToEdit.get(selectedMovieId);
-            pasteMovieToFields(movie);
+            movieEditing = cachedMoviesToEdit.get(selectedMovieId);
+            pasteMovieToFields(movieEditing);
         }
     }
 
