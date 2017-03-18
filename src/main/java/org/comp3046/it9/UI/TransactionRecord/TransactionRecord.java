@@ -1,5 +1,9 @@
 package org.comp3046.it9.UI.TransactionRecord;
 
+import org.comp3046.it9.Database.Sqlite;
+import org.comp3046.it9.Database.TransactionsDb;
+import org.comp3046.it9.Entity.Movie;
+import org.comp3046.it9.Entity.Transaction;
 import org.comp3046.it9.UI.Menu.MemberMenu;
 import org.comp3046.it9.UI.Menu.StaffMenu;
 import org.comp3046.it9.UI.Menu.TopBar;
@@ -10,6 +14,10 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Map;
+import java.util.function.Function;
 
 public class TransactionRecord {
     private final MemberMenu memberMenu;
@@ -22,7 +30,8 @@ public class TransactionRecord {
     private JButton btnBack, btnSearch;
     private JTextField textField_Mobile;
     private JSeparator separator;
-    private JTable MovieTable;
+    private JTable movieTable;
+    private DefaultTableModel movieTableModel;
     private JTable table;
 
     public TransactionRecord(StaffMenu staffMenu) {
@@ -41,6 +50,11 @@ public class TransactionRecord {
         tb = new TopBar();
         initialize();
         tb.clock();
+
+        // async
+        if (memberMenu != null) {
+            searchTransactionDb(trDb -> trDb.getTransactionsByMemberId(memberMenu.getCustomer().getUid()));
+        }
     }
 
     /**
@@ -63,12 +77,11 @@ public class TransactionRecord {
         lblLoginer = new JLabel("Login as ");
         int id = 0;
         String name = "";
-        if (staffMenu != null){
+        if (staffMenu != null) {
             id = staffMenu.getStaff().getId();
             name = staffMenu.getStaff().getName();
             lblLoginer.setText(lblLoginer.getText() + name + "-Staff");
-        }
-        else {
+        } else {
             id = memberMenu.getCustomer().getUid();
             name = memberMenu.getCustomer().getName();
             lblLoginer.setText(lblLoginer.getText() + name + "-Member");
@@ -107,14 +120,20 @@ public class TransactionRecord {
         btnSearch.addActionListener(new SearchAction());
         frame.getContentPane().add(btnSearch);
 
-        MovieTable = new JTable();
-        MovieTable.setBounds(0, 0, 478, 233);
+        if (memberMenu != null) {
+            lblMobile.setVisible(false);
+            textField_Mobile.setEnabled(false);
+            textField_Mobile.setVisible(false);
+            btnSearch.setEnabled(false);
+            btnSearch.setVisible(false);
+        }
 
-        DefaultTableModel model = defaultTableModel();
-        model.addRow(new Object[]{"123", "11:15 pm", "Chinese", "183 mins"});
-        MovieTable.setModel(model);
+        movieTable = new JTable();
+        movieTable.setBounds(0, 0, 478, 233);
+        this.movieTableModel = generateTableModel();
+        movieTable.setModel(this.movieTableModel);
 
-        JScrollPane scrollPane = new JScrollPane(MovieTable);
+        JScrollPane scrollPane = new JScrollPane(movieTable);
         scrollPane.setBounds(10, 102, 488, 233);
         frame.getContentPane().add(scrollPane);
 
@@ -133,18 +152,71 @@ public class TransactionRecord {
 
     private class SearchAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            // TODO: search TRANSACTIONS
+            tableModelClearRecords();
+            /*
+            search Transactions by customer mobile number
+            WITH IDENTITY OF staff
+            */
+            int mobile;
+            try {
+                mobile = Integer.parseInt(textField_Mobile.getText());
+            } catch (NumberFormatException ignored) {
+                JOptionPane.showMessageDialog(null, "Mobile number contains illegal characters.",
+                        "Transaction Record Search", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            searchTransactionDb(trDb -> trDb.getTransactionsByMemberMobile(mobile));
         }
     }
 
-    private DefaultTableModel defaultTableModel() {
+    private DefaultTableModel generateTableModel() {
         DefaultTableModel model = new DefaultTableModel();
 
-        model.addColumn("Movie Name");
-        model.addColumn("Start Time");
-        model.addColumn("Language");
-        model.addColumn("Length");
+        model.addColumn("#");
+        model.addColumn("Movie name");
+        model.addColumn("Seat No.");
+        model.addColumn("Total $");
+        model.addColumn("Cancelled");
 
         return model;
+    }
+
+    private void tableModelAddRecord(int tid, String movieName, String seats, int totalPrice, boolean cancelled) {
+        this.movieTableModel.addRow(new Object[]{
+                tid + "",
+                movieName,
+                seats,
+                totalPrice + "",
+                cancelled ? "Yes" : ""
+        });
+    }
+
+    private void tableModelAddRecordByEntities(Transaction t) {
+        String movieName = "?";
+        Movie m = t.getMovie();
+        if (m != null)
+            movieName = m.getName();
+        this.tableModelAddRecord(t.getId(), movieName, t.getSeat(), t.getTotal(), t.isCancelled());
+    }
+
+    private void tableModelClearRecords() {
+        this.movieTableModel.getDataVector().removeAllElements();
+        this.movieTableModel.fireTableDataChanged();
+    }
+
+    private void searchTransactionDb(Function<TransactionsDb, Map<Integer, Transaction>> opr) {
+        new Thread(() -> {
+            try (Sqlite sqlite = new Sqlite()) {
+                TransactionsDb tr = new TransactionsDb(sqlite);
+                opr.apply(tr).forEach((k, t) -> tableModelAddRecordByEntities(t));
+            } catch (SQLException | IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Cannot fetch movie data from database: " + e.getMessage(),
+                        "Movie setting",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }).start();
     }
 }
