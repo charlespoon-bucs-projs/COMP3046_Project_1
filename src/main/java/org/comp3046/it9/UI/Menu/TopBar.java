@@ -5,29 +5,28 @@ import java.awt.*;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class topbar {
-    public static String id, FullName;
+public class TopBar {
+    private String id, FullName;
     JSeparator s;
-    private JPanel topbar;
     private JLabel time, loginer;
 
-    public topbar() {
+    public TopBar() {
     }
 
-    public JPanel topbarLayout(JPanel p, String id, String FullName) {
-        topbar = p;
+    public JPanel topbarLayout(JPanel jPanel, String id, String FullName) {
         this.id = id;
         this.FullName = FullName;
         time = new JLabel("Time:	");
 
         time.setBounds(10, 10, 225, 15);
         time.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
-        topbar.add(time);
-        return p;
+        jPanel.add(time);
+        return jPanel;
     }
 
     public void clock() {
         Thread clock = new Thread() {
+            @SuppressWarnings("InfiniteLoopStatement")
             public void run() {
                 try {
                     while (true) {

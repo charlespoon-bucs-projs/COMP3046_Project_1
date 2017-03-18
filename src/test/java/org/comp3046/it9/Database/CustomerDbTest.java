@@ -10,13 +10,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class CustomerDbTest {
-    private Sqlite sqlite;
     private CustomerDb customerDb;
 
     @Before
     public void setup() throws SQLException {
-        this.sqlite = new Sqlite();
-        this.customerDb = new CustomerDb(this.sqlite);
+        Sqlite sqlite = new Sqlite();
+        this.customerDb = new CustomerDb(sqlite);
     }
 
     @Test

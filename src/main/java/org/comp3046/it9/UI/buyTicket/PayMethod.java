@@ -2,14 +2,17 @@ package org.comp3046.it9.UI.buyTicket;
 
 import org.comp3046.it9.Entity.Movie;
 import org.comp3046.it9.UI.Menu.MemberMenu;
-import org.comp3046.it9.UI.Menu.topbar;
+import org.comp3046.it9.UI.Menu.TopBar;
 import org.comp3046.it9.UI.Register.JTextFieldLimit;
 import org.comp3046.it9.UI.search.SearchResult;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.regex.Pattern;
 
 public class PayMethod {
 	// parent
@@ -24,7 +27,7 @@ public class PayMethod {
 	private JPanel topbar;
 	private JLabel lblLoginer, lblMovieName, lblSelectdSeat, lblpatmentMethod, lblCardNo, lblExpiryDate, lblSecurity,
 			lblnew;
-	topbar tb;
+	TopBar tb;
 	private JButton btnCancel, btnPrint;
 	private JSeparator separator;
 	JRadioButton rdbtnCash, rdbtnCreditCard;
@@ -38,7 +41,7 @@ public class PayMethod {
         this.movie = movie;
         this.selectedSeat = selectedSeat;
 
-		tb = new topbar();
+		tb = new TopBar();
 		frame = new JFrame();
 		frame.getContentPane().setLayout(null);
 

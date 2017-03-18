@@ -16,7 +16,7 @@ public class MemberMenu {
     private LoginFrame loginFrame;
     private Customer customer;
 
-    topbar tp;
+    TopBar tp;
     private JFrame frame;
     private JLabel lblLoginer;
     private JSeparator separator;
@@ -30,7 +30,7 @@ public class MemberMenu {
         this.loginFrame = LoginFrame;
         this.customer = customer;
 
-        tp = new topbar();
+        tp = new TopBar();
         frame = new JFrame();
         frame.setBounds(100, 100, 524, 340);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

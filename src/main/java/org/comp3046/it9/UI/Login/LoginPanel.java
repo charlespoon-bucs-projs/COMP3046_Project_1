@@ -16,22 +16,22 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class loginPanel extends JPanel {
+public class LoginPanel extends JPanel {
+    private LoginFrame loginFrame;
 
     private JTextField username;
-    private JLabel label_username, label_password;
     private JPasswordField password;
-    private JPanel inputPanel, usernamePanel, passwordPanel, buttonPanel;
-    private JButton btn_cancel, btn_login;
 
-    public loginPanel() {
+    public LoginPanel(LoginFrame loginFrame) {
+        this.loginFrame = loginFrame;
+
         setLayout(new BorderLayout());
-        inputPanel = new JPanel(new GridLayout(2, 1));
+        JPanel inputPanel = new JPanel(new GridLayout(2, 1));
 
         // for user name;
-        usernamePanel = new JPanel(new FlowLayout());
+        JPanel usernamePanel = new JPanel(new FlowLayout());
 
-        label_username = new JLabel("User Name ");
+        JLabel label_username = new JLabel("User Name ");
         label_username.setPreferredSize(new Dimension(90, 40));
         label_username.setLabelFor(username);
 
@@ -43,9 +43,9 @@ public class loginPanel extends JPanel {
 
 
         // for password;
-        passwordPanel = new JPanel(new FlowLayout());
+        JPanel passwordPanel = new JPanel(new FlowLayout());
 
-        label_password = new JLabel("Password  ");
+        JLabel label_password = new JLabel("Password  ");
         label_password.setPreferredSize(new Dimension(90, 40));
         label_password.setLabelFor(password);
 
@@ -59,10 +59,10 @@ public class loginPanel extends JPanel {
         inputPanel.add(passwordPanel);
 
         //set cancel button and login button
-        buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 30));
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 30));
 
-        btn_cancel = new JButton("Cancel");
-        btn_login = new JButton("UI/Login");
+        JButton btn_cancel = new JButton("Cancel");
+        JButton btn_login = new JButton("UI/Login");
         addButton("Cancel", new CancelAction(), buttonPanel);
         addButton("UI/Login", new LoginAction(), buttonPanel);
 
@@ -72,10 +72,7 @@ public class loginPanel extends JPanel {
     }
 
     private LoginFrame getLoginFrame() {
-        Window window = SwingUtilities.windowForComponent(this);
-        if (window instanceof LoginFrame)
-            return (LoginFrame) window;
-        return null;
+        return this.loginFrame;
     }
 
     private void addButton(String label, ActionListener listener, JPanel panel) {

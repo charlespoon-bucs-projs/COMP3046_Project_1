@@ -2,7 +2,7 @@ package org.comp3046.it9.UI.search;
 
 import org.comp3046.it9.Entity.Movie;
 import org.comp3046.it9.UI.Menu.MemberMenu;
-import org.comp3046.it9.UI.Menu.topbar;
+import org.comp3046.it9.UI.Menu.TopBar;
 import org.comp3046.it9.UI.buyTicket.PayMethod;
 
 import javax.swing.*;
@@ -22,7 +22,7 @@ public class SearchResult {
     @Deprecated
     String movie_id, movie_name;
 
-    topbar tb;
+    TopBar tb;
     private JFrame frame;
     private JPanel topbar;
     private JLabel lblLoginer, lblMovieName, lblHouse, lblTime;
@@ -37,7 +37,7 @@ public class SearchResult {
         this.searchMovie = searchMovie;
         this.movie = movie;
 
-        tb = new topbar();
+        tb = new TopBar();
         frame = new JFrame();
         frame.setBounds(100, 100, 524, 353);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

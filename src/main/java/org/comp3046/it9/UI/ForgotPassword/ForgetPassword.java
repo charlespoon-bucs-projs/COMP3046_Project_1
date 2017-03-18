@@ -11,17 +11,15 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class forget_password {
+public class ForgetPassword {
 
     private JFrame frame;
     private JTextField textField_email;
-    private JButton btnSubmit;
-    private JButton btnReset;
 
+    /*
     /**
      * Launch the application.
-     */
-    /*
+     *
      * public static void main(String[] args) { EventQueue.invokeLater(new
 	 * Runnable() { public void run() { try { forgot_password window = new
 	 * forgot_password(); window.frame.setVisible(true); } catch (Exception e) {
@@ -31,7 +29,7 @@ public class forget_password {
     /**
      * Create the application.
      */
-    public forget_password() {
+    public ForgetPassword() {
         frame = new JFrame();
         frame.setBounds(100, 100, 402, 202);
         frame.setTitle("XXX Cinema - Forget Password");
@@ -56,12 +54,12 @@ public class forget_password {
         frame.getContentPane().add(textField_email);
         textField_email.setColumns(30);
 
-        btnSubmit = new JButton("Submit");
+        JButton btnSubmit = new JButton("Submit");
         btnSubmit.setBounds(51, 96, 87, 23);
         btnSubmit.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
         frame.getContentPane().add(btnSubmit);
 
-        btnReset = new JButton("Reset");
+        JButton btnReset = new JButton("Reset");
         btnReset.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
         btnReset.setBounds(202, 96, 87, 23);
         btnReset.addActionListener(new ResetAction());
@@ -79,6 +77,7 @@ public class forget_password {
 
                 String newPassword;
                 try {
+                    //noinspection deprecation
                     newPassword = customerDb.forgetPasswordCheckEmail(email);
                 } catch (UnsupportedOperationException e) {
                     JOptionPane.showMessageDialog(null, "User not found.", "Forget password", JOptionPane.WARNING_MESSAGE);

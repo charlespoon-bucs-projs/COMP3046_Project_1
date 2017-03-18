@@ -3,9 +3,8 @@ package org.comp3046.it9.UI.MovieAction;
 import org.comp3046.it9.Database.MovieDb;
 import org.comp3046.it9.Database.Sqlite;
 import org.comp3046.it9.Entity.Movie;
-import org.comp3046.it9.Entity.Staff;
 import org.comp3046.it9.UI.Menu.StaffMenu;
-import org.comp3046.it9.UI.Menu.topbar;
+import org.comp3046.it9.UI.Menu.TopBar;
 import org.comp3046.it9.UI.Register.JTextFieldLimit;
 import org.jdatepicker.impl.DateComponentFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
@@ -23,12 +22,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
 
-public class movieSetting {
+public class MovieSetting {
     private StaffMenu staffMenu;
     private Movie movie = null;
 //    private Customer customer = null;
 
-    topbar tb;
+    TopBar tb;
 //    boolean isAdd;
     MaskFormatter mf1;
     UtilDateModel model;
@@ -45,12 +44,12 @@ public class movieSetting {
 
     private JDatePickerImpl datePicker;
 
-    public movieSetting(StaffMenu staffMenu) {
+    public MovieSetting(StaffMenu staffMenu) {
         this.staffMenu = staffMenu;
         _ctor();
     }
 
-    public movieSetting(StaffMenu staffMenu, Movie movie) {
+    public MovieSetting(StaffMenu staffMenu, Movie movie) {
         this.staffMenu = staffMenu;
         this.movie = movie;
         _ctor();
@@ -76,7 +75,7 @@ public class movieSetting {
     private void initialize() {
         frame = new JFrame();
 
-        tb = new topbar();
+        tb = new TopBar();
         frame.setBounds(100, 100, 524, 465);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

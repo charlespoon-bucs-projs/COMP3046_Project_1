@@ -1,14 +1,14 @@
 package org.comp3046.it9.UI.Index;
 
-import org.comp3046.it9.UI.ForgotPassword.forget_password;
-import org.comp3046.it9.UI.Register.register;
+import org.comp3046.it9.UI.ForgotPassword.ForgetPassword;
+import org.comp3046.it9.UI.Register.Register;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class index {
+public class Index {
 
     private JFrame frame;
     private JTextField textField_username;
@@ -18,7 +18,7 @@ public class index {
     /**
      * Create the application.
      */
-    public index() {
+    public Index() {
         frame = new JFrame();
         frame.setBounds(100, 100, 450, 300);
         frame.setTitle("XXX Cinema - Login");
@@ -35,7 +35,7 @@ public class index {
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
             try {
-                index window = new index();
+                Index window = new Index();
                 window.frame.setVisible(true);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -94,13 +94,13 @@ public class index {
 
     private class ToForgotPasswordAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            new forget_password();
+            new ForgetPassword();
         }
     }
 
     private class ToRegisterAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            new register();
+            new Register();
         }
     }
 

@@ -7,14 +7,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class indexPanel extends JPanel {
-    private JPanel loginPanel, controlPanel;
+public class IndexPanel extends JPanel {
+    private JPanel controlPanel;
 
-    public indexPanel() {
+    public IndexPanel() {
 
         setLayout(new BorderLayout());
         //set for login (top bar)
-        loginPanel = new JPanel();
+        JPanel loginPanel = new JPanel();
         addButton("UI/Login", new ChangeFrameAction(), loginPanel);
         add(loginPanel, BorderLayout.LINE_END);
 

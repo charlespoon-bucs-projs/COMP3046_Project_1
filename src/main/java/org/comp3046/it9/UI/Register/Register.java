@@ -18,23 +18,20 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
 
-public class register {
+public class Register {
 
     MaskFormatter mf1;
     UtilDateModel model;
     private JFrame frame;
-    private JLabel lblFullName, lblSalutation, lblUsername, lblBirthday, lblMobileNumber, lblEmail, lblConfirm_Email,
-            lblPassword, lblConfirm_Password;
     private JTextField textField_FullName, textField_Username, textField_Mobile_Number, textField_Email,
             textField_Confirm_Email, textField_Password, textField_Confirm_Password;
-    private JComboBox comboBox_Salutation;
-    private JButton btnSubmit, btnReset;
+    private JComboBox<String> comboBox_Salutation;
     private JDatePickerImpl datePicker;
 
     /**
      * Create the application.
      */
-    public register() {
+    public Register() {
 
         frame = new JFrame();
         frame.setBounds(100, 100, 450, 447);
@@ -76,7 +73,7 @@ public class register {
      */
     private void initialize() {
 
-        lblFullName = new JLabel("*Full Name");
+        JLabel lblFullName = new JLabel("*Full Name");
         lblFullName.setBounds(46, 10, 138, 35);
         lblFullName.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
         frame.getContentPane().add(lblFullName);
@@ -87,19 +84,19 @@ public class register {
         frame.getContentPane().add(textField_FullName);
         textField_FullName.setColumns(10);
 
-        lblSalutation = new JLabel("*Salutation");
+        JLabel lblSalutation = new JLabel("*Salutation");
         lblSalutation.setBounds(46, 45, 114, 35);
         lblSalutation.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
         frame.getContentPane().add(lblSalutation);
 
-        comboBox_Salutation = new JComboBox();
+        comboBox_Salutation = new JComboBox<>();
         comboBox_Salutation.setBounds(250, 54, 70, 21);
         comboBox_Salutation.addItem("Mr.");
         comboBox_Salutation.addItem("Ms.");
         comboBox_Salutation.addItem("Mrs.");
         frame.getContentPane().add(comboBox_Salutation);
 
-        lblUsername = new JLabel("*Username");
+        JLabel lblUsername = new JLabel("*Username");
         lblUsername.setBounds(46, 80, 114, 35);
         lblUsername.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
         frame.getContentPane().add(lblUsername);
@@ -110,7 +107,7 @@ public class register {
         frame.getContentPane().add(textField_Username);
         textField_Username.setColumns(15);
 
-        lblBirthday = new JLabel("*Birthday");
+        JLabel lblBirthday = new JLabel("*Birthday");
         lblBirthday.setBounds(46, 115, 114, 35);
         lblBirthday.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
         frame.getContentPane().add(lblBirthday);
@@ -134,7 +131,7 @@ public class register {
         datePicker.addActionListener(new CheckDateAction());
         frame.getContentPane().add(datePicker);
 
-        lblMobileNumber = new JLabel("*Mobile Number");
+        JLabel lblMobileNumber = new JLabel("*Mobile Number");
         lblMobileNumber.setBounds(46, 150, 114, 35);
         lblMobileNumber.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
         frame.getContentPane().add(lblMobileNumber);
@@ -145,7 +142,7 @@ public class register {
         textField_Mobile_Number.setDocument(new JTextFieldLimit(8));
         textField_Mobile_Number.setColumns(8);
 
-        lblEmail = new JLabel("*Email");
+        JLabel lblEmail = new JLabel("*Email");
         lblEmail.setBounds(46, 185, 114, 35);
         lblEmail.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
         frame.getContentPane().add(lblEmail);
@@ -156,7 +153,7 @@ public class register {
         textField_Email.setDocument(new JTextFieldLimit(20));
         textField_Email.setColumns(20);
 
-        lblConfirm_Email = new JLabel("*Confirm");
+        JLabel lblConfirm_Email = new JLabel("*Confirm");
         lblConfirm_Email.setBounds(46, 220, 114, 35);
         lblConfirm_Email.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
         frame.getContentPane().add(lblConfirm_Email);
@@ -167,7 +164,7 @@ public class register {
         textField_Confirm_Email.setDocument(new JTextFieldLimit(20));
         textField_Confirm_Email.setColumns(20);
 
-        lblPassword = new JLabel("*Password");
+        JLabel lblPassword = new JLabel("*Password");
         lblPassword.setBounds(46, 255, 114, 35);
         lblPassword.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
         frame.getContentPane().add(lblPassword);
@@ -178,7 +175,7 @@ public class register {
         textField_Password.setDocument(new JTextFieldLimit(20));
         textField_Password.setColumns(20);
 
-        lblConfirm_Password = new JLabel("*Confirm");
+        JLabel lblConfirm_Password = new JLabel("*Confirm");
         lblConfirm_Password.setBounds(46, 290, 114, 35);
         lblConfirm_Password.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
         frame.getContentPane().add(lblConfirm_Password);
@@ -194,13 +191,13 @@ public class register {
         lblrequiredField.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
         frame.getContentPane().add(lblrequiredField);
 
-        btnSubmit = new JButton("Submit");
+        JButton btnSubmit = new JButton("Submit");
         btnSubmit.setBounds(186, 366, 87, 23);
         btnSubmit.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
         frame.getContentPane().add(btnSubmit);
         btnSubmit.addActionListener(new SubmitAction());
 
-        btnReset = new JButton("Reset");
+        JButton btnReset = new JButton("Reset");
         btnReset.setBounds(283, 366, 87, 23);
         btnReset.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
         frame.getContentPane().add(btnReset);

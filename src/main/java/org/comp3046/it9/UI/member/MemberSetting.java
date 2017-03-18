@@ -3,10 +3,9 @@ package org.comp3046.it9.UI.member;
 import org.comp3046.it9.Database.CustomerDb;
 import org.comp3046.it9.Database.Sqlite;
 import org.comp3046.it9.Entity.Customer;
-import org.comp3046.it9.Entity.Staff;
 import org.comp3046.it9.UI.Menu.MemberMenu;
 import org.comp3046.it9.UI.Menu.StaffMenu;
-import org.comp3046.it9.UI.Menu.topbar;
+import org.comp3046.it9.UI.Menu.TopBar;
 import org.comp3046.it9.UI.Register.JTextFieldLimit;
 import org.jdatepicker.impl.DateComponentFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
@@ -30,7 +29,7 @@ public class MemberSetting {
     private final Customer editingCustomer;
 
     JRadioButton rdbtnStaff;
-    topbar tp;
+    TopBar tp;
     MaskFormatter mf1;
     UtilDateModel model;
     JDatePickerImpl datePicker;
@@ -91,7 +90,7 @@ public class MemberSetting {
             frame.setTitle("XXX Cinema - Modify Member");
         frame.setBounds(100, 100, 524, 447);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        tp = new topbar();
+        tp = new TopBar();
 
         frame.setVisible(true);
         frame.getContentPane().setLayout(null);

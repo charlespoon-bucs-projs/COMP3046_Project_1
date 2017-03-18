@@ -10,6 +10,6 @@ public class LoginFrame extends JFrame {
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setVisible(true);
         setResizable(false);
-        add(new loginPanel());
+        add(new LoginPanel(this));
     }
 }

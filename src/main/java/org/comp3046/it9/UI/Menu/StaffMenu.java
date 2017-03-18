@@ -5,7 +5,7 @@ import org.comp3046.it9.Database.Sqlite;
 import org.comp3046.it9.Entity.Customer;
 import org.comp3046.it9.Entity.Staff;
 import org.comp3046.it9.UI.Login.LoginFrame;
-import org.comp3046.it9.UI.MovieAction.movieSetting;
+import org.comp3046.it9.UI.MovieAction.MovieSetting;
 import org.comp3046.it9.UI.TransactionRecord.TransactionRecord;
 import org.comp3046.it9.UI.member.MemberSetting;
 import org.jooq.exception.DataAccessException;
@@ -20,7 +20,7 @@ import java.sql.SQLException;
 public class StaffMenu {
 
     JLabel lblLoginer;
-    topbar tb;
+    TopBar tb;
     private JFrame frame;
     private JSeparator separator;
     private JButton btnAddMember, btnAddMovie, btnModifyMember, btnModifyMovie, btnTransactionRecord;
@@ -41,7 +41,7 @@ public class StaffMenu {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("XXX Cinema - Menu");
         frame.getContentPane().setLayout(null);
-        tb = new topbar();
+        tb = new TopBar();
         initialize();
         tb.clock();
     }
@@ -127,7 +127,7 @@ public class StaffMenu {
 
     private class AddMovieAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            new movieSetting(getSelf());
+            new MovieSetting(getSelf());
             frame.setVisible(false);
         }
     }

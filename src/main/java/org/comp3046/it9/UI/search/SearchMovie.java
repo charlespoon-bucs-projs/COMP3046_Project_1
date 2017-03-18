@@ -2,7 +2,7 @@ package org.comp3046.it9.UI.search;
 
 import org.comp3046.it9.Entity.Movie;
 import org.comp3046.it9.UI.Menu.MemberMenu;
-import org.comp3046.it9.UI.Menu.topbar;
+import org.comp3046.it9.UI.Menu.TopBar;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 public class SearchMovie {
     private final MemberMenu memberMenu;
 
-    topbar tb;
+    TopBar tb;
     private JFrame frame;
     private JPanel topbar;
     private JLabel lblLoginer, lblMovieName, lblHouse, lblTime;
@@ -26,7 +26,7 @@ public class SearchMovie {
     public SearchMovie(MemberMenu memberMenu) {
         this.memberMenu = memberMenu;
 
-        tb = new topbar();
+        tb = new TopBar();
         frame = new JFrame();
         frame.setBounds(100, 100, 524, 457);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

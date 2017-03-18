@@ -2,7 +2,7 @@ package org.comp3046.it9.UI.buyTicket;
 
 import org.comp3046.it9.Entity.Movie;
 import org.comp3046.it9.UI.Menu.MemberMenu;
-import org.comp3046.it9.UI.Menu.topbar;
+import org.comp3046.it9.UI.Menu.TopBar;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,7 +21,7 @@ public class BuyTicket {
 	private JFrame frame;
 	private JPanel topbar;
 	private JLabel lblLoginer, lblID, lblMovieName, lblTime, lblLocation, lblSeat, lblTotal;
-	topbar tb;
+	TopBar tb;
 	private JButton btnBack, btnPrint;
 	private JSeparator separator;
 	private JLabel lblNewLabel;
@@ -35,7 +35,7 @@ public class BuyTicket {
         this.movie = movie;
 		this.selectedSeat = selectedSeat;
 
-		tb = new topbar();
+		tb = new TopBar();
 		frame = new JFrame();
 		frame.getContentPane().setLayout(null);
 

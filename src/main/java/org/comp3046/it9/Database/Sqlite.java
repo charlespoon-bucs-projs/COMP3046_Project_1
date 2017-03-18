@@ -1,7 +1,6 @@
 package org.comp3046.it9.Database;
 
 import org.jooq.DSLContext;
-import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 import org.sqlite.SQLiteConfig;

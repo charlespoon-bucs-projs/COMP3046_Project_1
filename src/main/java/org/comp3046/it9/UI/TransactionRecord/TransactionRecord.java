@@ -1,10 +1,8 @@
 package org.comp3046.it9.UI.TransactionRecord;
 
-import org.comp3046.it9.Entity.Customer;
-import org.comp3046.it9.Entity.Staff;
 import org.comp3046.it9.UI.Menu.MemberMenu;
 import org.comp3046.it9.UI.Menu.StaffMenu;
-import org.comp3046.it9.UI.Menu.topbar;
+import org.comp3046.it9.UI.Menu.TopBar;
 import org.comp3046.it9.UI.Register.JTextFieldLimit;
 
 import javax.swing.*;
@@ -17,7 +15,7 @@ public class TransactionRecord {
     private final MemberMenu memberMenu;
     private final StaffMenu staffMenu;
 
-    topbar tb;
+    TopBar tb;
     private JFrame frame;
     private JPanel topbar;
     private JLabel lblLoginer, lblMobile;
@@ -40,7 +38,7 @@ public class TransactionRecord {
     }
 
     private void _ctor() {
-        tb = new topbar();
+        tb = new TopBar();
         initialize();
         tb.clock();
     }
