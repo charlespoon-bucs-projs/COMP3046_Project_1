@@ -7,7 +7,7 @@ import org.comp3046.it9.Entity.Staff;
 import org.comp3046.it9.UI.Login.LoginFrame;
 import org.comp3046.it9.UI.MovieAction.MovieSetting;
 import org.comp3046.it9.UI.TransactionRecord.TransactionRecord;
-import org.comp3046.it9.UI.member.MemberSetting;
+import org.comp3046.it9.UI.Member.MemberSetting;
 import org.jooq.exception.DataAccessException;
 
 import javax.swing.*;

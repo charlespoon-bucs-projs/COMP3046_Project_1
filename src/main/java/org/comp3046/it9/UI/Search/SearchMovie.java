@@ -1,4 +1,4 @@
-package org.comp3046.it9.UI.search;
+package org.comp3046.it9.UI.Search;
 
 import org.comp3046.it9.Entity.Movie;
 import org.comp3046.it9.UI.Menu.MemberMenu;

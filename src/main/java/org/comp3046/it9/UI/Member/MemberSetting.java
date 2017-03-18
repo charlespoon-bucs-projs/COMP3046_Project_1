@@ -1,4 +1,4 @@
-package org.comp3046.it9.UI.member;
+package org.comp3046.it9.UI.Member;
 
 import org.comp3046.it9.Database.CustomerDb;
 import org.comp3046.it9.Database.Sqlite;

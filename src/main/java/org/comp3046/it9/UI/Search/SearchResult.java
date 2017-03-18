@@ -1,9 +1,9 @@
-package org.comp3046.it9.UI.search;
+package org.comp3046.it9.UI.Search;
 
 import org.comp3046.it9.Entity.Movie;
 import org.comp3046.it9.UI.Menu.MemberMenu;
 import org.comp3046.it9.UI.Menu.TopBar;
-import org.comp3046.it9.UI.buyTicket.PayMethod;
+import org.comp3046.it9.UI.BuyTicket.PayMethod;
 
 import javax.swing.*;
 import java.awt.*;

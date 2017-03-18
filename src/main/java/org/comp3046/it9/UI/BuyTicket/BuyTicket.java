@@ -1,4 +1,4 @@
-package org.comp3046.it9.UI.buyTicket;
+package org.comp3046.it9.UI.BuyTicket;
 
 import org.comp3046.it9.Entity.Movie;
 import org.comp3046.it9.UI.Menu.MemberMenu;

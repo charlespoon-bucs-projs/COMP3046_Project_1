@@ -1,10 +1,10 @@
-package org.comp3046.it9.UI.buyTicket;
+package org.comp3046.it9.UI.BuyTicket;
 
 import org.comp3046.it9.Entity.Movie;
 import org.comp3046.it9.UI.Menu.MemberMenu;
 import org.comp3046.it9.UI.Menu.TopBar;
 import org.comp3046.it9.UI.Register.JTextFieldLimit;
-import org.comp3046.it9.UI.search.SearchResult;
+import org.comp3046.it9.UI.Search.SearchResult;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
