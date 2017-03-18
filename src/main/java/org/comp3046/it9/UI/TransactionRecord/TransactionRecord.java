@@ -143,8 +143,10 @@ public class TransactionRecord {
         public void actionPerformed(ActionEvent event) {
             if (staffMenu != null)
                 staffMenu.setVisible(true);
-            else
+            else if (memberMenu != null)
                 memberMenu.setVisible(true);
+            else
+                throw new UnsupportedOperationException("no menu!");
             frame.setVisible(false);
             frame.dispose();
         }

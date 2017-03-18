@@ -165,25 +165,15 @@ public class StaffMenu {
 
     private class ModifyMovieAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-
-            // check the movie id is true
-
-            throw new UnsupportedOperationException("not implemented");
-
-            // TODO: how to get movie object?
-
-//            Movie movieToEdit = null;
-//
-//            new movieSetting(staff, movieToEdit);
-//
-//            frame.dispose();
+            new MovieSetting(getSelf(), null);
+            frame.setVisible(false);
         }
     }
 
     private class TransactionRecordAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             new TransactionRecord(getSelf());
-            frame.dispose();
+            frame.setVisible(false);
         }
     }
 

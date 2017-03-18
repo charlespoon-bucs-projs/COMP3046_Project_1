@@ -202,9 +202,6 @@ public class PayMethod {
 
 	private class PrintAction implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
-            // TODO: calculate me total price!!!
-            int totalPrice = 55 * selectedSeat.length;
-
             // really buy ticket, write record into db
             try (Sqlite sqlite = new Sqlite()) {
                 TransactionsDb tr = new TransactionsDb(sqlite);
@@ -212,8 +209,8 @@ public class PayMethod {
                 tr.createTransaction(
                         memberMenu.getCustomer().getUid(),
                         movie.getId(),
-                        String.join(", ",selectedSeat),
-                        totalPrice,
+                        String.join(", ", (CharSequence[]) selectedSeat),
+                        movie.getPrice() * selectedSeat.length,
                         selectedSeat.length,
                         false);
             } catch (SQLException | IOException e) {
