@@ -9,9 +9,10 @@ import org.jooq.exception.DataAccessException;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static org.comp3046.it9.Database.JooqGenerated.Tables.CUSTOMER;
 import static org.comp3046.it9.Database.JooqGenerated.Tables.TRANSACTIONS;
 
-class TransactionsDb {
+public class TransactionsDb {
     private Sqlite sqlite;
 
     public TransactionsDb(Sqlite sqlite) {
@@ -99,6 +100,64 @@ class TransactionsDb {
                         TRANSACTIONS.NUMBEROFTICKETS,
                         TRANSACTIONS.ISCANCELLED)
                 .from(TRANSACTIONS)
+                .fetch();
+
+        return fetch.stream().map(r -> new Transaction(
+                r.get(TRANSACTIONS.TID),
+                r.get(TRANSACTIONS.STAFFID),
+                r.get(TRANSACTIONS.CUSTOMERID),
+                r.get(TRANSACTIONS.MOVIEID),
+                r.get(TRANSACTIONS.SEAT),
+                r.get(TRANSACTIONS.TOTAL),
+                r.get(TRANSACTIONS.NUMBEROFTICKETS),
+                r.get(TRANSACTIONS.ISCANCELLED) != 0
+        )).collect(Collectors.toMap(Transaction::getId, c -> c));
+    }
+
+    public Map<Integer, Transaction> getTransactionsByMemberMobile(int mobile) {
+        DSLContext dsl = this.sqlite.getDsl();
+
+        Result<Record8<Integer, Integer, Integer, Integer, String, Integer, Integer, Integer>> fetch = dsl
+                .select(TRANSACTIONS.TID,
+                        TRANSACTIONS.STAFFID,
+                        TRANSACTIONS.CUSTOMERID,
+                        TRANSACTIONS.MOVIEID,
+                        TRANSACTIONS.SEAT,
+                        TRANSACTIONS.TOTAL,
+                        TRANSACTIONS.NUMBEROFTICKETS,
+                        TRANSACTIONS.ISCANCELLED)
+                .from(TRANSACTIONS)
+                .innerJoin(CUSTOMER)
+                .on(TRANSACTIONS.CUSTOMERID.equal(CUSTOMER.UID))
+                .where(CUSTOMER.MOBILE.equal(mobile))
+                .fetch();
+
+        return fetch.stream().map(r -> new Transaction(
+                r.get(TRANSACTIONS.TID),
+                r.get(TRANSACTIONS.STAFFID),
+                r.get(TRANSACTIONS.CUSTOMERID),
+                r.get(TRANSACTIONS.MOVIEID),
+                r.get(TRANSACTIONS.SEAT),
+                r.get(TRANSACTIONS.TOTAL),
+                r.get(TRANSACTIONS.NUMBEROFTICKETS),
+                r.get(TRANSACTIONS.ISCANCELLED) != 0
+        )).collect(Collectors.toMap(Transaction::getId, c -> c));
+    }
+
+    public Map<Integer, Transaction> getTransactionsByMemberId(int memberId) {
+        DSLContext dsl = this.sqlite.getDsl();
+
+        Result<Record8<Integer, Integer, Integer, Integer, String, Integer, Integer, Integer>> fetch = dsl
+                .select(TRANSACTIONS.TID,
+                        TRANSACTIONS.STAFFID,
+                        TRANSACTIONS.CUSTOMERID,
+                        TRANSACTIONS.MOVIEID,
+                        TRANSACTIONS.SEAT,
+                        TRANSACTIONS.TOTAL,
+                        TRANSACTIONS.NUMBEROFTICKETS,
+                        TRANSACTIONS.ISCANCELLED)
+                .from(TRANSACTIONS)
+                .where(TRANSACTIONS.CUSTOMERID.equal(memberId))
                 .fetch();
 
         return fetch.stream().map(r -> new Transaction(

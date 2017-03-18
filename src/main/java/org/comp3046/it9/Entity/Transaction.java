@@ -1,5 +1,13 @@
 package org.comp3046.it9.Entity;
 
+import org.comp3046.it9.Database.CustomerDb;
+import org.comp3046.it9.Database.MovieDb;
+import org.comp3046.it9.Database.Sqlite;
+import org.comp3046.it9.Database.StaffDb;
+
+import java.io.IOException;
+import java.sql.SQLException;
+
 public class Transaction {
     private final int id;
     private final int staffId;
@@ -10,6 +18,9 @@ public class Transaction {
     private final int numberOfTickets;
     private final boolean cancelled;
 
+    private Movie cachedMovie = null;
+    private Customer cachedCustomer = null;
+    private Staff cachedStaff = null;
 
     public Transaction(int id, int staffId, int memberId, int movieId, String stringeat, int total, int numberOfTickets, boolean cancelled) {
         this.id = id;
@@ -55,20 +66,41 @@ public class Transaction {
     }
 
     public Staff getStaff() {
-        // TODO: dynamic fetch reference if not stored reference,
-        // TODO: or return the cached reference if available.
-        throw new UnsupportedOperationException("Not Yet Implemented");
+        if (cachedStaff != null) return cachedStaff;
+
+        try (Sqlite sqlite = new Sqlite()) {
+            StaffDb staffDb = new StaffDb(sqlite);
+            cachedStaff = staffDb.getStaffById(getStaffId());
+            return cachedStaff;
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public Customer getCustomer() {
-        // TODO: dynamic fetch reference if not stored reference,
-        // TODO: or return the cached reference if available.
-        throw new UnsupportedOperationException("Not Yet Implemented");
+        if (cachedCustomer != null) return cachedCustomer;
+
+        try (Sqlite sqlite = new Sqlite()) {
+            CustomerDb customerDb = new CustomerDb(sqlite);
+            cachedCustomer = customerDb.getCustomerByUid(getCustomerId());
+            return cachedCustomer;
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public Movie getMovie() {
-        // TODO: dynamic fetch reference if not stored reference,
-        // TODO: or return the cached reference if available.
-        throw new UnsupportedOperationException("Not Yet Implemented");
+        if (cachedMovie != null) return cachedMovie;
+
+        try (Sqlite sqlite = new Sqlite()) {
+            MovieDb movieDb = new MovieDb(sqlite);
+            cachedMovie = movieDb.getMovieById(getMovieId());
+            return cachedMovie;
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
