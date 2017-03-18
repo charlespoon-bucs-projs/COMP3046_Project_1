@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Map;
@@ -63,6 +64,8 @@ public class SearchMovie {
 
                 comboBox_MovieName.removeAllItems();
                 moviesList.values().stream().map(Movie::getName).distinct().forEach(mt -> comboBox_MovieName.addItem(mt));
+            } catch (FileNotFoundException ignored) {
+                JOptionPane.showMessageDialog(null, "Error: \r\n\r\nMissing database file.", "Search movie", JOptionPane.ERROR_MESSAGE);
             } catch (SQLException | IOException e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(

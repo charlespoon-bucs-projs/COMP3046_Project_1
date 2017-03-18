@@ -15,7 +15,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.sql.SQLException;
 
 public class LoginFrame {
@@ -144,8 +146,11 @@ public class LoginFrame {
                     return;
                 }
 
-                JOptionPane.showMessageDialog(null, "The username and password is incorrect.", "Cannot login", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "The username and password is incorrect.", "Login", JOptionPane.ERROR_MESSAGE);
+            } catch (FileNotFoundException ignored) {
+                JOptionPane.showMessageDialog(null, "Error: \r\n\r\nMissing database file.", "Login", JOptionPane.ERROR_MESSAGE);
             } catch (DataAccessException | SQLException | IOException e) {
+                JOptionPane.showMessageDialog(null, "Error: \r\n\r\n" + e.getMessage(), "Login", JOptionPane.ERROR_MESSAGE);
                 e.printStackTrace();
             }
         }

@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -97,8 +98,11 @@ public class ForgetPassword {
                 frame.dispatchEvent(
                         new WindowEvent(frame, WindowEvent.WINDOW_CLOSING)
                 );
+            } catch (FileNotFoundException ignored) {
+                JOptionPane.showMessageDialog(null, "Error: \r\n\r\nMissing database file.", "Forget password", JOptionPane.ERROR_MESSAGE);
             } catch (SQLException | IOException e) {
                 e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error: \r\n\r\n" + e.getMessage(), "Forget password", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

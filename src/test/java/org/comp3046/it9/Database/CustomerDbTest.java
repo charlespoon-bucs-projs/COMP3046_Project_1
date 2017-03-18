@@ -5,6 +5,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,7 +14,7 @@ public class CustomerDbTest {
     private CustomerDb customerDb;
 
     @Before
-    public void setup() throws SQLException {
+    public void setup() throws SQLException, FileNotFoundException {
         Sqlite sqlite = new Sqlite();
         this.customerDb = new CustomerDb(sqlite);
     }

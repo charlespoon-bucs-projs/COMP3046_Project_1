@@ -11,6 +11,7 @@ import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -278,6 +279,9 @@ public class Register {
                 } else {
                     throw new SQLException("returns false, see log");
                 }
+            } catch (FileNotFoundException ignored) {
+                JOptionPane.showMessageDialog(null, "Error: \r\n\r\nMissing database file.", "Error creating account", JOptionPane.ERROR_MESSAGE);
+
             } catch (SQLException | IOException e) {
                 e.printStackTrace();
 

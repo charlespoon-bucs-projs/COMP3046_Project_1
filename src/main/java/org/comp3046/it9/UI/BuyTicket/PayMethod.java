@@ -14,6 +14,7 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.regex.Pattern;
@@ -213,9 +214,11 @@ public class PayMethod {
                         movie.getPrice() * selectedSeat.length,
                         selectedSeat.length,
                         false);
-            } catch (SQLException | IOException e) {
-                JOptionPane.showMessageDialog(null, "Error: \r\n\r\n" + e.getMessage() , "Buy Ticket", JOptionPane.ERROR_MESSAGE);
+            } catch (FileNotFoundException ignored) {
+				JOptionPane.showMessageDialog(null, "Error: \r\n\r\nMissing database file.", "Buy Ticket", JOptionPane.ERROR_MESSAGE);
+			} catch (SQLException | IOException e) {
                 e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error: \r\n\r\n" + e.getMessage() , "Buy Ticket", JOptionPane.ERROR_MESSAGE);
             }
 
             new BuyTicketSuccess(memberMenu, getSelf(), movie, selectedSeat);

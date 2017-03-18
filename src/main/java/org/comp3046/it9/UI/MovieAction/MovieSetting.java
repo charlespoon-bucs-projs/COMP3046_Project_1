@@ -16,6 +16,7 @@ import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Calendar;
@@ -84,6 +85,8 @@ public class MovieSetting {
                     MovieDb movieDb = new MovieDb(sqlite);
                     this.cachedMoviesToEdit = movieDb.getMoviesList();
                     this.cachedMoviesToEdit.keySet().forEach(k -> comboBox_ID.addItem(k));
+                } catch (FileNotFoundException ignored) {
+                    JOptionPane.showMessageDialog(null, "Error: \r\n\r\nMissing database file.", "Movie setting", JOptionPane.ERROR_MESSAGE);
                 } catch (SQLException | IOException e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(
@@ -396,6 +399,9 @@ public class MovieSetting {
                 // cleanup
                 cachedMoviesToEdit.remove(movieEditing.getId()); // delete cache first, or may affected by new selection below
                 comboBox_ID.setSelectedIndex(comboBox_ID.getSelectedIndex() - 1); // may set as -1. see doc
+            } catch (FileNotFoundException ignored) {
+                JOptionPane.showMessageDialog(null, "Error: \r\n\r\nMissing database file.", "Error deleting movie", JOptionPane.ERROR_MESSAGE);
+
             } catch (SQLException | IOException e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(
@@ -439,9 +445,11 @@ public class MovieSetting {
 
                 // back
                 btnBack.doClick();
+            } catch (FileNotFoundException ignored) {
+                JOptionPane.showMessageDialog(null, "Error: \r\n\r\nMissing database file.", "Modify member", JOptionPane.ERROR_MESSAGE);
             } catch (SQLException | IOException e) {
-                JOptionPane.showMessageDialog(null, "Error: \r\n\r\n" + e.getMessage(), "Modify member", JOptionPane.ERROR_MESSAGE);
                 e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error: \r\n\r\n" + e.getMessage(), "Modify member", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -499,7 +507,7 @@ public class MovieSetting {
         if (m == null) {
             textField_MovieName.setText("");
             // no use for ID
-            ((UtilDateModel) datePicker.getModel()).setDate(
+            datePicker.getModel().setDate(
                     Calendar.getInstance().get(Calendar.YEAR),
                     Calendar.getInstance().get(Calendar.MONTH),
                     Calendar.getInstance().get(Calendar.DAY_OF_MONTH));

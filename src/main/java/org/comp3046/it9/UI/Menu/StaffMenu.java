@@ -14,6 +14,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -147,12 +148,15 @@ public class StaffMenu {
             } catch (NumberFormatException ignored) {
                 JOptionPane.showMessageDialog(null, "Input member ID is not an integer.", "Modify member", JOptionPane.WARNING_MESSAGE);
                 return;
+            } catch (FileNotFoundException ignored) {
+                JOptionPane.showMessageDialog(null, "Error: \r\n\r\nMissing database file.", "Modify member", JOptionPane.ERROR_MESSAGE);
+                return;
             } catch (DataAccessException ignored) {
                 JOptionPane.showMessageDialog(null, "Member not found.", "Modify member", JOptionPane.WARNING_MESSAGE);
                 return;
             } catch (SQLException | IOException e) {
-                JOptionPane.showMessageDialog(null, "Error: \r\n\r\n" + e.getMessage() , "Modify member", JOptionPane.ERROR_MESSAGE);
                 e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error: \r\n\r\n" + e.getMessage() , "Modify member", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 

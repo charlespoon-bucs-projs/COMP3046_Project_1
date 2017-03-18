@@ -17,6 +17,7 @@ import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Calendar;
@@ -362,13 +363,14 @@ public class MemberSetting {
 
                 // back
                 btnBack.doClick();
-
+            } catch (FileNotFoundException ignored) {
+                JOptionPane.showMessageDialog(null, "Error: \r\n\r\nMissing database file.", "Member Settings", JOptionPane.ERROR_MESSAGE);
             } catch (SQLException | IOException e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(
                         null,
                         "Error: \r\n\r\n" + e.getMessage(),
-                        "Error setting member details",
+                        "Member Settings",
                         JOptionPane.ERROR_MESSAGE);
             }
         }

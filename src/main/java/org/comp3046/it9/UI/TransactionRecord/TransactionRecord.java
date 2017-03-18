@@ -14,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Map;
@@ -211,6 +212,8 @@ public class TransactionRecord {
             try (Sqlite sqlite = new Sqlite()) {
                 TransactionsDb tr = new TransactionsDb(sqlite);
                 opr.apply(tr).forEach((k, t) -> tableModelAddRecordByEntities(t));
+            } catch (FileNotFoundException ignored) {
+                JOptionPane.showMessageDialog(null, "Error: \r\n\r\nMissing database file.", "Movie setting", JOptionPane.ERROR_MESSAGE);
             } catch (SQLException | IOException e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(

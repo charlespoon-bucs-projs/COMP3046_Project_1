@@ -4,6 +4,8 @@ import org.comp3046.it9.Database.CustomerDb;
 import org.comp3046.it9.Database.MovieDb;
 import org.comp3046.it9.Database.Sqlite;
 
+import javax.swing.*;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 

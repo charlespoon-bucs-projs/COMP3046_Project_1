@@ -7,14 +7,20 @@ import org.sqlite.SQLiteConfig;
 import org.sqlite.SQLiteDataSource;
 
 import java.io.Closeable;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class Sqlite implements Closeable, AutoCloseable {
+    private static final String SQLITE3_FILE_PATH = "cinema.sqlite3";
+
     private Connection connection;
 
-    public Sqlite() throws SQLException {
+    public Sqlite() throws SQLException, FileNotFoundException {
+        if (!(new java.io.File(SQLITE3_FILE_PATH).exists()))
+            throw new FileNotFoundException(String.format("missing SQLite3 file %s", SQLITE3_FILE_PATH));
+
         this.connection = createConnection();
     }
 
@@ -26,9 +32,9 @@ public class Sqlite implements Closeable, AutoCloseable {
 
 
         SQLiteDataSource ds = new SQLiteDataSource(config);
-        ds.setUrl("jdbc:sqlite:cinema.db");
+        ds.setUrl(String.format("jdbc:sqlite:%s", SQLITE3_FILE_PATH));
         return ds.getConnection();
-        //ds.setServerName("cinema.db");
+        //ds.setServerName("cinema.sqlite3");
     }
 
     private Connection getConnection() {
