@@ -60,6 +60,23 @@ public class Transaction {
         return cancelled;
     }
 
+    @Override
+    public String toString() {
+        String msg = "Transaction {\r\n";
+        msg += "Id: %d\r\n";
+        msg += "CustomerId: %d\r\n";
+        msg += "MovieId: %d\r\n";
+        msg += "Seat: %s\r\n";
+        msg += "Total: %d\r\n";
+        msg += "NumberOfTickets: %d\r\n";
+        msg += "IsCancelled: %s\r\n";
+        msg += "}";
+
+        return String.format(
+                msg, getId(), getCustomerId(), getMovieId(), getSeat(),
+                getTotal(), getNumberOfTickets(), (isCancelled() ? "True" : "False"));
+    }
+
     public Customer getCustomer() {
         if (cachedCustomer != null) return cachedCustomer;
 

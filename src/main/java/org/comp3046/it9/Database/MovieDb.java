@@ -1,6 +1,7 @@
 package org.comp3046.it9.Database;
 
 import org.comp3046.it9.Entity.Movie;
+import org.comp3046.it9.Utils.Convert;
 import org.jooq.DSLContext;
 import org.jooq.Record13;
 import org.jooq.Result;
@@ -9,6 +10,8 @@ import org.jooq.exception.DataAccessException;
 import java.util.Date;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import org.comp3046.it9.Utils.*;
 
 import static org.comp3046.it9.Database.JooqGenerated.tables.Movie.MOVIE;
 
@@ -43,7 +46,7 @@ public class MovieDb {
                     .values(
                             name,
                             type,
-                            Utils.Convert.dateToString(date),
+                            Convert.dateToString(date),
                             typeClass,
                             language,
                             length,
@@ -82,7 +85,7 @@ public class MovieDb {
             return dsl.update(MOVIE)
                     .set(MOVIE.MOVIE_NAME, name)
                     .set(MOVIE.MOVIE_TYPE, type)
-                    .set(MOVIE.MOVIE_DATE, Utils.Convert.dateToString(date))
+                    .set(MOVIE.MOVIE_DATE, Convert.dateToString(date))
                     .set(MOVIE.MOVIE_CLASS, typeClass)
                     .set(MOVIE.MOVIE_LANG, language)
                     .set(MOVIE.MOVIE_LENGTH, length)
@@ -148,7 +151,7 @@ public class MovieDb {
                 r.get(MOVIE.MID),
                 r.get(MOVIE.MOVIE_NAME),
                 r.get(MOVIE.MOVIE_TYPE),
-                Utils.Convert.stringToDate(r.get(MOVIE.MOVIE_DATE), null),
+                Convert.stringToDate(r.get(MOVIE.MOVIE_DATE), null),
                 r.get(MOVIE.MOVIE_CLASS),
                 r.get(MOVIE.MOVIE_LANG),
                 r.get(MOVIE.MOVIE_LENGTH),
@@ -207,7 +210,7 @@ public class MovieDb {
                 fetchSingle.get(MOVIE.MID),
                 fetchSingle.get(MOVIE.MOVIE_NAME),
                 fetchSingle.get(MOVIE.MOVIE_TYPE),
-                Utils.Convert.stringToDate(fetchSingle.get(MOVIE.MOVIE_DATE), null),
+                Convert.stringToDate(fetchSingle.get(MOVIE.MOVIE_DATE), null),
                 fetchSingle.get(MOVIE.MOVIE_CLASS),
                 fetchSingle.get(MOVIE.MOVIE_LANG),
                 fetchSingle.get(MOVIE.MOVIE_LENGTH),

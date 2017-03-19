@@ -1,5 +1,7 @@
 package org.comp3046.it9.Entity;
 
+import org.comp3046.it9.Utils.Convert;
+
 import java.util.Date;
 
 public class Movie {
@@ -84,5 +86,27 @@ public class Movie {
 
     public int getStartMinute() {
         return startMinute;
+    }
+
+    @Override
+    public String toString() {
+        String msg = "Movie {\r\n";
+        msg += "Id: %d, \r\n";
+        msg += "Name: %s, \r\n";
+        msg += "Type: %s, \r\n";
+        msg += "Date: %s, \r\n";
+        msg += "TypeClass: %s, \r\n";
+        msg += "Language: %s, \r\n";
+        msg += "Length: %d, \r\n";
+        msg += "Director: %s, \r\n";
+        msg += "Cast: %s, \r\n";
+        msg += "Location: %s, \r\n";
+        msg += "Price: %d, \r\n";
+        msg += "StartHour: %d, \r\n";
+        msg += "StartMinute: %d\r\n";
+        msg += "}";
+        return String.format(
+                msg, getId(), getName(), getType(), Convert.dateToString(getDate()), getTypeClass(), getLanguage(),
+                getLength(), getDirector(), getCast(), getLocation(), getPrice(), getStartHour(), getStartMinute());
     }
 }
