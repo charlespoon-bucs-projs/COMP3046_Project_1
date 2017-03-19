@@ -205,7 +205,10 @@ public class PayMethod {
         public void actionPerformed(ActionEvent event) {
 
             if (rdbtnCreditCard.isSelected()) {
-                if (textField_cardNo.getText().equals("") || textField_MM.getText().equals("") || textField_Security.getText().equals("") || textField_YY.getText().equals("")) {
+                if (textField_cardNo.getText().trim().length() == 0 ||
+                        textField_MM.getText().trim().length() == 0 ||
+                        textField_Security.getText().trim().length() == 0 ||
+                        textField_YY.getText().trim().length() == 0) {
                     JOptionPane.showMessageDialog(null, "Please input the credit card information", "No card info is inputted", JOptionPane.ERROR_MESSAGE);
                 } else {
                     try (Sqlite sqlite = new Sqlite()) {
