@@ -234,6 +234,7 @@ public class MemberSetting {
         btnReset.setBounds(397, 366, 87, 23);
         btnReset.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
         frame.getContentPane().add(btnReset); //
+        btnReset.addActionListener(new ResetAction());
 
         JButton button = new JButton("Delete Member");
         button.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
@@ -260,8 +261,8 @@ public class MemberSetting {
             lblMobileNumber.setEnabled(false);
 
             textField_Email.setText(editingCustomer.getEmail());
-            textField_Email.setEditable(false);
-            lblEmail.setEnabled(false);
+            textField_Email.setEditable(true);
+            lblEmail.setEnabled(true);
 
             lblBirthday.setEnabled(false);
 
@@ -270,7 +271,6 @@ public class MemberSetting {
         } else if (staffMenu != null) {
 
         } else {
-            rdbtnStaff.setVisible(false);
             textField_FullName.setText(memberMenu.getCustomer().getName());
             textField_FullName.setEditable(true);
             lblFullName.setEnabled(true);
@@ -280,7 +280,7 @@ public class MemberSetting {
 
             textField_Username.setText(memberMenu.getCustomer().getUsername());
             textField_Username.setEditable(false);
-            lblUsername.setEnabled(true);
+            lblUsername.setEnabled(false);
 
             textField_Password.setText("");
 
@@ -289,8 +289,8 @@ public class MemberSetting {
             lblMobileNumber.setEnabled(false);
 
             textField_Email.setText(memberMenu.getCustomer().getEmail());
-            textField_Email.setEditable(false);
-            lblEmail.setEnabled(false);
+            textField_Email.setEditable(true);
+            lblEmail.setEnabled(true);
             lblBirthday.setText("*Birthday: ");
             lblBirthday.setEnabled(false);
 
@@ -314,13 +314,63 @@ public class MemberSetting {
     private class ResetAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             // reset all fields
-            textField_FullName.setText("");
-            comboBox_Salutation.setSelectedIndex(0);
-            textField_Username.setText("");
-            textField_Password.setText("");
-            textField_Mobile_Number.setText("");
-            textField_Email.setText("");
-            ((UtilDateModel)datePicker.getModel()).setValue(new Date()); // reset date of birth to today
+            System.out.println(editingCustomer != null && staffMenu != null);
+            if (editingCustomer != null && staffMenu != null) { // staff modify mem
+
+                textField_FullName.setText(editingCustomer.getName());
+                textField_FullName.setEditable(true);
+                lblFullName.setEnabled(true);
+
+                comboBox_Salutation.setSelectedIndex(0);
+                lblSalutation.setEnabled(false);
+
+                textField_Username.setText(editingCustomer.getUsername());
+                textField_Username.setEditable(true);
+                lblUsername.setEnabled(true);
+
+                textField_Password.setText("");
+
+                textField_Mobile_Number.setText(Integer.toString(editingCustomer.getMobile()));
+                textField_Mobile_Number.setEditable(false);
+                lblMobileNumber.setEnabled(false);
+
+                textField_Email.setText(editingCustomer.getEmail());
+                textField_Email.setEditable(false);
+                lblEmail.setEnabled(false);
+
+                lblBirthday.setEnabled(false);
+
+                datePicker.getComponent(1).setEnabled(true);
+
+            } else if (staffMenu != null) {
+
+            } else {
+                textField_FullName.setText(memberMenu.getCustomer().getName());
+                textField_FullName.setEditable(true);
+                lblFullName.setEnabled(true);
+
+                comboBox_Salutation.setSelectedIndex(0);
+                lblSalutation.setEnabled(false);
+
+                textField_Username.setText(memberMenu.getCustomer().getUsername());
+                textField_Username.setEditable(false);
+                lblUsername.setEnabled(false);
+
+                textField_Password.setText("");
+
+                textField_Mobile_Number.setText(Integer.toString(memberMenu.getCustomer().getMobile()));
+                textField_Mobile_Number.setEditable(false);
+                lblMobileNumber.setEnabled(false);
+
+                textField_Email.setText(memberMenu.getCustomer().getEmail());
+                textField_Email.setEditable(true);
+                lblEmail.setEnabled(true);
+                lblBirthday.setText("*Birthday: ");
+                lblBirthday.setEnabled(false);
+
+                datePicker.getComponent(1).setEnabled(false);
+            }
+
         }
     }
 
