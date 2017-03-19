@@ -200,6 +200,7 @@ public class MovieSetting {
         comboBox_Type = new JComboBox<>();
         comboBox_Type.setBounds(411, 194, 87, 28);
 
+        comboBox_Type.setEditable(true);
         comboBox_Type.addItem("Action");
         comboBox_Type.addItem("Adventure");
         comboBox_Type.addItem("Romance");
@@ -211,6 +212,7 @@ public class MovieSetting {
         frame.getContentPane().add(lblLang);
 
         comboBox_Lang = new JComboBox<>();
+        comboBox_Lang.setEditable(true);
         comboBox_Lang.setBounds(258, 194, 92, 28);
         comboBox_Lang.addItem("Chinese");
         comboBox_Lang.addItem("English");
