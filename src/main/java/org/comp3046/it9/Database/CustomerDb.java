@@ -153,7 +153,7 @@ public class CustomerDb {
 
         int changingUid = fetchUid.get(0).value1();
 
-        String newPassword = new BigInteger(40, new SecureRandom()).toString(32).trim().substring(0, 9);
+        String newPassword = new BigInteger(40, new SecureRandom()).toString(32).trim();
 
         int affect = dsl.update(CUSTOMER)
                 .set(CUSTOMER.PASSWORD, newPassword)
@@ -183,7 +183,7 @@ public class CustomerDb {
 
         int changingUid = fetchUid.get(0).value1();
 
-        String newPassword = new BigInteger(40, new SecureRandom()).toString(32).trim().substring(0, 9);
+        String newPassword = new BigInteger(40, new SecureRandom()).toString(32).trim();
 
         int affect = dsl.update(CUSTOMER)
                 .set(CUSTOMER.PASSWORD, newPassword)
