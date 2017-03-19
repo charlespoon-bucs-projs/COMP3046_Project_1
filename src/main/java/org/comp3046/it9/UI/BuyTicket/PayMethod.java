@@ -84,7 +84,7 @@ public class PayMethod {
 				topbar, memberMenu.getCustomer().getUid() + "", memberMenu.getCustomer().getName()
 		));
 
-		lblMovieName = new JLabel(movie.getName() + "ih");
+		lblMovieName = new JLabel(movie.getName());
 		lblMovieName.setBounds(122, 50, 280, 40);
 		lblMovieName.setHorizontalAlignment(JLabel.CENTER);
 		lblMovieName.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 26));

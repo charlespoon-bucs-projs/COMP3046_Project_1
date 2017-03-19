@@ -73,33 +73,28 @@ class BuyTicketSuccess {
 		        topbar, memberMenu.getCustomer().getUid() + "", memberMenu.getCustomer().getName()
         ));
 
-		lblNewLabel = new JLabel("Thank you for putchase");
+		lblNewLabel = new JLabel("Thank you for purchase");
 		lblNewLabel.setBounds(122, 50, 280, 40);
 		lblNewLabel.setHorizontalAlignment(JLabel.CENTER);
 		lblNewLabel.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 26));
 		frame.getContentPane().add(lblNewLabel);
 
-		lblID = new JLabel("ID");
-		lblID.setBounds(122, 90, 300, 28);
-		lblID.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
-		frame.getContentPane().add(lblID);
-
-		lblMovieName = new JLabel("Movie Name");
+		lblMovieName = new JLabel("Movie Name: "+movie.getName());
 		lblMovieName.setBounds(122, 130, 300, 28);
 		lblMovieName.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
 		frame.getContentPane().add(lblMovieName);
 
-		lblTime = new JLabel("Time");
+		lblTime = new JLabel("Time: "+movie.getStartHour()+" : "+movie.getStartMinute());
 		lblTime.setBounds(122, 170, 300, 28);
 		lblTime.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
 		frame.getContentPane().add(lblTime);
 
-		lblLocation = new JLabel("Location");
+		lblLocation = new JLabel("Location: "+movie.getLocation());
 		lblLocation.setBounds(122, 210, 300, 28);
 		lblLocation.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
 		frame.getContentPane().add(lblLocation);
 
-		lblSeat = new JLabel("Seat");
+		lblSeat = new JLabel("Seat: ");
 		lblSeat.setBounds(122, 250, 300, 28);
 		lblSeat.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
 		frame.getContentPane().add(lblSeat);
