@@ -2,9 +2,9 @@ package org.comp3046.it9.UI.Menu;
 
 import org.comp3046.it9.Entity.Customer;
 import org.comp3046.it9.UI.Login.LoginFrame;
-import org.comp3046.it9.UI.TransactionRecord.TransactionRecord;
 import org.comp3046.it9.UI.Member.MemberSetting;
 import org.comp3046.it9.UI.Search.SearchMovie;
+import org.comp3046.it9.UI.TransactionRecord.TransactionRecord;
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,12 +40,6 @@ public class MemberMenu {
         tp.clock();
     }
 
-    /*
-    @Deprecated
-    public member_menu(String id, String fullName) {
-        //TO-DO payMethod, buyTicket
-    }
-    */
 
 
     /**

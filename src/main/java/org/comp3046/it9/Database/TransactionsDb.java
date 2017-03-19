@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.comp3046.it9.Database.JooqGenerated.Tables.CUSTOMER;
-import static org.comp3046.it9.Database.JooqGenerated.Tables.MOVIE;
 import static org.comp3046.it9.Database.JooqGenerated.Tables.TRANSACTIONS;
 
 public class TransactionsDb {
@@ -22,11 +21,11 @@ public class TransactionsDb {
     }
 
     public boolean createTransaction(int customerId,
-                                      int movieId,
-                                      String seat,
-                                      int total,
-                                      int numberOfTickets,
-                                      boolean cancelled) {
+                                     int movieId,
+                                     String seat,
+                                     int total,
+                                     int numberOfTickets,
+                                     boolean cancelled) {
         DSLContext dsl = this.sqlite.getDsl();
 
         try {

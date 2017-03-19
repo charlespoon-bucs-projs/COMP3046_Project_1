@@ -17,7 +17,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.sql.SQLException;
 
 public class LoginFrame {
@@ -130,7 +129,6 @@ public class LoginFrame {
                 StaffDb staffDb = new StaffDb(sqlite);
                 Staff staff = staffDb.getIdFromUserCredentials(strUsername, strPassword);
                 if (staff != null) {
-                    // what to do if it's staff? This window should also be closed
                     loginFrame.setVisible(false);
                     new StaffMenu(loginFrame, staff);
                     return;
@@ -140,13 +138,12 @@ public class LoginFrame {
                 CustomerDb customerDb = new CustomerDb(sqlite);
                 Customer customer = customerDb.getIdFromUserCredentials(strUsername, strPassword);
                 if (customer != null) {
-                    // what to do if it's customer? This window should also be closed
                     loginFrame.setVisible(false);
                     new MemberMenu(loginFrame, customer);
                     return;
                 }
 
-                JOptionPane.showMessageDialog(null, "The username and password is incorrect.", "Login", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Username/Password incorrect, please try again.", "Login", JOptionPane.ERROR_MESSAGE);
             } catch (FileNotFoundException ignored) {
                 JOptionPane.showMessageDialog(null, "Error: \r\n\r\nMissing database file.", "Login", JOptionPane.ERROR_MESSAGE);
             } catch (DataAccessException | SQLException | IOException e) {

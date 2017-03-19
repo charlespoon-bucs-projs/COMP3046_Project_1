@@ -11,8 +11,6 @@ import java.util.Date;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.comp3046.it9.Utils.*;
-
 import static org.comp3046.it9.Database.JooqGenerated.tables.Movie.MOVIE;
 
 public class MovieDb {

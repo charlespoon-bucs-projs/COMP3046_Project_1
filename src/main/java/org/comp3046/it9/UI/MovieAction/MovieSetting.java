@@ -13,7 +13,6 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
-import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,11 +31,8 @@ public class MovieSetting {
     private Movie movieEditing;
 
     private TopBar tb;
-    //    boolean isAdd;
-    MaskFormatter mf1;
     private UtilDateModel model;
     private JFrame frame;
-    private JLabel lblMovieImage;
     private JButton btnBack;
     private JTextField textField_MovieName;
     private JTextField textField_Director;
@@ -65,14 +61,6 @@ public class MovieSetting {
         this.editMovie = true;
         _ctor();
     }
-
-    /*
-    // not possible
-    public movieSetting(boolean isAdd, Customer customer) {
-        this.customer = customer;
-        _ctor(isAdd);
-    }
-    */
 
     private void _ctor() {
 //        this.isAdd = isAdd;
@@ -297,14 +285,6 @@ public class MovieSetting {
         comboBox_hours.addItem("24");
         frame.getContentPane().add(comboBox_hours);
 
-        /*
-        comboBox_apm = new JComboBox<>();
-        comboBox_apm.setBounds(452, 314, 46, 28);
-        comboBox_apm.addItem("am");
-        comboBox_apm.addItem("pm");
-        frame.getContentPane().add(comboBox_apm);
-        */
-
         comboBox_minutes = new JComboBox<String>();
         comboBox_minutes.setBounds(334, 314, 87, 28);
         comboBox_minutes.addItem("00 min");
@@ -320,7 +300,6 @@ public class MovieSetting {
 
         textField_Cast = new JTextField();
         textField_Cast.setBounds(228, 348, 270, 28);
-//        textField_Cast.setDocument(new JTextFieldLimit(10));
         frame.getContentPane().add(textField_Cast);
 
         JButton btnDelete = new JButton("Delete Movie");

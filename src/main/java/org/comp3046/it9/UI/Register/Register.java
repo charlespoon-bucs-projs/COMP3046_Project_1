@@ -1,7 +1,7 @@
 package org.comp3046.it9.UI.Register;
 
-import org.comp3046.it9.Database.Sqlite;
 import org.comp3046.it9.Database.CustomerDb;
+import org.comp3046.it9.Database.Sqlite;
 import org.comp3046.it9.Utils.DatePickerGetSet;
 import org.jdatepicker.impl.DateComponentFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
@@ -38,11 +38,6 @@ public class Register {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         frame.getContentPane().setLayout(null);
-//        try {
-//            MaskFormatter mf1 = new MaskFormatter("00000000");
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
         initialize();
     }
 
@@ -111,9 +106,6 @@ public class Register {
         frame.getContentPane().add(lblBirthday);
 
         model = new UtilDateModel();
-
-        // model.setDate(20,04,2014);
-        // Need this...
         model.setSelected(true);
         model.setDate(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH),
                 Calendar.getInstance().get(Calendar.DAY_OF_MONTH) - 1);
@@ -123,7 +115,6 @@ public class Register {
         p.put("text.month", "Month");
         p.put("text.year", "Year");
         JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
-        // Don't know about the formatter, but there it is...
         datePicker = new JDatePickerImpl(datePanel, new DateComponentFormatter());
         datePicker.setBounds(182, 119, 138, 28);
         datePicker.addActionListener(new CheckDateAction());

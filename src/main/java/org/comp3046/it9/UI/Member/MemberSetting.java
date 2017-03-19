@@ -14,7 +14,6 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
-import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,9 +29,7 @@ public class MemberSetting {
     private final StaffMenu staffMenu;
     private final Customer editingCustomer;
 
-    private JRadioButton rdbtnStaff;
     private TopBar tp;
-    MaskFormatter mf1;
     private UtilDateModel model;
     private JDatePickerImpl datePicker;
     private JFrame frame;
@@ -61,7 +58,6 @@ public class MemberSetting {
      * Launch the application.
      */
 
-    // must not be adding customer by customer itself
     public MemberSetting(MemberMenu memberMenu) {
         this.memberMenu = memberMenu;
         this.staffMenu = null;
@@ -71,7 +67,7 @@ public class MemberSetting {
         tp.clock();
     }
 
-    public MemberSetting(StaffMenu staffMenu) { // for add new member
+    public MemberSetting(StaffMenu staffMenu) {
         this.memberMenu = null;
         this.staffMenu = staffMenu;
         this.editingCustomer = null;
@@ -80,10 +76,7 @@ public class MemberSetting {
         tp.clock();
     }
 
-    public MemberSetting(StaffMenu staffMenu, Customer editingCustomer) { // for
-        // add
-        // new
-        // member
+    public MemberSetting(StaffMenu staffMenu, Customer editingCustomer) {
         this.memberMenu = null;
         this.staffMenu = staffMenu;
         this.editingCustomer = editingCustomer;
@@ -116,12 +109,11 @@ public class MemberSetting {
         lblLoginer = new JLabel("Login as ");
         int id = 0;
         String name = "";
-        if (staffMenu != null){
+        if (staffMenu != null) {
             id = staffMenu.getStaff().getId();
             name = staffMenu.getStaff().getName();
             lblLoginer.setText(lblLoginer.getText() + name + "-Staff");
-        }
-        else {
+        } else {
             id = memberMenu.getCustomer().getUid();
             name = memberMenu.getCustomer().getName();
             lblLoginer.setText(lblLoginer.getText() + name + "-Member");
@@ -255,7 +247,7 @@ public class MemberSetting {
         if (memberMenu != null) { // cannot delete itself
             btnDelete.setVisible(false);
             btnDelete.setEnabled(false);
-        }else if(this.editingCustomer == null){
+        } else if (this.editingCustomer == null) {
             btnDelete.setVisible(false);
             btnDelete.setEnabled(false);
         } else {
@@ -430,7 +422,7 @@ public class MemberSetting {
                             email
                     );
                 } else {
-                    if(password.equals("")){
+                    if (password.equals("")) {
                         System.out.println("password null");
                         dbOk = customerDb.updateCustomer2(
                                 editingCustomer.getUid(),
@@ -440,8 +432,8 @@ public class MemberSetting {
                                 dateOfBorn,
                                 mobile,
                                 email
-                    );
-                    }else{
+                        );
+                    } else {
                         System.out.println("Have PW");
                         dbOk = customerDb.updateCustomer(
                                 editingCustomer.getUid(),
@@ -455,7 +447,7 @@ public class MemberSetting {
                         );
                     }
                 }
-                if (dbOk){
+                if (dbOk) {
                     JOptionPane.showMessageDialog(
                             null, "Member information updated.",
                             "Member Settings", JOptionPane.INFORMATION_MESSAGE);
@@ -543,8 +535,6 @@ public class MemberSetting {
                         String.format("Successful to delete data of member \"%s\".", editingCustomer.getName()),
                         "Member Settings",
                         JOptionPane.INFORMATION_MESSAGE);
-
-                // cleanup
                 btnBack.doClick();
             } catch (FileNotFoundException ignored) {
                 JOptionPane.showMessageDialog(null, "Error: \r\n\r\nMissing database file.", "Error deleting member", JOptionPane.ERROR_MESSAGE);

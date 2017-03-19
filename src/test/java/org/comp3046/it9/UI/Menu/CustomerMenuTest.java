@@ -25,7 +25,7 @@ class CustomerMenuTest {
         }
     }
 
-    private static final Customer CUSTOMER = new Customer(UID, NAME, SALUTATION, USERNAME,MOBILE, EMAIL, BIRTHDAY);
+    private static final Customer CUSTOMER = new Customer(UID, NAME, SALUTATION, USERNAME, MOBILE, EMAIL, BIRTHDAY);
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {

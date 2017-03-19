@@ -115,8 +115,9 @@ public class CustomerDb {
             return false;
         }
     }
+
     public boolean updateCustomer2(int uid, String username,
-                                  String salutation, String name, Date birthday, int mobile, String email) {
+                                   String salutation, String name, Date birthday, int mobile, String email) {
         DSLContext dsl = this.sqlite.getDsl();
 
         try {
@@ -135,6 +136,7 @@ public class CustomerDb {
             return false;
         }
     }
+
     // @Deprecated
     public String forgetPasswordCheckEmail(String email) throws UnsupportedOperationException {
         // DON'T DO THIS ON PRODUCTION!!!

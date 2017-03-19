@@ -21,10 +21,6 @@ public class ForgetPassword {
     /**
      * Launch the application.
      *
-     * public static void main(String[] args) { EventQueue.invokeLater(new
-	 * Runnable() { public void run() { try { forgot_password window = new
-	 * forgot_password(); window.frame.setVisible(true); } catch (Exception e) {
-	 * e.printStackTrace(); } } }); }
 	 */
 
     /**
@@ -70,7 +66,6 @@ public class ForgetPassword {
 
     private class SubmitAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            // forget password submit
 
             String email = textField_email.getText();
 

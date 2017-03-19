@@ -5,9 +5,9 @@ import org.comp3046.it9.Database.Sqlite;
 import org.comp3046.it9.Entity.Customer;
 import org.comp3046.it9.Entity.Staff;
 import org.comp3046.it9.UI.Login.LoginFrame;
+import org.comp3046.it9.UI.Member.MemberSetting;
 import org.comp3046.it9.UI.MovieAction.MovieSetting;
 import org.comp3046.it9.UI.TransactionRecord.TransactionRecord;
-import org.comp3046.it9.UI.Member.MemberSetting;
 import org.jooq.exception.DataAccessException;
 
 import javax.swing.*;
@@ -156,7 +156,7 @@ public class StaffMenu {
                 return;
             } catch (SQLException | IOException e) {
                 e.printStackTrace();
-                JOptionPane.showMessageDialog(null, "Error: \r\n\r\n" + e.getMessage() , "Modify member", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Error: \r\n\r\n" + e.getMessage(), "Modify member", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
