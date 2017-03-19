@@ -15,13 +15,12 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class SearchMovie {
     private final MemberMenu memberMenu;
 
     private Map<Integer, Movie> moviesList = null;
-    private Stream<Movie> _cacheForTimeFilter = null;
+    private java.util.ArrayList<Movie> _cacheForTimeFilter = null;
     private Map<String, Movie> _cacheForSearchResult = null;
 
     private final TopBar tb;
@@ -210,8 +209,11 @@ public class SearchMovie {
         public void actionPerformed(ActionEvent e) {
             String movieName = (String) comboBox_MovieName.getSelectedItem();
             comboBox_House.removeAllItems();
-            _cacheForTimeFilter = moviesList.values().stream().filter(m -> m.getName().equals(movieName));
-            _cacheForTimeFilter.map(Movie::getLocation).distinct().forEach(ml -> comboBox_House.addItem(ml));
+            _cacheForTimeFilter = moviesList.values().stream()
+                    .filter(m -> m.getName().equals(movieName))
+                    .map(m -> m)
+                    .collect(Collectors.toCollection(java.util.ArrayList::new));
+            _cacheForTimeFilter.stream().map(Movie::getLocation).distinct().forEach(ml -> comboBox_House.addItem(ml));
 
             comboBox_House.setEnabled(comboBox_MovieName.getSelectedIndex() > -1);
         }
@@ -226,7 +228,7 @@ public class SearchMovie {
             String location = (String) comboBox_House.getSelectedItem();
             comboBox_Time.removeAllItems();
 
-            _cacheForSearchResult = _cacheForTimeFilter
+            _cacheForSearchResult = _cacheForTimeFilter.stream()
                     .filter(m -> m.getLocation().equals(location))
                     .collect(Collectors.toMap(
                             m -> m.getStartHour() + ":" + m.getStartMinute(),
