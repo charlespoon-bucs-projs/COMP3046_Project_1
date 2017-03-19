@@ -140,16 +140,6 @@ public class MovieSetting {
         frame.getContentPane().add(btnBack);
         btnBack.addActionListener(new BackAction());
 
-        JLabel lblMovieImage = new JLabel("Click  For  Movie Image"); // may
-        // has
-        // click
-        // event
-        lblMovieImage.setOpaque(true);
-        lblMovieImage.setBackground(Color.LIGHT_GRAY);
-        lblMovieImage.setBounds(10, 85, 148, 188);
-
-        frame.getContentPane().add(lblMovieImage);
-
         JLabel lblMovieName = new JLabel("Movie Name");
         lblMovieName.setBounds(130, 50, 138, 35);
         lblMovieName.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 20));
