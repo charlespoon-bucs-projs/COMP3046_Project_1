@@ -255,6 +255,9 @@ public class MemberSetting {
         if (memberMenu != null) { // cannot delete itself
             btnDelete.setVisible(false);
             btnDelete.setEnabled(false);
+        }else if(this.editingCustomer == null){
+            btnDelete.setVisible(false);
+            btnDelete.setEnabled(false);
         } else {
             btnDelete.addActionListener(new DeleteAction());
         }
