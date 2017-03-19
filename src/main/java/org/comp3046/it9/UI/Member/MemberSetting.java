@@ -35,12 +35,24 @@ public class MemberSetting {
     private UtilDateModel model;
     private JDatePickerImpl datePicker;
     private JFrame frame;
-    private JLabel lblLoginer, lblFullName, lblSalutation, lblUsername, lblBirthday, lblMobileNumber, lblEmail,
-            lblPassword;
-    private JTextField textField_FullName, textField_Username, textField_Mobile_Number, textField_Email,
-            textField_Password;
+    private JLabel lblLoginer;
+    private JLabel lblFullName;
+    private JLabel lblSalutation;
+    private JLabel lblUsername;
+    private JLabel lblBirthday;
+    private JLabel lblMobileNumber;
+    private JLabel lblEmail;
+    private JLabel lblPassword;
+    private JTextField textField_FullName;
+    private JTextField textField_Username;
+    private JTextField textField_Mobile_Number;
+    private JTextField textField_Email;
+    private JTextField textField_Password;
     private JComboBox<String> comboBox_Salutation;
-    private JButton btnSubmit, btnReset, btnBack;
+    private JButton btnSubmit;
+    private JButton btnReset;
+    private JButton btnBack;
+    private JButton btnDelete;
     private JPanel topbar;
     private JSeparator separator;
 
@@ -236,10 +248,16 @@ public class MemberSetting {
         frame.getContentPane().add(btnReset); //
         btnReset.addActionListener(new ResetAction());
 
-        JButton button = new JButton("Delete Member");
-        button.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
-        button.setBounds(27, 367, 122, 23);
-        frame.getContentPane().add(button);
+        btnDelete = new JButton("Delete Member");
+        btnDelete.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
+        btnDelete.setBounds(27, 367, 122, 23);
+        if (memberMenu != null) { // cannot delete itself
+            btnDelete.setVisible(false);
+            btnDelete.setEnabled(false);
+        } else {
+            btnDelete.addActionListener(new DeleteAction());
+        }
+        frame.getContentPane().add(btnDelete);
 
         if (this.editingCustomer != null && staffMenu != null) { // staff modify mem
 
@@ -321,6 +339,7 @@ public class MemberSetting {
                 textField_FullName.setEditable(true);
                 lblFullName.setEnabled(true);
 
+                comboBox_Salutation.setSelectedIndex(0);
                 comboBox_Salutation.setSelectedIndex(0);
                 lblSalutation.setEnabled(false);
 
@@ -485,6 +504,49 @@ public class MemberSetting {
                             Calendar.getInstance().get(Calendar.DAY_OF_MONTH) - 1);
                 }
 
+            }
+        }
+    }
+
+    private class DeleteAction implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            String msg = "";
+            msg += String.format("Are you sure you want to delete member #%d \"%s\"? \r\n",
+                    editingCustomer.getUid(), editingCustomer.getName());
+            msg += "This action cannot be undone.";
+
+            int ans = JOptionPane.showConfirmDialog(null, msg, "Delete member", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            if (ans != 0) return;
+
+            try (Sqlite sqlite = new Sqlite()) {
+                CustomerDb customerDb = new CustomerDb(sqlite);
+
+                boolean dbOk = customerDb.removeCustomer(editingCustomer.getUid());
+
+                if (!dbOk) {
+                    JOptionPane.showMessageDialog(null,
+                            "Failed to modify data on database, unknown reason.",
+                            "Member Settings",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                JOptionPane.showMessageDialog(null,
+                        String.format("Successful to delete data of member \"%s\".", editingCustomer.getName()),
+                        "Member Settings",
+                        JOptionPane.INFORMATION_MESSAGE);
+
+                // cleanup
+                btnBack.doClick();
+            } catch (FileNotFoundException ignored) {
+                JOptionPane.showMessageDialog(null, "Error: \r\n\r\nMissing database file.", "Error deleting member", JOptionPane.ERROR_MESSAGE);
+
+            } catch (SQLException | IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Error: \r\n\r\n" + e.getMessage(),
+                        "Error deleting member",
+                        JOptionPane.ERROR_MESSAGE);
             }
         }
     }
