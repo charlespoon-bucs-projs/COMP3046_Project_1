@@ -2,7 +2,7 @@
 
 Deadline : 19/3/2017 - 11 pm
 
-Present time: Group 8 but Who cares?
+Present time: Group 8 20 March, 17:34 - 17:46
 
 Topic: Movie Ticketing System
 
