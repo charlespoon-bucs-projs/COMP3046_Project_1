@@ -7,6 +7,7 @@ import org.comp3046.it9.UI.Menu.MemberMenu;
 import org.comp3046.it9.UI.Menu.StaffMenu;
 import org.comp3046.it9.UI.Menu.TopBar;
 import org.comp3046.it9.UI.Register.JTextFieldLimit;
+import org.comp3046.it9.Utils.DatePickerGetSet;
 import org.jdatepicker.impl.DateComponentFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -400,7 +401,7 @@ public class MemberSetting {
             String username = textField_Username.getText();
             String password = textField_Password.getText();
             int mobile = Integer.parseInt(textField_Mobile_Number.getText(), 10);
-            Date dateOfBorn = (Date) datePicker.getModel().getValue();
+            Date dateOfBorn = DatePickerGetSet.getDate(datePicker);
             String email = textField_Email.getText();
 
             boolean isAdd = editingCustomer == null;

@@ -2,19 +2,18 @@ package org.comp3046.it9.UI.Register;
 
 import org.comp3046.it9.Database.Sqlite;
 import org.comp3046.it9.Database.CustomerDb;
+import org.comp3046.it9.Utils.DatePickerGetSet;
 import org.jdatepicker.impl.DateComponentFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
-import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
@@ -241,7 +240,7 @@ public class Register {
             String pwd = textField_Password.getText();
             String salutn = (String) comboBox_Salutation.getSelectedItem();
             String name = textField_FullName.getText();
-            Date bday = (Date) datePicker.getModel().getValue();
+            Date bday = DatePickerGetSet.getDate(datePicker);
             int mob = Integer.parseInt(textField_Mobile_Number.getText(), 10);
             String email = textField_Email.getText();
 

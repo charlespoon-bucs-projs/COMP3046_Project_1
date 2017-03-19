@@ -6,6 +6,7 @@ import org.comp3046.it9.Entity.Movie;
 import org.comp3046.it9.UI.Menu.StaffMenu;
 import org.comp3046.it9.UI.Menu.TopBar;
 import org.comp3046.it9.UI.Register.JTextFieldLimit;
+import org.comp3046.it9.Utils.DatePickerGetSet;
 import org.jdatepicker.impl.DateComponentFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -507,10 +508,7 @@ public class MovieSetting {
         if (m == null) {
             textField_MovieName.setText("");
             // no use for ID
-            datePicker.getModel().setDate(
-                    Calendar.getInstance().get(Calendar.YEAR),
-                    Calendar.getInstance().get(Calendar.MONTH),
-                    Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+            DatePickerGetSet.setToday(datePicker);
             comboBox_Class.setSelectedIndex(0);
             comboBox_Lang.setSelectedIndex(0);
             comboBox_Type.setSelectedIndex(0);
@@ -525,7 +523,7 @@ public class MovieSetting {
         } else {
             textField_MovieName.setText(m.getName());
             // shall not edit ID to make infinite loop
-            ((UtilDateModel) datePicker.getModel()).setValue(m.getDate());
+            DatePickerGetSet.setDate(datePicker, m.getDate());
             comboBox_Class.setSelectedItem(m.getTypeClass());
             comboBox_Lang.setSelectedItem(m.getLanguage());
             comboBox_Type.setSelectedItem(m.getType());
@@ -547,7 +545,7 @@ public class MovieSetting {
             id = Integer.MIN_VALUE;
         String name = textField_MovieName.getText();
         String type = (String) comboBox_Type.getSelectedItem();
-        Date date = (Date) datePicker.getModel().getValue();
+        Date date = DatePickerGetSet.getDate(datePicker);
         String typeClass = (String) comboBox_Class.getSelectedItem();
         String language = (String) comboBox_Lang.getSelectedItem();
         String director = textField_Director.getText();
