@@ -47,12 +47,12 @@ public class CustomerDb {
         Record7<Integer, String, String, String, Integer, String, String> fetch1 = fetch.get(0);
         return new Customer(
                 fetch1.get(CUSTOMER.UID),
-                fetch1.get(CUSTOMER.NAME),
-                fetch1.get(CUSTOMER.SALUTATION),
-                fetch1.get(CUSTOMER.USERNAME),
+                fetch1.get(CUSTOMER.NAME).trim(),
+                fetch1.get(CUSTOMER.SALUTATION).trim(),
+                fetch1.get(CUSTOMER.USERNAME).trim(),
                 fetch1.get(CUSTOMER.MOBILE),
-                fetch1.get(CUSTOMER.EMAIL),
-                Convert.stringToDate(fetch1.get(CUSTOMER.BIRTHDAY), null));
+                fetch1.get(CUSTOMER.EMAIL).trim(),
+                Convert.stringToDate(fetch1.get(CUSTOMER.BIRTHDAY).trim(), null));
     }
 
     public boolean createCustomer(String username,
@@ -73,13 +73,13 @@ public class CustomerDb {
                     CUSTOMER.BIRTHDAY,
                     CUSTOMER.MOBILE,
                     CUSTOMER.EMAIL)
-                    .values(username,
+                    .values(username.trim(),
                             password,
-                            salutation,
-                            name,
-                            Convert.dateToString(birthday),
+                            salutation.trim(),
+                            name.trim(),
+                            Convert.dateToString(birthday).trim(),
                             mobile,
-                            email)
+                            email.trim())
                     .returning(CUSTOMER.UID)
                     .execute() == 1;
             // IF need to know new ID, call SQL "SELECT last_insert_rowid()"
@@ -100,13 +100,13 @@ public class CustomerDb {
 
         try {
             return dsl.update(CUSTOMER)
-                    .set(CUSTOMER.USERNAME, username)
+                    .set(CUSTOMER.USERNAME, username.trim())
                     .set(CUSTOMER.PASSWORD, password)
-                    .set(CUSTOMER.SALUTATION, salutation)
-                    .set(CUSTOMER.NAME, name)
-                    .set(CUSTOMER.BIRTHDAY, Convert.dateToString(birthday))
+                    .set(CUSTOMER.SALUTATION, salutation.trim())
+                    .set(CUSTOMER.NAME, name.trim())
+                    .set(CUSTOMER.BIRTHDAY, Convert.dateToString(birthday).trim())
                     .set(CUSTOMER.MOBILE, mobile)
-                    .set(CUSTOMER.EMAIL, email)
+                    .set(CUSTOMER.EMAIL, email.trim())
                     .where(CUSTOMER.UID.equal(uid))
                     .execute() == 1;
         } catch (DataAccessException e) {
@@ -121,13 +121,12 @@ public class CustomerDb {
 
         try {
             return dsl.update(CUSTOMER)
-                    .set(CUSTOMER.USERNAME, username)
-                    .set(CUSTOMER.PASSWORD, CUSTOMER.PASSWORD)
-                    .set(CUSTOMER.SALUTATION, salutation)
-                    .set(CUSTOMER.NAME, name)
-                    .set(CUSTOMER.BIRTHDAY, Convert.dateToString(birthday))
+                    .set(CUSTOMER.USERNAME, username.trim())
+                    .set(CUSTOMER.SALUTATION, salutation.trim())
+                    .set(CUSTOMER.NAME, name.trim())
+                    .set(CUSTOMER.BIRTHDAY, Convert.dateToString(birthday).trim())
                     .set(CUSTOMER.MOBILE, mobile)
-                    .set(CUSTOMER.EMAIL, email)
+                    .set(CUSTOMER.EMAIL, email.trim())
                     .where(CUSTOMER.UID.equal(uid))
                     .execute() == 1;
         } catch (DataAccessException e) {
@@ -144,7 +143,7 @@ public class CustomerDb {
 
         Result<Record1<Integer>> fetchUid = dsl.select(CUSTOMER.UID)
                 .from(CUSTOMER)
-                .where(CUSTOMER.EMAIL.equal(email))
+                .where(CUSTOMER.EMAIL.equal(email.trim()))
                 .fetch();
 
         boolean canChangePassword = fetchUid.size() == 1;
@@ -154,7 +153,7 @@ public class CustomerDb {
 
         int changingUid = fetchUid.get(0).value1();
 
-        String newPassword = new BigInteger(40, new SecureRandom()).toString(32);
+        String newPassword = new BigInteger(40, new SecureRandom()).toString(32).trim().substring(0, 9);
 
         int affect = dsl.update(CUSTOMER)
                 .set(CUSTOMER.PASSWORD, newPassword)
@@ -184,7 +183,7 @@ public class CustomerDb {
 
         int changingUid = fetchUid.get(0).value1();
 
-        String newPassword = new BigInteger(130, new SecureRandom()).toString(32);
+        String newPassword = new BigInteger(40, new SecureRandom()).toString(32).trim().substring(0, 9);
 
         int affect = dsl.update(CUSTOMER)
                 .set(CUSTOMER.PASSWORD, newPassword)
@@ -217,12 +216,12 @@ public class CustomerDb {
 
         return fetch.stream().map(r -> new Customer(
                 r.get(CUSTOMER.UID),
-                r.get(CUSTOMER.NAME),
-                r.get(CUSTOMER.SALUTATION),
-                r.get(CUSTOMER.USERNAME),
+                r.get(CUSTOMER.NAME).trim(),
+                r.get(CUSTOMER.SALUTATION).trim(),
+                r.get(CUSTOMER.USERNAME).trim(),
                 r.get(CUSTOMER.MOBILE),
-                r.get(CUSTOMER.EMAIL),
-                Convert.stringToDate(r.get(CUSTOMER.BIRTHDAY), null)
+                r.get(CUSTOMER.EMAIL).trim(),
+                Convert.stringToDate(r.get(CUSTOMER.BIRTHDAY).trim(), null)
         )).collect(Collectors.toMap(Customer::getUid, c -> c));
     }
 
@@ -250,12 +249,12 @@ public class CustomerDb {
         Record7<Integer, String, String, String, Integer, String, String> fetch1 = fetch.get(0);
         return new Customer(
                 fetch1.get(CUSTOMER.UID),
-                fetch1.get(CUSTOMER.NAME),
-                fetch1.get(CUSTOMER.SALUTATION),
-                fetch1.get(CUSTOMER.USERNAME),
+                fetch1.get(CUSTOMER.NAME).trim(),
+                fetch1.get(CUSTOMER.SALUTATION).trim(),
+                fetch1.get(CUSTOMER.USERNAME).trim(),
                 fetch1.get(CUSTOMER.MOBILE),
-                fetch1.get(CUSTOMER.EMAIL),
-                Convert.stringToDate(fetch1.get(CUSTOMER.BIRTHDAY), null)
+                fetch1.get(CUSTOMER.EMAIL).trim(),
+                Convert.stringToDate(fetch1.get(CUSTOMER.BIRTHDAY).trim(), null)
         );
     }
 

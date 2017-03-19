@@ -27,8 +27,8 @@ public class StaffDb {
                     STAFF.USERNAME,
                     STAFF.PASSWORD)
                     .values(
-                            name,
-                            username,
+                            name.trim(),
+                            username.trim(),
                             password
                     )
                     .execute() == 1;
@@ -49,8 +49,8 @@ public class StaffDb {
 
         try {
             return dsl.update(STAFF)
-                    .set(STAFF.NAME, name)
-                    .set(STAFF.USERNAME, username)
+                    .set(STAFF.NAME, name.trim())
+                    .set(STAFF.USERNAME, username.trim())
                     .set(STAFF.PASSWORD, password)
                     .where(STAFF.SID.equal(staffId))
                     .execute() == 1;
@@ -87,8 +87,8 @@ public class StaffDb {
 
         return fetch.stream().map(r -> new Staff(
                 r.get(STAFF.SID),
-                r.get(STAFF.NAME),
-                r.get(STAFF.USERNAME)
+                r.get(STAFF.NAME).trim(),
+                r.get(STAFF.USERNAME).trim()
         )).collect(Collectors.toMap(Staff::getId, c -> c));
     }
 
@@ -113,8 +113,8 @@ public class StaffDb {
 
         return new Staff(
                 fetch1.get(STAFF.SID),
-                fetch1.get(STAFF.NAME),
-                fetch1.get(STAFF.USERNAME)
+                fetch1.get(STAFF.NAME).trim(),
+                fetch1.get(STAFF.USERNAME).trim()
         );
     }
 
@@ -139,7 +139,7 @@ public class StaffDb {
 
         return new Staff(
                 fetch1.get(STAFF.SID),
-                fetch1.get(STAFF.NAME),
-                fetch1.get(STAFF.USERNAME));
+                fetch1.get(STAFF.NAME).trim(),
+                fetch1.get(STAFF.USERNAME).trim());
     }
 }

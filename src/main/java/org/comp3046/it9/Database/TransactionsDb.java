@@ -38,7 +38,7 @@ public class TransactionsDb {
                     .values(
                             customerId,
                             movieId,
-                            seat,
+                            seat.trim(),
                             total,
                             numberOfTickets,
                             cancelled ? 1 : 0
@@ -70,7 +70,7 @@ public class TransactionsDb {
             return dsl.update(TRANSACTIONS)
                     .set(TRANSACTIONS.CUSTOMERID, customerId)
                     .set(TRANSACTIONS.MOVIEID, movieId)
-                    .set(TRANSACTIONS.SEAT, seat)
+                    .set(TRANSACTIONS.SEAT, seat.trim())
                     .set(TRANSACTIONS.TOTAL, total)
                     .set(TRANSACTIONS.NUMBEROFTICKETS, numberOfTickets)
                     .set(TRANSACTIONS.ISCANCELLED, cancelled ? 1 : 0)
@@ -101,7 +101,7 @@ public class TransactionsDb {
                 r.get(TRANSACTIONS.TID),
                 r.get(TRANSACTIONS.CUSTOMERID),
                 r.get(TRANSACTIONS.MOVIEID),
-                r.get(TRANSACTIONS.SEAT),
+                r.get(TRANSACTIONS.SEAT).trim(),
                 r.get(TRANSACTIONS.TOTAL),
                 r.get(TRANSACTIONS.NUMBEROFTICKETS),
                 r.get(TRANSACTIONS.ISCANCELLED) != 0
@@ -129,7 +129,7 @@ public class TransactionsDb {
                 r.get(TRANSACTIONS.TID),
                 r.get(TRANSACTIONS.CUSTOMERID),
                 r.get(TRANSACTIONS.MOVIEID),
-                r.get(TRANSACTIONS.SEAT),
+                r.get(TRANSACTIONS.SEAT).trim(),
                 r.get(TRANSACTIONS.TOTAL),
                 r.get(TRANSACTIONS.NUMBEROFTICKETS),
                 r.get(TRANSACTIONS.ISCANCELLED) != 0
@@ -155,7 +155,7 @@ public class TransactionsDb {
                 r.get(TRANSACTIONS.TID),
                 r.get(TRANSACTIONS.CUSTOMERID),
                 r.get(TRANSACTIONS.MOVIEID),
-                r.get(TRANSACTIONS.SEAT),
+                r.get(TRANSACTIONS.SEAT).trim(),
                 r.get(TRANSACTIONS.TOTAL),
                 r.get(TRANSACTIONS.NUMBEROFTICKETS),
                 r.get(TRANSACTIONS.ISCANCELLED) != 0
@@ -188,7 +188,7 @@ public class TransactionsDb {
                 fetch1.get(TRANSACTIONS.TID),
                 fetch1.get(TRANSACTIONS.CUSTOMERID),
                 fetch1.get(TRANSACTIONS.MOVIEID),
-                fetch1.get(TRANSACTIONS.SEAT),
+                fetch1.get(TRANSACTIONS.SEAT).trim(),
                 fetch1.get(TRANSACTIONS.TOTAL),
                 fetch1.get(TRANSACTIONS.NUMBEROFTICKETS),
                 fetch1.get(TRANSACTIONS.ISCANCELLED) != 0
