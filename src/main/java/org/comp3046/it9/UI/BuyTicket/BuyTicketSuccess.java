@@ -109,19 +109,8 @@ class BuyTicketSuccess {
 		frame.getContentPane().add(btnBack);
 		btnBack.addActionListener(new BackAction());
 
-		btnPrint = new JButton("Print Receipt");
-		btnPrint.setBounds(179, 315, 146, 23);
-		btnPrint.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
-		frame.getContentPane().add(btnPrint);
-		btnPrint.addActionListener(new PrintAction());
-
 	}
-
-	private class PrintAction implements ActionListener {
-		public void actionPerformed(ActionEvent event) {
-            btnBack.doClick(); // ha
-		}
-	}
+	
 
 	private class BackAction implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
