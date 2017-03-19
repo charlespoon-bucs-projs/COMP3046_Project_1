@@ -22,5 +22,3 @@ Topic: Movie Ticketing System
 1. add/modify/delete movie information
 
 2. add/modify/delete customers information
-
-FUCK 🖕🖕🖕
