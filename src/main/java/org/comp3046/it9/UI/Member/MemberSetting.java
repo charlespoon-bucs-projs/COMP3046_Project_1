@@ -279,7 +279,30 @@ public class MemberSetting {
 
         } else {
             rdbtnStaff.setVisible(false);
+            textField_FullName.setText(memberMenu.getCustomer().getName());
+            textField_FullName.setEditable(true);
+            lblFullName.setEnabled(true);
 
+            comboBox_Salutation.setSelectedIndex(0);
+            lblSalutation.setEnabled(false);
+
+            textField_Username.setText(memberMenu.getCustomer().getUsername());
+            textField_Username.setEditable(false);
+            lblUsername.setEnabled(true);
+
+            textField_Password.setText("");
+
+            textField_Mobile_Number.setText(Integer.toString(memberMenu.getCustomer().getMobile()));
+            textField_Mobile_Number.setEditable(false);
+            lblMobileNumber.setEnabled(false);
+
+            textField_Email.setText(memberMenu.getCustomer().getEmail());
+            textField_Email.setEditable(false);
+            lblEmail.setEnabled(false);
+            lblBirthday.setText("*Birthday: ");
+            lblBirthday.setEnabled(false);
+
+            datePicker.getComponent(1).setEnabled(false);
         }
 
     }
