@@ -110,7 +110,7 @@ class BuyTicketSuccess {
 		btnBack.addActionListener(new BackAction());
 
 	}
-	
+
 
 	private class BackAction implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
