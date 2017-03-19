@@ -325,7 +325,6 @@ public class MemberSetting {
     private class ResetAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             // reset all fields
-            System.out.println(editingCustomer != null && staffMenu != null);
             if (editingCustomer != null && staffMenu != null) { // staff modify mem
 
                 textField_FullName.setText(editingCustomer.getName());
@@ -345,7 +344,7 @@ public class MemberSetting {
                 textField_Mobile_Number.setEditable(false);
                 
                 textField_Email.setText(editingCustomer.getEmail());
-                textField_Email.setEditable(false);
+                textField_Email.setEditable(true);
 
                 
                 datePicker.getComponent(1).setEnabled(true);
