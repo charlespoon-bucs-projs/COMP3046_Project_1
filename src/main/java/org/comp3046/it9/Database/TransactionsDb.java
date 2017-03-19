@@ -1,5 +1,6 @@
 package org.comp3046.it9.Database;
 
+import org.comp3046.it9.Entity.Movie;
 import org.comp3046.it9.Entity.Transaction;
 import org.jooq.DSLContext;
 import org.jooq.Record7;
@@ -10,6 +11,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.comp3046.it9.Database.JooqGenerated.Tables.CUSTOMER;
+import static org.comp3046.it9.Database.JooqGenerated.Tables.MOVIE;
 import static org.comp3046.it9.Database.JooqGenerated.Tables.TRANSACTIONS;
 
 public class TransactionsDb {
@@ -95,6 +97,32 @@ public class TransactionsDb {
                         TRANSACTIONS.NUMBEROFTICKETS,
                         TRANSACTIONS.ISCANCELLED)
                 .from(TRANSACTIONS)
+                .fetch();
+
+        return fetch.stream().map(r -> new Transaction(
+                r.get(TRANSACTIONS.TID),
+                r.get(TRANSACTIONS.CUSTOMERID),
+                r.get(TRANSACTIONS.MOVIEID),
+                r.get(TRANSACTIONS.SEAT).trim(),
+                r.get(TRANSACTIONS.TOTAL),
+                r.get(TRANSACTIONS.NUMBEROFTICKETS),
+                r.get(TRANSACTIONS.ISCANCELLED) != 0
+        )).collect(Collectors.toMap(Transaction::getId, c -> c));
+    }
+
+    public Map<Integer, Transaction> getTransactionsByMovie(Movie m) {
+        DSLContext dsl = this.sqlite.getDsl();
+
+        Result<Record7<Integer, Integer, Integer, String, Integer, Integer, Integer>> fetch = dsl
+                .select(TRANSACTIONS.TID,
+                        TRANSACTIONS.CUSTOMERID,
+                        TRANSACTIONS.MOVIEID,
+                        TRANSACTIONS.SEAT,
+                        TRANSACTIONS.TOTAL,
+                        TRANSACTIONS.NUMBEROFTICKETS,
+                        TRANSACTIONS.ISCANCELLED)
+                .from(TRANSACTIONS)
+                .where(TRANSACTIONS.MOVIEID.equal(m.getId()))
                 .fetch();
 
         return fetch.stream().map(r -> new Transaction(
