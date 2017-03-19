@@ -366,6 +366,11 @@ public class MemberSetting {
                 datePicker.getComponent(1).setEnabled(true);
 
             } else if (staffMenu != null) {
+                textField_FullName.setText("");
+                textField_Username.setText("");
+                textField_Password.setText("");
+                textField_Mobile_Number.setText("");
+                textField_Email.setText("");
 
             } else {
                 textField_FullName.setText(memberMenu.getCustomer().getName());
