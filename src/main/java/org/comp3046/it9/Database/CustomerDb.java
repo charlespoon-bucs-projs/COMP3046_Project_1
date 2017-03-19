@@ -1,6 +1,7 @@
 package org.comp3046.it9.Database;
 
 import org.comp3046.it9.Entity.Customer;
+import org.comp3046.it9.Utils.Convert;
 import org.jooq.DSLContext;
 import org.jooq.Record1;
 import org.jooq.Record7;
@@ -12,6 +13,8 @@ import java.security.SecureRandom;
 import java.util.Date;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import org.comp3046.it9.Utils.*;
 
 import static org.comp3046.it9.Database.JooqGenerated.tables.Customer.CUSTOMER;
 
@@ -51,7 +54,7 @@ public class CustomerDb {
                 fetch1.get(CUSTOMER.USERNAME),
                 fetch1.get(CUSTOMER.MOBILE),
                 fetch1.get(CUSTOMER.EMAIL),
-                Utils.Convert.stringToDate(fetch1.get(CUSTOMER.BIRTHDAY), null));
+                Convert.stringToDate(fetch1.get(CUSTOMER.BIRTHDAY), null));
     }
 
     public boolean createCustomer(String username,
@@ -76,7 +79,7 @@ public class CustomerDb {
                             password,
                             salutation,
                             name,
-                            Utils.Convert.dateToString(birthday),
+                            Convert.dateToString(birthday),
                             mobile,
                             email)
                     .returning(CUSTOMER.UID)
@@ -103,7 +106,7 @@ public class CustomerDb {
                     .set(CUSTOMER.PASSWORD, password)
                     .set(CUSTOMER.SALUTATION, salutation)
                     .set(CUSTOMER.NAME, name)
-                    .set(CUSTOMER.BIRTHDAY, Utils.Convert.dateToString(birthday))
+                    .set(CUSTOMER.BIRTHDAY, Convert.dateToString(birthday))
                     .set(CUSTOMER.MOBILE, mobile)
                     .set(CUSTOMER.EMAIL, email)
                     .where(CUSTOMER.UID.equal(uid))
@@ -124,7 +127,7 @@ public class CustomerDb {
                     .set(CUSTOMER.PASSWORD, CUSTOMER.PASSWORD)
                     .set(CUSTOMER.SALUTATION, salutation)
                     .set(CUSTOMER.NAME, name)
-                    .set(CUSTOMER.BIRTHDAY, Utils.Convert.dateToString(birthday))
+                    .set(CUSTOMER.BIRTHDAY, Convert.dateToString(birthday))
                     .set(CUSTOMER.MOBILE, mobile)
                     .set(CUSTOMER.EMAIL, email)
                     .where(CUSTOMER.UID.equal(uid))
@@ -173,7 +176,7 @@ public class CustomerDb {
                 .from(CUSTOMER)
                 .where(CUSTOMER.USERNAME.equal(username))
                 .and(CUSTOMER.MOBILE.equal(mobile))
-                .and(CUSTOMER.BIRTHDAY.equal(Utils.Convert.dateToString(birthday)))
+                .and(CUSTOMER.BIRTHDAY.equal(Convert.dateToString(birthday)))
                 .fetch();
 
         boolean canChangePassword = fetchUid.size() == 1;
@@ -221,7 +224,7 @@ public class CustomerDb {
                 r.get(CUSTOMER.USERNAME),
                 r.get(CUSTOMER.MOBILE),
                 r.get(CUSTOMER.EMAIL),
-                Utils.Convert.stringToDate(r.get(CUSTOMER.BIRTHDAY), null)
+                Convert.stringToDate(r.get(CUSTOMER.BIRTHDAY), null)
         )).collect(Collectors.toMap(Customer::getUid, c -> c));
     }
 
@@ -254,7 +257,7 @@ public class CustomerDb {
                 fetch1.get(CUSTOMER.USERNAME),
                 fetch1.get(CUSTOMER.MOBILE),
                 fetch1.get(CUSTOMER.EMAIL),
-                Utils.Convert.stringToDate(fetch1.get(CUSTOMER.BIRTHDAY), null)
+                Convert.stringToDate(fetch1.get(CUSTOMER.BIRTHDAY), null)
         );
     }
 
