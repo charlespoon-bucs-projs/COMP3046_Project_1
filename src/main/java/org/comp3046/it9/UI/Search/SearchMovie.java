@@ -64,6 +64,8 @@ public class SearchMovie {
 
                 comboBox_MovieName.removeAllItems();
                 moviesList.values().stream().map(Movie::getName).distinct().forEach(mt -> comboBox_MovieName.addItem(mt));
+
+                comboBox_MovieName.setEnabled(true);
             } catch (FileNotFoundException ignored) {
                 JOptionPane.showMessageDialog(null, "Error: \r\n\r\nMissing database file.", "Search movie", JOptionPane.ERROR_MESSAGE);
             } catch (SQLException | IOException e) {
@@ -210,6 +212,8 @@ public class SearchMovie {
             comboBox_House.removeAllItems();
             _cacheForTimeFilter = moviesList.values().stream().filter(m -> m.getName().equals(movieName));
             _cacheForTimeFilter.map(Movie::getLocation).distinct().forEach(ml -> comboBox_House.addItem(ml));
+
+            comboBox_House.setEnabled(comboBox_MovieName.getSelectedIndex() > -1);
         }
     }
 
@@ -230,6 +234,8 @@ public class SearchMovie {
                     ));
 
             _cacheForSearchResult.keySet().stream().distinct().forEach(mt -> comboBox_Time.addItem(mt));
+
+            comboBox_Time.setEnabled(comboBox_House.getSelectedIndex() > -1);
         }
     }
 }
