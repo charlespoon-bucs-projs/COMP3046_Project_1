@@ -44,15 +44,15 @@ public class MovieDb {
                     MOVIE.MOVIE_STARTHOUR,
                     MOVIE.MOVIE_STARTMINUTE)
                     .values(
-                            name,
-                            type,
-                            Convert.dateToString(date),
-                            typeClass,
-                            language,
+                            name.trim(),
+                            type.trim(),
+                            Convert.dateToString(date).trim(),
+                            typeClass.trim(),
+                            language.trim(),
                             length,
-                            director,
-                            cast,
-                            location,
+                            director.trim(),
+                            cast.trim(),
+                            location.trim(),
                             price,
                             startHour,
                             startMinute
@@ -83,15 +83,15 @@ public class MovieDb {
 
         try {
             return dsl.update(MOVIE)
-                    .set(MOVIE.MOVIE_NAME, name)
-                    .set(MOVIE.MOVIE_TYPE, type)
-                    .set(MOVIE.MOVIE_DATE, Convert.dateToString(date))
-                    .set(MOVIE.MOVIE_CLASS, typeClass)
-                    .set(MOVIE.MOVIE_LANG, language)
+                    .set(MOVIE.MOVIE_NAME, name.trim())
+                    .set(MOVIE.MOVIE_TYPE, type.trim())
+                    .set(MOVIE.MOVIE_DATE, Convert.dateToString(date).trim())
+                    .set(MOVIE.MOVIE_CLASS, typeClass.trim())
+                    .set(MOVIE.MOVIE_LANG, language.trim())
                     .set(MOVIE.MOVIE_LENGTH, length)
-                    .set(MOVIE.MOVIE_DIRECTOR, director)
-                    .set(MOVIE.MOVIE_CAST, cast)
-                    .set(MOVIE.MOVIE_LOCATION, location)
+                    .set(MOVIE.MOVIE_DIRECTOR, director.trim())
+                    .set(MOVIE.MOVIE_CAST, cast.trim())
+                    .set(MOVIE.MOVIE_LOCATION, location.trim())
                     .set(MOVIE.MOVIE_PRICE, price)
                     .set(MOVIE.MOVIE_STARTHOUR, startHour)
                     .set(MOVIE.MOVIE_STARTMINUTE, startMinute)
@@ -149,15 +149,15 @@ public class MovieDb {
 
         return fetch.stream().map(r -> new Movie(
                 r.get(MOVIE.MID),
-                r.get(MOVIE.MOVIE_NAME),
-                r.get(MOVIE.MOVIE_TYPE),
-                Convert.stringToDate(r.get(MOVIE.MOVIE_DATE), null),
-                r.get(MOVIE.MOVIE_CLASS),
-                r.get(MOVIE.MOVIE_LANG),
+                r.get(MOVIE.MOVIE_NAME).trim(),
+                r.get(MOVIE.MOVIE_TYPE).trim(),
+                Convert.stringToDate(r.get(MOVIE.MOVIE_DATE).trim(), null),
+                r.get(MOVIE.MOVIE_CLASS).trim(),
+                r.get(MOVIE.MOVIE_LANG).trim(),
                 r.get(MOVIE.MOVIE_LENGTH),
-                r.get(MOVIE.MOVIE_DIRECTOR),
-                r.get(MOVIE.MOVIE_CAST),
-                r.get(MOVIE.MOVIE_LOCATION),
+                r.get(MOVIE.MOVIE_DIRECTOR).trim(),
+                r.get(MOVIE.MOVIE_CAST).trim(),
+                r.get(MOVIE.MOVIE_LOCATION).trim(),
                 r.get(MOVIE.MOVIE_PRICE),
                 r.get(MOVIE.MOVIE_STARTHOUR),
                 r.get(MOVIE.MOVIE_STARTMINUTE)
@@ -208,15 +208,15 @@ public class MovieDb {
         Record13<Integer, String, String, String, String, String, Integer, String, String, String, Integer, Integer, Integer> fetchSingle = fetch.get(0);
         return new Movie(
                 fetchSingle.get(MOVIE.MID),
-                fetchSingle.get(MOVIE.MOVIE_NAME),
-                fetchSingle.get(MOVIE.MOVIE_TYPE),
-                Convert.stringToDate(fetchSingle.get(MOVIE.MOVIE_DATE), null),
-                fetchSingle.get(MOVIE.MOVIE_CLASS),
-                fetchSingle.get(MOVIE.MOVIE_LANG),
+                fetchSingle.get(MOVIE.MOVIE_NAME).trim(),
+                fetchSingle.get(MOVIE.MOVIE_TYPE).trim(),
+                Convert.stringToDate(fetchSingle.get(MOVIE.MOVIE_DATE).trim(), null),
+                fetchSingle.get(MOVIE.MOVIE_CLASS).trim(),
+                fetchSingle.get(MOVIE.MOVIE_LANG).trim(),
                 fetchSingle.get(MOVIE.MOVIE_LENGTH),
-                fetchSingle.get(MOVIE.MOVIE_DIRECTOR),
-                fetchSingle.get(MOVIE.MOVIE_CAST),
-                fetchSingle.get(MOVIE.MOVIE_LOCATION),
+                fetchSingle.get(MOVIE.MOVIE_DIRECTOR).trim(),
+                fetchSingle.get(MOVIE.MOVIE_CAST).trim(),
+                fetchSingle.get(MOVIE.MOVIE_LOCATION).trim(),
                 fetchSingle.get(MOVIE.MOVIE_PRICE),
                 fetchSingle.get(MOVIE.MOVIE_STARTHOUR),
                 fetchSingle.get(MOVIE.MOVIE_STARTMINUTE));
