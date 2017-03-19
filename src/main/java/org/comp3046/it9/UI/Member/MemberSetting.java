@@ -224,11 +224,6 @@ public class MemberSetting {
         datePicker.addActionListener(new CheckDateAction());
         frame.getContentPane().add(datePicker);
 
-        rdbtnStaff = new JRadioButton("Staff");
-        rdbtnStaff.setBounds(66, 323, 107, 23);
-        rdbtnStaff.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
-        frame.getContentPane().add(rdbtnStaff);
-
         btnSubmit = new JButton("Submit");
         btnSubmit.setBounds(276, 366, 87, 23);
         btnSubmit.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
@@ -247,35 +242,32 @@ public class MemberSetting {
 
         if (this.editingCustomer != null && staffMenu != null) { // staff modify mem
 
-            textField_FullName.setText("BenLi");
+            textField_FullName.setText(editingCustomer.getName());
             textField_FullName.setEditable(true);
             lblFullName.setEnabled(true);
 
             comboBox_Salutation.setSelectedIndex(0);
             lblSalutation.setEnabled(false);
 
-            textField_Username.setText("bbqwe");
+            textField_Username.setText(editingCustomer.getUsername());
             textField_Username.setEditable(true);
             lblUsername.setEnabled(true);
 
-            textField_Password.setText("123445556");
+            textField_Password.setText("");
 
-            textField_Mobile_Number.setText("12345676");
+            textField_Mobile_Number.setText(Integer.toString(editingCustomer.getMobile()));
             textField_Mobile_Number.setEditable(false);
             lblMobileNumber.setEnabled(false);
 
-            textField_Email.setText("dsfgn@sdgfhj");
+            textField_Email.setText(editingCustomer.getEmail());
             textField_Email.setEditable(false);
             lblEmail.setEnabled(false);
 
             lblBirthday.setEnabled(false);
 
-            datePicker.getComponent(1).setEnabled(false);
+            datePicker.getComponent(1).setEnabled(true);
 
         } else if (staffMenu != null) {
-            rdbtnStaff.setVisible(true);
-            rdbtnStaff.setSelected(true);
-            rdbtnStaff.setEnabled(false);
 
         } else {
             rdbtnStaff.setVisible(false);
@@ -360,18 +352,37 @@ public class MemberSetting {
                             email
                     );
                 } else {
-                    dbOk = customerDb.updateCustomer(
-                            editingCustomer.getUid(),
-                            username,
-                            password,
-                            salutation,
-                            fullName,
-                            dateOfBorn,
-                            mobile,
-                            email
+                    if(password.equals("")){
+                        System.out.println("password null");
+                        dbOk = customerDb.updateCustomer2(
+                                editingCustomer.getUid(),
+                                username,
+                                salutation,
+                                fullName,
+                                dateOfBorn,
+                                mobile,
+                                email
                     );
+                    }else{
+                        System.out.println("Have PW");
+                        dbOk = customerDb.updateCustomer(
+                                editingCustomer.getUid(),
+                                username,
+                                password,
+                                salutation,
+                                fullName,
+                                dateOfBorn,
+                                mobile,
+                                email
+                        );
+                    }
                 }
-
+                if (dbOk){
+                    JOptionPane.showMessageDialog(
+                            null, "Member information updated.",
+                            "Member Settings", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
                 if (!dbOk) {
                     JOptionPane.showMessageDialog(
                             null, "Failed to modify data on database, unknown reason.",

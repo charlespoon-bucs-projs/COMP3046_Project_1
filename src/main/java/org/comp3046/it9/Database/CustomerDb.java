@@ -114,7 +114,27 @@ public class CustomerDb {
             return false;
         }
     }
+    public boolean updateCustomer2(int uid, String username,
+                                  String salutation, String name, Date birthday, int mobile, String email) {
+        DSLContext dsl = this.sqlite.getDsl();
 
+        try {
+            return dsl.update(CUSTOMER)
+                    .set(CUSTOMER.USERNAME, username)
+                    .set(CUSTOMER.PASSWORD, CUSTOMER.PASSWORD)
+                    .set(CUSTOMER.SALUTATION, salutation)
+                    .set(CUSTOMER.NAME, name)
+                    .set(CUSTOMER.BIRTHDAY, Utils.Convert.dateToString(birthday))
+                    .set(CUSTOMER.MOBILE, mobile)
+                    .set(CUSTOMER.EMAIL, email)
+                    .where(CUSTOMER.UID.equal(uid))
+                    .execute() == 1;
+        } catch (DataAccessException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
     // @Deprecated
     public String forgetPasswordCheckEmail(String email) throws UnsupportedOperationException {
         // DON'T DO THIS ON PRODUCTION!!!
