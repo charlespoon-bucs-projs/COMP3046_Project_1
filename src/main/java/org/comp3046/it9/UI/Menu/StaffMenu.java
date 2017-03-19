@@ -151,12 +151,14 @@ public class StaffMenu {
             } catch (FileNotFoundException ignored) {
                 JOptionPane.showMessageDialog(null, "Error: \r\n\r\nMissing database file.", "Modify member", JOptionPane.ERROR_MESSAGE);
                 return;
-            } catch (DataAccessException ignored) {
-                JOptionPane.showMessageDialog(null, "Member not found.", "Modify member", JOptionPane.WARNING_MESSAGE);
-                return;
-            } catch (SQLException | IOException e) {
+            } catch (DataAccessException | SQLException | IOException e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Error: \r\n\r\n" + e.getMessage(), "Modify member", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (fetchCustomer == null) {
+                JOptionPane.showMessageDialog(null, "Member not found.", "Modify member", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 

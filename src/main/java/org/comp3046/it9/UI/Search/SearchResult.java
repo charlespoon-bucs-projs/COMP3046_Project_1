@@ -15,9 +15,9 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.text.Collator;
+import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class SearchResult {
@@ -27,7 +27,6 @@ public class SearchResult {
     private final SearchMovie searchMovie;
     // target
     private final Movie movie;
-    private final String[] selectedSeat; // new from this step
 
     @Deprecated
     String movie_id;
@@ -56,11 +55,6 @@ public class SearchResult {
         frame.setBounds(100, 100, 524, 353);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("XXX Cinema - Search Movie");
-        selectedSeat = new String[8];
-        for (int i = 0; i < 8; i++) {
-            selectedSeat[i] = "";
-
-        }
         initialize();
         tb.clock();
 
@@ -230,23 +224,9 @@ public class SearchResult {
             if (btn instanceof JButton) {
                 if (((JButton) btn).getBackground().equals(Color.RED)) {
                     ((JButton) btn).setBackground(UIManager.getColor("panelButtons.Background"));
-                    for (int i = 0; i < selectedSeat.length; i++) {
-                        if (selectedSeat[i].equals(((JButton) btn).getText())) {
-                            selectedSeat[i] = "";
-                            break;
-                        }
-                    }
-
                 } else {
                     ((JButton) btn).setBackground(Color.RED);
-                    for (int i = 0; i < selectedSeat.length; i++) {
-                        if (selectedSeat[i].equals("")) {
-                            selectedSeat[i] = ((JButton) btn).getText();
-                            break;
-                        }
-                    }
                 }
-
             }
 
         }
@@ -260,7 +240,12 @@ public class SearchResult {
 
     private class NextAction implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            new PayMethod(memberMenu, getSelf(), movie, selectedSeat);
+            String[] selectedSeats = seatButtons.values().stream()
+                    .filter(b -> b.getBackground().equals(Color.RED))
+                    .map(AbstractButton::getText)
+                    .toArray(String[]::new);
+
+            new PayMethod(memberMenu, getSelf(), movie, selectedSeats);
             frame.setVisible(false);
         }
     }

@@ -262,24 +262,23 @@ public class MemberSetting {
             lblFullName.setEnabled(true);
 
             comboBox_Salutation.setSelectedIndex(0);
-            lblSalutation.setEnabled(false);
-
+            
             textField_Username.setText(editingCustomer.getUsername());
             textField_Username.setEditable(true);
             lblUsername.setEnabled(true);
+
+            DatePickerGetSet.setDate(datePicker, editingCustomer.getBirthday());
 
             textField_Password.setText("");
 
             textField_Mobile_Number.setText(Integer.toString(editingCustomer.getMobile()));
             textField_Mobile_Number.setEditable(false);
-            lblMobileNumber.setEnabled(false);
-
+            
             textField_Email.setText(editingCustomer.getEmail());
             textField_Email.setEditable(true);
             lblEmail.setEnabled(true);
 
-            lblBirthday.setEnabled(false);
-
+            
             datePicker.getComponent(1).setEnabled(true);
 
         } else if (staffMenu != null) {
@@ -290,24 +289,22 @@ public class MemberSetting {
             lblFullName.setEnabled(true);
 
             comboBox_Salutation.setSelectedIndex(0);
-            lblSalutation.setEnabled(false);
-
+            
             textField_Username.setText(memberMenu.getCustomer().getUsername());
             textField_Username.setEditable(false);
-            lblUsername.setEnabled(false);
 
+            DatePickerGetSet.setDate(datePicker, editingCustomer.getBirthday());
+            
             textField_Password.setText("");
 
             textField_Mobile_Number.setText(Integer.toString(memberMenu.getCustomer().getMobile()));
             textField_Mobile_Number.setEditable(false);
-            lblMobileNumber.setEnabled(false);
-
+            
             textField_Email.setText(memberMenu.getCustomer().getEmail());
             textField_Email.setEditable(true);
             lblEmail.setEnabled(true);
             lblBirthday.setText("*Birthday: ");
-            lblBirthday.setEnabled(false);
-
+            
             datePicker.getComponent(1).setEnabled(false);
         }
 
@@ -337,8 +334,7 @@ public class MemberSetting {
 
                 comboBox_Salutation.setSelectedIndex(0);
                 comboBox_Salutation.setSelectedIndex(0);
-                lblSalutation.setEnabled(false);
-
+                
                 textField_Username.setText(editingCustomer.getUsername());
                 textField_Username.setEditable(true);
                 lblUsername.setEnabled(true);
@@ -347,14 +343,11 @@ public class MemberSetting {
 
                 textField_Mobile_Number.setText(Integer.toString(editingCustomer.getMobile()));
                 textField_Mobile_Number.setEditable(false);
-                lblMobileNumber.setEnabled(false);
-
+                
                 textField_Email.setText(editingCustomer.getEmail());
                 textField_Email.setEditable(false);
-                lblEmail.setEnabled(false);
 
-                lblBirthday.setEnabled(false);
-
+                
                 datePicker.getComponent(1).setEnabled(true);
 
             } else if (staffMenu != null) {
@@ -370,24 +363,20 @@ public class MemberSetting {
                 lblFullName.setEnabled(true);
 
                 comboBox_Salutation.setSelectedIndex(0);
-                lblSalutation.setEnabled(false);
-
+                
                 textField_Username.setText(memberMenu.getCustomer().getUsername());
                 textField_Username.setEditable(false);
-                lblUsername.setEnabled(false);
-
+                
                 textField_Password.setText("");
 
                 textField_Mobile_Number.setText(Integer.toString(memberMenu.getCustomer().getMobile()));
                 textField_Mobile_Number.setEditable(false);
-                lblMobileNumber.setEnabled(false);
-
+                
                 textField_Email.setText(memberMenu.getCustomer().getEmail());
                 textField_Email.setEditable(true);
                 lblEmail.setEnabled(true);
                 lblBirthday.setText("*Birthday: ");
-                lblBirthday.setEnabled(false);
-
+                
                 datePicker.getComponent(1).setEnabled(false);
             }
 
