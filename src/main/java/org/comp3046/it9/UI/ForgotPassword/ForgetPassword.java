@@ -59,6 +59,7 @@ public class ForgetPassword {
         btnSubmit.setBounds(51, 96, 87, 23);
         btnSubmit.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
         frame.getContentPane().add(btnSubmit);
+        btnSubmit.addActionListener(new SubmitAction());
 
         JButton btnReset = new JButton("Reset");
         btnReset.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));

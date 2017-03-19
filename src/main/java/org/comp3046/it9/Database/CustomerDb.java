@@ -14,8 +14,6 @@ import java.util.Date;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.comp3046.it9.Utils.*;
-
 import static org.comp3046.it9.Database.JooqGenerated.tables.Customer.CUSTOMER;
 
 public class CustomerDb {
@@ -156,7 +154,7 @@ public class CustomerDb {
 
         int changingUid = fetchUid.get(0).value1();
 
-        String newPassword = new BigInteger(130, new SecureRandom()).toString(32);
+        String newPassword = new BigInteger(40, new SecureRandom()).toString(32);
 
         int affect = dsl.update(CUSTOMER)
                 .set(CUSTOMER.PASSWORD, newPassword)
