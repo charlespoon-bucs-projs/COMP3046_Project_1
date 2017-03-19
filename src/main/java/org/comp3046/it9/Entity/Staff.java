@@ -23,4 +23,13 @@ public class Staff {
         return username;
     }
 
+    @Override
+    public String toString() {
+        String msg = "Staff {\r\n";
+        msg += "Id: %d\r\n";
+        msg += "Name: %s\r\n";
+        msg += "Username: %s\r\n";
+        msg += "}";
+        return String.format(msg, getId(), getName(), getUsername());
+    }
 }

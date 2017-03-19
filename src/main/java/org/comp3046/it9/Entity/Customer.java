@@ -1,5 +1,7 @@
 package org.comp3046.it9.Entity;
 
+import org.comp3046.it9.Utils.Convert;
+
 import java.util.Date;
 
 public class Customer {
@@ -53,5 +55,22 @@ public class Customer {
 
     public Date getBirthday() {
         return birthday;
+    }
+
+    @Override
+    public String toString() {
+        String msg = "Customer {\r\n";
+        msg += "Uid: %d\r\n";
+        msg += "Name: %s\r\n";
+        msg += "Salutation: %s\r\n";
+        msg += "Username: %s\r\n";
+        msg += "Mobile: %d\r\n";
+        msg += "Email: %s\r\n";
+        msg += "Birthday: %s\r\n";
+        msg += "}";
+
+        return String.format(
+                msg, getUid(), getName(), getSalutation(), getUsername(),
+                getMobile(), getEmail(), Convert.dateToString(getBirthday()));
     }
 }
